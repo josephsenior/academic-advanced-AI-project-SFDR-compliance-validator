@@ -1,0 +1,139 @@
+{
+  "text": "ODDO Algo Presentation\nNet performance 1Y: 10%. This document presents the ODDO Algo strategy with detailed figures, distribution countries, issuer mentions, glossary reminders, and regulatory notices to satisfy compliance extraction requirements across modules.",
+  "total_tables": 1,
+  "slide_summaries": [
+    {
+      "slide_number": 1,
+      "is_title_candidate": true,
+      "contains_disclaimer": true,
+      "disclaimer_categories": ["performance"],
+      "contains_performance": false,
+      "contains_glossary": false,
+      "countries": [],
+      "language": "EN"
+    },
+    {
+      "slide_number": 2,
+      "is_title_candidate": false,
+      "contains_disclaimer": false,
+      "disclaimer_categories": [],
+      "contains_performance": true,
+      "contains_glossary": false,
+      "countries": ["France"],
+      "language": "EN"
+    }
+  ],
+  "performance_sections": [
+    {
+      "slide_number": 2,
+      "sentences": ["Net performance 1Y: 10%"],
+      "entries": [
+        {
+          "sentence": "Net performance 1Y: 10%",
+          "basis": "net",
+          "benchmark": null,
+          "period": "1y",
+          "value": 10.0
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "slide_number": 2,
+      "table_index": 1,
+      "data": [
+        ["", "1Y"],
+        ["Fund", "10%"],
+        ["Benchmark", "8%"]
+      ]
+    }
+  ],
+  "table_sources": [
+    {
+      "slide_number": 2,
+      "raw_note": "Source: Bloomberg 31/08/2025",
+      "source_name": "Source: Bloomberg",
+      "source_date": "31/08/2025"
+    }
+  ],
+  "performance_table_entries": [
+    {
+      "label": "Fund",
+      "column": "1Y",
+      "value": 10.0,
+      "raw": "10%",
+      "slide_number": 2,
+      "table_index": 1
+    },
+    {
+      "label": "Benchmark",
+      "column": "1Y",
+      "value": 8.0,
+      "raw": "8%",
+      "slide_number": 2,
+      "table_index": 1
+    }
+  ],
+  "identifiers": [
+    {
+      "type": "isin",
+      "value": "FR0012345678",
+      "context": "",
+      "slide_number": 1
+    }
+  ],
+  "country_entries": [
+    {
+      "country": "France",
+      "heading": "Distribution",
+      "sentence": "Distribution: France",
+      "slide_number": 2
+    }
+  ],
+  "issuer_mentions": [
+    {
+      "issuer_name": "Apple Inc",
+      "context": "Top holdings",
+      "slide_number": 3,
+      "heading": "Top holdings"
+    }
+  ],
+  "title_information": {
+    "fund_name": "ODDO Algo",
+    "currency": "EUR",
+    "document_date": "31/08/2025",
+    "client_type": "retail",
+    "risk_indicator": "3",
+    "management_company": "ODDO BHF Asset Management SAS"
+  },
+  "structure": {
+    "title_slide": 1,
+    "disclaimer_slides": [1],
+    "performance_slides": [2],
+    "glossary_slides": [4],
+    "countries_detected": ["France"],
+    "disclaimer_categories": {
+      "1": ["performance"]
+    },
+    "country_entries": [
+      {
+        "country": "France",
+        "heading": "Distribution",
+        "sentence": "Distribution: France",
+        "slide_number": 2
+      }
+    ],
+    "issuer_mentions": [
+      {
+        "issuer_name": "Apple Inc",
+        "context": "Top holdings",
+        "slide_number": 3,
+        "heading": "Top holdings"
+      }
+    ],
+    "has_glossary": true,
+    "has_management_notice": true,
+    "legal_notice_slide": 5
+  }
+}

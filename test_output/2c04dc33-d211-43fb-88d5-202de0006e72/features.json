@@ -1,0 +1,159 @@
+{
+  "esg_mentions": [
+    {
+      "text": "environmental",
+      "context": "This product promotes environmental characteristics is not mentioned, but environmental is mentioned in the context of investment policy",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.5
+    },
+    {
+      "text": "ESG",
+      "context": "The Sub-Fund will exclude securities on the basis of environmental, social and governance (ESG) criteria, using the ESG ratings produced and monitoring of controversies by MSCI (the MSCI ESG Rating) or another source of information deemed acceptable to the Investment Manager.",
+      "sfdr_article": "Article 8",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "text": "sustainability",
+      "context": "The Investment Manager will consider current and future sustainability activities of issuers and sustainability opportunities/risks when making investment decisions, as well as the significant negative impact of investment decisions on sustainability factors.",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.9
+    },
+    {
+      "text": "social",
+      "context": "The Sub-Fund will exclude securities on the basis of environmental, social and governance (ESG) criteria, using the ESG ratings produced and monitoring of controversies by MSCI (the MSCI ESG Rating) or another source of information deemed acceptable to the Investment Manager.",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.9
+    },
+    {
+      "text": "governance",
+      "context": "The Sub-Fund will exclude securities on the basis of environmental, social and governance (ESG) criteria, using the ESG ratings produced and monitoring of controversies by MSCI (the MSCI ESG Rating) or another source of information deemed acceptable to the Investment Manager.",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.9
+    },
+    {
+      "text": "Article 8",
+      "context": "The Sub-Fund promotes environmental and social characteristics and qualifies as a financial product subject to Article 8(1) of Regulation (EU) 2019/2088 of the European Parliament and of the Council of 27 November 2019 on sustainability-related disclosures in the financial services sector (as may be amended from time to time) (SFDR).",
+      "sfdr_article": "Article 8",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "text": "Environmental, Social and Governance Standards",
+      "context": "Risk Factors",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.8
+    },
+    {
+      "text": "Sustainable investing",
+      "context": "Investment Strategy Risk",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.8
+    },
+    {
+      "text": "SFDR Sub-Fund Classification Risk",
+      "context": "Risk Factors",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.8
+    },
+    {
+      "text": "Sustainable investment objective",
+      "context": "The Sub-Fund has a sustainable investment objective",
+      "sfdr_article": null,
+      "location": "document",
+      "confidence": 0.95
+    }
+  ],
+  "performance_data": [],
+  "country_mentions": [
+    {
+      "country_name": "Ireland",
+      "context": "registered in Ireland by the Central Bank of Ireland",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "country_name": "Germany",
+      "context": "CLASSIFICATION AS AN EQUITY FUND FOR GERMAN TAX PURPOSES",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "country_name": "US",
+      "context": "investing in a portfolio of US equity securities",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "country_name": "Ireland",
+      "context": "Application is expected to be made to register the Sub-Fund for public distribution in various European countries.",
+      "location": "document",
+      "confidence": 0.7
+    },
+    {
+      "country_name": "Germany",
+      "context": "CLASSIFICATION AS AN EQUITY FUND FOR GERMAN TAX PURPOSES",
+      "location": "document",
+      "confidence": 0.95
+    }
+  ],
+  "company_mentions": [
+    {
+      "company_name": "ODDO BHF Asset Management SAS",
+      "context": "The Manager has appointed ODDO BHF Asset Management SAS as investment manager for the Sub-Fund",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "company_name": "HANetf ICAV",
+      "context": "HANetf ICAV (the ICAV), an Irish collective asset-management vehicle umbrella fund with segregated liability between sub-funds",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "company_name": "Standard & Poor",
+      "context": "a classification of BBB- or above by Standard & Poor or the deemed equivalent by the Investment Manager or the Investment Manager’s internal rating",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "company_name": "MSCI",
+      "context": "The Sub-Fund will exclude securities on the basis of environmental, social and governance (ESG) criteria, using the ESG ratings produced and monitoring of controversies by MSCI (the MSCI ESG Rating) or another source of information deemed acceptable to the Investment Manager.",
+      "location": "document",
+      "confidence": 0.95
+    },
+    {
+      "company_name": "Oddo",
+      "context": "The portfolio construction process is optimised in order to build a high-momentum portfolio under various risk management constraints (being …  [Oddo to elaborate]).",
+      "location": "document",
+      "confidence": 0.9
+    },
+    {
+      "company_name": "ODDO BHF",
+      "context": "Product name: ODDO BHF US Equity Active UCITS ETF (the Sub-Fund)",
+      "location": "document",
+      "confidence": 0.95
+    }
+  ],
+  "financial_terms": [
+    {
+      "term": "Net Asset Value",
+      "full_text": "The Net Asset Value per Share in the Creation Unit subscribed for by Shareholders (and will not be incurred by the ICAV on behalf of the Sub-Fund, and accordingly will not affect the Net Asset Value of the relevant Class of Share of the Sub-Fund).",
+      "location": "document",
+      "confidence": 0.9
+    },
+    {
+      "term": "Total Expense Ratio",
+      "full_text": "The Total Expense Ratio or TER, a percentage of the Net Asset Value of the relevant Class of Shares (plus VAT, if any), is payable by the ICAV out of the Sub-Fund Assets to the Manager.",
+      "location": "document",
+      "confidence": 0.9
+    }
+  ]
+}

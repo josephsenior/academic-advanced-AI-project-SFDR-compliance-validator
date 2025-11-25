@@ -1,0 +1,13 @@
+{
+  "executive_summary": {
+    "document": "dummy.txt",
+    "text_characters": 262,
+    "total_tables": 1,
+    "identifier_count": 1,
+    "issuer_count": 1,
+    "country_mentions_count": 1,
+    "has_glossary": true,
+    "has_management_notice": true,
+    "warnings": []
+  }
+}

@@ -44,4 +44,10 @@ corrected_documents/
 test_corrected.pptx
 *.pptx
 !dataset/**/*.pptx
+
+# Frontend (Next.js)
 compliance-dashboard/node_modules/
+compliance-dashboard/.next/
+compliance-dashboard/.turbo/
+compliance-dashboard/tsconfig.tsbuildinfo
+compliance-dashboard/out/

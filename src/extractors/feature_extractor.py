@@ -5,10 +5,21 @@ Extracts structured features from document text for compliance validation
 """
 
 import os
+import sys
+# Apply Pydantic v1 patch for Python 3.12 compatibility
+try:
+    from src.utils import pydantic_v1_patch
+except ImportError:
+    # Fallback if running as script
+    pass
+
 from typing import List, Dict, Any, Optional
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import PydanticOutputParser
+try:
+    from langchain.output_parsers import PydanticOutputParser
+except ImportError:
+    from langchain_core.output_parsers import PydanticOutputParser
 from dotenv import load_dotenv
 
 from .models import ContentFeatures, ESGFeature, PerformanceFeature, CountryFeature, CompanyFeature, FinancialTermFeature
@@ -72,15 +83,18 @@ class ContentFeatureExtractor:
         # Initialize Token Factory LLM using OpenAI-compatible API
         # Disable SSL verification for self-signed certificates
         import httpx
-        http_client = httpx.Client(verify=False)
+        sync_client = httpx.Client(verify=False)
+        async_client = httpx.AsyncClient(verify=False)
         
         self.llm = ChatOpenAI(
             model=model_name,
             temperature=temperature,
             api_key=api_key,
-            base_url=base_url,
-            http_client=http_client
+            base_url=base_url
         )
+        # Manually set clients to bypass validation issues in langchain-openai 0.0.2
+        # self.llm.http_client = sync_client
+        # self.llm.http_async_client = async_client
         
 
         # Ninitializiw Pydantic parser - to convert LLM response to structured format

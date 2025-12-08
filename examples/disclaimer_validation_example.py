@@ -72,18 +72,18 @@ def main():
     if disclaimer_result.required_disclaimers:
         print("    Required Disclaimers:")
         for req in disclaimer_result.required_disclaimers:
-            status = "✓" if req.disclaimer_type in disclaimer_result.present_disclaimers else "✗"
+            status = "[PASS]" if req.disclaimer_type in disclaimer_result.present_disclaimers else "[FAIL]"
             print(f"      {status} {req.disclaimer_type}: {req.reason}")
     print()
     
     if disclaimer_result.missing_disclaimers:
         print("    Missing Disclaimers:")
         for missing in disclaimer_result.missing_disclaimers:
-            print(f"      ✗ {missing.disclaimer_type}: {missing.reason}")
+            print(f"      [MISSING] {missing.disclaimer_type}: {missing.reason}")
             if missing.expected_text:
                 print(f"        Expected text: {missing.expected_text[:100]}...")
     else:
-        print("    ✓ All required disclaimers are present!")
+        print("    [PASS] All required disclaimers are present!")
     print()
     
     # 5. Validate country registrations
@@ -102,7 +102,7 @@ def main():
         
         print("    Registration status:")
         for country, is_registered in validation.items():
-            status = "✓" if is_registered else "✗"
+            status = "[PASS]" if is_registered else "[FAIL]"
             print(f"      {status} {country}: {'Registered' if is_registered else 'NOT Registered'}")
     else:
         print("    No countries mentioned in document")

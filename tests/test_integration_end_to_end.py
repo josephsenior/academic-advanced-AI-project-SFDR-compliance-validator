@@ -32,7 +32,7 @@ def test_end_to_end_flow():
     metadata_path = "dataset/example_1/metadata.json"
     
     if not Path(document_path).exists():
-        print(f"⚠️  Document not found: {document_path}")
+        print(f"WARNING: Document not found: {document_path}")
         print("   Skipping integration test")
         return False
     
@@ -46,7 +46,7 @@ def test_end_to_end_flow():
             from src.extractors.chart_analyzer import ChartAnalyzer
             pipeline.document_extractor.chart_analyzer = ChartAnalyzer(use_llm=True)
         except Exception as e:
-            print(f"  ⚠️  Chart analyzer not available: {e}")
+            print(f"  WARNING: Chart analyzer not available: {e}")
             pipeline.document_extractor.enable_chart_analysis = False
     
     try:
@@ -55,19 +55,19 @@ def test_end_to_end_flow():
             metadata_json_path=metadata_path if Path(metadata_path).exists() else None
         )
     except Exception as e:
-        print(f"  ❌ Pipeline failed: {e}")
+        print(f"  ERROR: Pipeline failed: {e}")
         return False
     
     if pipeline_result['status'] != 'success':
-        print(f"  ❌ Pipeline status: {pipeline_result['status']}")
+        print(f"  ERROR: Pipeline status: {pipeline_result['status']}")
         print(f"  Errors: {pipeline_result.get('errors', [])}")
         return False
     
-    print(f"  ✅ Document processed: {pipeline_result['document_id']}")
+    print(f"  SUCCESS: Document processed: {pipeline_result['document_id']}")
     extraction_result = pipeline_result.get('extraction_result', {})
-    print(f"  ✅ Extracted {len(extraction_result.get('text', ''))} characters")
-    print(f"  ✅ Found {extraction_result.get('total_tables', 0)} tables")
-    print(f"  ✅ Found {extraction_result.get('total_charts', 0)} charts")
+    print(f"  SUCCESS: Extracted {len(extraction_result.get('text', ''))} characters")
+    print(f"  SUCCESS: Found {extraction_result.get('total_tables', 0)} tables")
+    print(f"  SUCCESS: Found {extraction_result.get('total_charts', 0)} charts")
     print()
     
     # Step 2: Data Consistency Validation
@@ -91,12 +91,12 @@ def test_end_to_end_flow():
             document_id=pipeline_result['document_id']
         )
     except Exception as e:
-        print(f"  ❌ Validation failed: {e}")
+        print(f"  ERROR: Validation failed: {e}")
         import traceback
         traceback.print_exc()
         return False
     
-    print(f"  ✅ Validation completed")
+    print(f"  SUCCESS: Validation completed")
     print(f"  Status: {validation_result.overall_status}")
     print(f"  Tables checked: {validation_result.total_tables_checked}")
     print(f"  Source/Date issues: {len(validation_result.source_date_issues)}")
@@ -113,27 +113,27 @@ def test_end_to_end_flow():
     # Check 1: Extraction result has charts field
     total_checks += 1
     if 'charts' in extraction_result:
-        print("  ✅ Extraction result includes 'charts' field")
+        print("  SUCCESS: Extraction result includes 'charts' field")
         checks_passed += 1
     else:
-        print("  ⚠️  Extraction result missing 'charts' field")
+        print("  WARNING: Extraction result missing 'charts' field")
     
     # Check 2: Charts are validated
     total_checks += 1
     if validation_result.total_tables_checked > 0:
-        print("  ✅ Charts/tables are being validated")
+        print("  SUCCESS: Charts/tables are being validated")
         checks_passed += 1
     else:
-        print("  ⚠️  No charts/tables were validated")
+        print("  WARNING: No charts/tables were validated")
     
     # Check 3: Performance data from charts is included
     total_checks += 1
     perf_sections = extraction_result.get('performance_sections', [])
     if perf_sections:
-        print(f"  ✅ Performance sections found: {len(perf_sections)}")
+        print(f"  SUCCESS: Performance sections found: {len(perf_sections)}")
         checks_passed += 1
     else:
-        print("  ⚠️  No performance sections found")
+        print("  WARNING: No performance sections found")
     
     # Check 4: Chart data structure
     total_checks += 1
@@ -141,12 +141,12 @@ def test_end_to_end_flow():
     if charts:
         chart = charts[0]
         if 'chart_type' in chart and 'data_points' in chart:
-            print("  ✅ Chart data structure is correct")
+            print("  SUCCESS: Chart data structure is correct")
             checks_passed += 1
         else:
-            print("  ⚠️  Chart data structure incomplete")
+            print("  WARNING: Chart data structure incomplete")
     else:
-        print("  ℹ️  No charts found in document (this is OK if document has no charts)")
+        print("  INFO: No charts found in document (this is OK if document has no charts)")
         checks_passed += 1  # Not a failure if no charts
     
     print()
@@ -166,10 +166,10 @@ def test_end_to_end_flow():
     print()
     
     if checks_passed == total_checks and validation_result.overall_status in ['pass', 'warning']:
-        print("✅ End-to-end integration test PASSED")
+        print("SUCCESS: End-to-end integration test PASSED")
         return True
     else:
-        print("⚠️  End-to-end integration test completed with warnings")
+        print("WARNING: End-to-end integration test completed with warnings")
         return True  # Still pass if integration works, even with warnings
 
 

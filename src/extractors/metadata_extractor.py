@@ -7,6 +7,14 @@ Combines all sources for complete metadata
 
 import json
 import os
+import sys
+# Apply Pydantic v1 patch for Python 3.12 compatibility
+try:
+    from src.utils import pydantic_v1_patch
+except ImportError:
+    # Fallback if running as script
+    pass
+
 from pathlib import Path
 from typing import Dict, Any, Optional
 from datetime import datetime
@@ -194,19 +202,25 @@ class MetadataExtractor:
         try:
             from langchain_openai import ChatOpenAI
             from langchain_core.prompts import ChatPromptTemplate
-            from langchain_core.output_parsers import PydanticOutputParser
+            try:
+                from langchain_core.output_parsers import PydanticOutputParser
+            except ImportError:
+                from langchain.output_parsers import PydanticOutputParser
             import httpx
             
             # Disable SSL verification for self-signed certificates
             http_client = httpx.Client(verify=False)
+            http_async_client = httpx.AsyncClient(verify=False)
             
             llm = ChatOpenAI(
                 model=config['model_name'],
                 api_key=config['api_key'],
                 base_url=config['base_url'],
-                temperature=0.0,
-                http_client=http_client
+                temperature=0.0
             )
+            # Manually set clients to bypass validation issues in langchain-openai 0.0.2
+            # llm.http_client = http_client
+            # llm.http_async_client = http_async_client
             
             parser = PydanticOutputParser(pydantic_object=MetadataDetectionResult)
             format_instructions = parser.get_format_instructions()
@@ -295,7 +309,10 @@ Your task is to extract specific metadata from the document text that is require
         try:
             # Get format instructions from parser (needed for prompt template)
             # The parser is already created in _create_llm_extractor, but we need format_instructions here
-            from langchain_core.output_parsers import PydanticOutputParser
+            try:
+                from langchain_core.output_parsers import PydanticOutputParser
+            except ImportError:
+                from langchain.output_parsers import PydanticOutputParser
             parser = PydanticOutputParser(pydantic_object=MetadataDetectionResult)
             format_instructions = parser.get_format_instructions()
             
@@ -624,7 +641,7 @@ if __name__ == "__main__":
     
     for test_file in test_files:
         if os.path.exists(test_file):
-            print(f"\n📄 File: {os.path.basename(test_file)}")
+            print(f"\nFile: {os.path.basename(test_file)}")
             print("-"*80)
             
             metadata = extractor.extract(test_file)
@@ -645,5 +662,5 @@ if __name__ == "__main__":
             print(f"Has Filename Metadata: {metadata.get('has_filename_metadata')}")
             print(f"Filename Parsing Confidence: {metadata.get('filename_parsing_confidence', 0):.2f}")
         else:
-            print(f"\n❌ File not found: {test_file}")
+            print(f"\nERROR: File not found: {test_file}")
 

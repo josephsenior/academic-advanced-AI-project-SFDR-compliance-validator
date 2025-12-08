@@ -82,7 +82,7 @@ def test_source_date_validation():
     assert result.tables_with_source_date == 1
     assert result.tables_missing_source_date == 2
     assert len(result.source_date_issues) >= 2
-    print("\n✅ Test 1 passed!\n")
+    print("\nSUCCESS: Test 1 passed!\n")
 
 
 def test_numerical_validation():
@@ -177,7 +177,7 @@ def test_numerical_validation():
     assert result.total_numerical_values_checked > 0
     assert result.values_matching_reference >= 3  # 10.5%, 8.3%, 10.5%, 8.0% should match
     assert result.values_with_inconsistencies >= 1  # 8.5% vs 8.2% should be flagged
-    print("\n✅ Test 2 passed!\n")
+    print("\nSUCCESS: Test 2 passed!\n")
 
 
 def test_integration_with_golden_fixture():
@@ -189,7 +189,7 @@ def test_integration_with_golden_fixture():
     # Load golden fixture
     fixture_path = Path(__file__).parent / "golden" / "extraction_fixture.json"
     if not fixture_path.exists():
-        print(f"⚠️  Golden fixture not found at {fixture_path}")
+        print(f"WARNING: Golden fixture not found at {fixture_path}")
         print("   Skipping integration test")
         return
     
@@ -228,7 +228,7 @@ def test_integration_with_golden_fixture():
     for msg in result.summary:
         print(f"  {msg}")
     
-    print("\n✅ Test 3 passed!\n")
+    print("\nSUCCESS: Test 3 passed!\n")
 
 
 def test_reference_data_creation():
@@ -267,7 +267,7 @@ def test_reference_data_creation():
     assert '1Y' in ref_data.performance_data
     assert ref_data.performance_data['1Y']['net'] == 10.5
     
-    print("\n✅ Test 4 passed!\n")
+    print("\nSUCCESS: Test 4 passed!\n")
 
 
 if __name__ == "__main__":
@@ -282,13 +282,13 @@ if __name__ == "__main__":
         test_reference_data_creation()
         
         print("=" * 60)
-        print("✅ All tests passed!")
+        print("SUCCESS: All tests passed!")
         print("=" * 60)
     except AssertionError as e:
-        print(f"\n❌ Test failed: {e}")
+        print(f"\nERROR: Test failed: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\nERROR: {e}")
         import traceback
         traceback.print_exc()
         sys.exit(1)

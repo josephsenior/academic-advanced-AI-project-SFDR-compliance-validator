@@ -58,7 +58,7 @@ except requests.exceptions.ConnectionError as e:
     print("  - Firewall blocking the connection")
     print("  - Incorrect URL")
 except Exception as e:
-    print(f"✗ Error: {type(e).__name__}: {e}")
+    print(f"[ERROR] {type(e).__name__}: {e}")
 
 print()
 
@@ -86,7 +86,7 @@ except ImportError as e:
     print(f"[ERROR] Missing dependency: {e}")
     print("  Install with: pip install langchain-openai")
 except Exception as e:
-    print(f"✗ Error: {type(e).__name__}: {e}")
+    print(f"[ERROR] {type(e).__name__}: {e}")
     import traceback
     print("\nFull traceback:")
     traceback.print_exc()
@@ -137,7 +137,7 @@ try:
         print(f"Response: {response.text[:500]}")
         
 except Exception as e:
-    print(f"✗ Error: {type(e).__name__}: {e}")
+    print(f"[ERROR] {type(e).__name__}: {e}")
     import traceback
     traceback.print_exc()
 

@@ -208,7 +208,7 @@ if __name__ == "__main__":
     print("="*80)
     
     for filename in test_files:
-        print(f"\n📄 Filename: {filename}")
+        print(f"\nFilename: {filename}")
         result = parser.parse(filename)
         print(f"   ID: {result['document_id_extracted']}")
         print(f"   Type: {result['document_type']}")

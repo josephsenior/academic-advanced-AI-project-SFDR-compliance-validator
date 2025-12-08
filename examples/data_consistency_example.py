@@ -33,7 +33,7 @@ def main():
     metadata_path = "dataset/example_1/metadata.json"
     
     if not Path(document_path).exists():
-        print(f"⚠️  Document not found: {document_path}")
+        print(f"WARNING: Document not found: {document_path}")
         print("   Please update the path to an existing document")
         return
     
@@ -44,10 +44,10 @@ def main():
     )
     
     if pipeline_result['status'] != 'success':
-        print(f"❌ Pipeline failed: {pipeline_result.get('errors', [])}")
+        print(f"ERROR: Pipeline failed: {pipeline_result.get('errors', [])}")
         return
     
-    print(f"✅ Document processed: {pipeline_result['document_id']}")
+    print(f"SUCCESS: Document processed: {pipeline_result['document_id']}")
     print()
     
     # Step 2: Prepare reference data
@@ -67,7 +67,7 @@ def main():
         reference_date="2025-08-31",
         source_document="Prospectus"
     )
-    print("✅ Reference data prepared")
+    print("SUCCESS: Reference data prepared")
     print()
     
     # Alternative: Create from dictionary
@@ -87,7 +87,7 @@ def main():
         metadata=pipeline_result['metadata'],
         document_id=pipeline_result['document_id']
     )
-    print("✅ Validation completed")
+    print("SUCCESS: Validation completed")
     print()
     
     # Step 4: Display results
@@ -108,10 +108,10 @@ def main():
     if validation_result.source_date_issues:
         print(f"\n  Issues found ({len(validation_result.source_date_issues)}):")
         for issue in validation_result.source_date_issues:
-            severity_icon = "❌" if issue.severity == "error" else "⚠️"
+            severity_icon = "[ERROR]" if issue.severity == "error" else "[WARNING]"
             print(f"    {severity_icon} [{issue.severity.upper()}] {issue.message}")
     else:
-        print("  ✅ No source/date issues found")
+        print("  [PASS] No source/date issues found")
     print()
     
     # Numerical validation
@@ -124,10 +124,10 @@ def main():
         if validation_result.numerical_inconsistencies:
             print(f"\n  Inconsistencies found ({len(validation_result.numerical_inconsistencies)}):")
             for inc in validation_result.numerical_inconsistencies:
-                severity_icon = "❌" if inc.severity == "error" else "⚠️"
+                severity_icon = "[ERROR]" if inc.severity == "error" else "[WARNING]"
                 print(f"    {severity_icon} [{inc.severity.upper()}] {inc.message}")
         else:
-            print("  ✅ No numerical inconsistencies found")
+            print("  [PASS] No numerical inconsistencies found")
         print()
     else:
         print("Numerical Validation: Skipped (no reference data or no numerical values found)")
@@ -147,7 +147,7 @@ def main():
         import json
         json.dump(validation_result.model_dump(), f, indent=2, ensure_ascii=False)
     
-    print(f"✅ Results saved to: {output_path}")
+    print(f"SUCCESS: Results saved to: {output_path}")
     print()
     
     print("=" * 60)

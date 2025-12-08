@@ -30,6 +30,10 @@ Verify that numerical data, sources, and charts match the official documents (Pr
    - Reports errors for numerical mismatches beyond tolerance
    - Reports warnings for unvalidatable data (no reference available)
 
+4. **Validate compliance rules**
+   - Checks against "Synthèse règles présentations commerciales.docx"
+   - Validates cover page requirements, performance display rules, disclaimers, etc.
+
 ## Usage
 
 ### Basic Usage
@@ -256,4 +260,45 @@ See `tests/test_data_consistency_agent.py` for comprehensive examples.
 - **DocumentExtractor**: Provides extraction results for validation
 - **ExtractionPipeline**: Orchestrates document processing
 - **Data Validation & Compliance Agent**: May merge with this agent for unified compliance checking
+
+## Compliance Validation
+
+The agent now includes comprehensive compliance validation based on "Synthèse règles présentations commerciales.docx".
+
+### Validated Rules
+
+1.  **Performance Rules (Section 4.3)**
+    - Performance cannot be on the cover page (Slide 1).
+    - Must show 10-year and 5-year history (or since inception).
+    - Must include mandatory past performance disclaimer.
+
+2.  **Cover Page Rules (Section 2)**
+    - Must include Fund Name.
+    - Must include Document Date.
+    - Must include Management Company Name.
+
+3.  **Slide 2 Rules (Section 3)**
+    - Must include Risk Scale (SRI).
+    - Must include Investment Horizon.
+
+4.  **Disclaimer Rules (Section 1)**
+    - Must include "Risk of Capital Loss" warning.
+    - Must include "Past Performance" warning.
+
+5.  **ESG & Securities Rules (Section 4.1, 4.2)**
+    - Securities mentions must have "Not a recommendation" disclaimer.
+    - ESG claims must be consistent.
+
+6.  **Fund Type Specific Rules**
+    - Private Equity: Must warn about liquidity risk.
+
+### ComplianceIssue
+
+Compliance issues are reported in `compliance_issues` list:
+
+- `issue_type`: Specific type (e.g., `PERFORMANCE_STARTS_DOCUMENT`, `MISSING_FUND_NAME`)
+- `rule_reference`: Reference to the rule section (e.g., "Section 4.3")
+- `location`: Where the issue was found
+- `severity`: "error" or "warning"
+- `message`: Description of the violation
 

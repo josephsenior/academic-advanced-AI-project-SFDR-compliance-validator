@@ -323,7 +323,7 @@ if __name__ == "__main__":
         if os.path.exists(test_file):
             metadata = extractor.extract(test_file)
             metadata_list.append(metadata)
-            print(f"\n📄 {os.path.basename(test_file)}")
+            print(f"\nFile: {os.path.basename(test_file)}")
             print(f"   Fund: {metadata.get('fund_name')}")
             print(f"   Date: {metadata.get('date_extracted')}")
             print(f"   Language: {metadata.get('language_code')}")
@@ -341,10 +341,10 @@ if __name__ == "__main__":
         if not family_id:
             # Create new family
             family_id = detector.create_family(metadata)
-            print(f"\n✅ Created new family: {family_id}")
+            print(f"\nSUCCESS: Created new family: {family_id}")
             print(f"   Family name: {detector._generate_family_name(metadata)}")
         else:
-            print(f"\n✅ Matched existing family: {family_id}")
+            print(f"\nSUCCESS: Matched existing family: {family_id}")
         
         families[metadata.get('filename')] = family_id
     

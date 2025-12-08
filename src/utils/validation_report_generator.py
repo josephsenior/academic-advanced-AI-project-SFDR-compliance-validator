@@ -268,7 +268,7 @@ class ValidationReportGenerator:
         </table>
 """
         else:
-            html += """        <p class="pass">✅ No source/date issues found</p>
+            html += """        <p class="pass">[PASS] No source/date issues found</p>
 """
         
         html += """    </div>
@@ -312,7 +312,7 @@ class ValidationReportGenerator:
         </table>
 """
             else:
-                html += """        <p class="pass">✅ No numerical inconsistencies found</p>
+                html += """        <p class="pass">[PASS] No numerical inconsistencies found</p>
 """
             
             html += """    </div>

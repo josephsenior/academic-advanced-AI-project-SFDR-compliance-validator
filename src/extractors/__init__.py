@@ -14,9 +14,6 @@ from .pipeline import ExtractionPipeline, process_document
 from .data_consistency_agent import (
     DataConsistencyAgent,
     ReferenceData,
-    SourceDateIssue,
-    NumericalInconsistency,
-    CrossReferenceIssue,
     DataConsistencyResult,
     create_reference_data_from_dict
 )
@@ -64,9 +61,6 @@ __all__ = [
     'create_feature_extractor',
     'DataConsistencyAgent',
     'ReferenceData',
-    'SourceDateIssue',
-    'NumericalInconsistency',
-    'CrossReferenceIssue',
     'DataConsistencyResult',
     'create_reference_data_from_dict',
     'ChartAnalyzer',

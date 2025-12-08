@@ -38,3 +38,10 @@ wheels/
 .DS_Store
 Thumbs.db
 
+# Project specific
+uploads/
+corrected_documents/
+test_corrected.pptx
+*.pptx
+!dataset/**/*.pptx
+compliance-dashboard/node_modules/

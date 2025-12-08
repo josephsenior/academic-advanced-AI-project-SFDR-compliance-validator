@@ -10,7 +10,7 @@ import re
 import hashlib
 from pathlib import Path
 from typing import Dict, Any, Optional, List
-from datetime import datetime
+from datetime import datetime, date
 import sys
 from functools import lru_cache
 
@@ -19,6 +19,16 @@ from src.extractors.document_extractor import DocumentExtractor
 from src.extractors.feature_extractor import ContentFeatureExtractor
 from src.extractors.llm_config import create_feature_extractor
 from src.extractors.models import ContentFeatures
+
+# Import performance and monitoring utilities
+try:
+    from src.utils.llm_cache import get_llm_cache
+    from src.utils.metrics import get_metrics_collector
+    from src.utils.parallel_processor import ChartBatchProcessor
+    UTILS_AVAILABLE = True
+except ImportError:
+    UTILS_AVAILABLE = False
+    print("Warning: Performance utilities not available")
 
 
 PIPELINE_VERSION = "0.3.0"
@@ -32,13 +42,14 @@ PHONE_PATTERN = re.compile(r"\+?\d[\d\s().-]{6,}")
 class ExtractionPipeline:
     """Main pipeline orchestrator for document extraction"""
     
-    def __init__(self, use_llm: bool = True, output_dir: Optional[str] = None):
+    def __init__(self, use_llm: bool = True, output_dir: Optional[str] = None, enable_metrics: bool = True):
         """
         Initialize pipeline
         
         Args:
             use_llm: Whether to use LLM for feature extraction (default: True)
             output_dir: Directory where JSON outputs will be stored (default: ./outputs)
+            enable_metrics: Whether to enable metrics tracking (default: True)
         """
         # Houni ninitializiw l pipeline: metadata extractor, document extractor, optional LLM feature extractor
         # Enable LLM for metadata extraction if use_llm is True
@@ -48,6 +59,10 @@ class ExtractionPipeline:
         self.use_llm = use_llm
         self.output_dir = Path(output_dir or os.getenv("PIPELINE_OUTPUT_DIR", "outputs"))
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize metrics tracking
+        self.enable_metrics = enable_metrics and UTILS_AVAILABLE
+        self.metrics = get_metrics_collector() if self.enable_metrics else None
         
         if use_llm:
             try:
@@ -66,6 +81,19 @@ class ExtractionPipeline:
 
     def _write_json(self, path: Path, data: Any) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Convert date objects to ISO format strings
+        def convert_dates(obj):
+            if isinstance(obj, (datetime, date)):
+                return obj.isoformat()
+            elif isinstance(obj, dict):
+                return {k: convert_dates(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_dates(item) for item in obj]
+            return obj
+        
+        data = convert_dates(data)
+        
         with path.open("w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -442,7 +470,7 @@ class ExtractionPipeline:
             except Exception as e:
                 error_msg = f"Metadata extraction failed: {str(e)}"
                 result['errors'].append(error_msg)
-                print(f"  ⚠️  {error_msg}")
+                print(f"  WARNING: {error_msg}")
                 # Continue with basic metadata
                 normalized_metadata = {
                     'filename': file_path.name,
@@ -573,7 +601,7 @@ class ExtractionPipeline:
                 except Exception as e:
                     error_msg = f"Feature extraction failed: {str(e)}"
                     result['warnings'].append(error_msg)
-                    print(f"  ⚠️  {error_msg}")
+                    print(f"  WARNING: {error_msg}")
                     # Continue without features
             else:
                 print(f"[Step 5/6] Skipping feature extraction (LLM disabled or no text)")
@@ -584,6 +612,22 @@ class ExtractionPipeline:
             result['status'] = 'success'
             result['steps_completed'].append('finalization')
             print(f"  [OK] Document processing completed successfully!")
+            
+            # Log performance metrics
+            if self.enable_metrics and self.metrics:
+                document_type = result['metadata'].get('document_type', 'unknown')
+                self.metrics.log_performance(
+                    operation_type="document_extraction",
+                    document_type=document_type,
+                    success=True,
+                    details={
+                        'steps_completed': len(result.get('steps_completed', [])),
+                        'text_length': len(extraction_result.get('text', '')),
+                        'total_tables': extraction_result.get('total_tables', 0),
+                        'total_charts': extraction_result.get('total_charts', 0),
+                        'has_features': 'features' in result
+                    }
+                )
 
             summary = {
                 'steps_completed': result.get('steps_completed', []),
@@ -648,6 +692,20 @@ class ExtractionPipeline:
             result['status'] = 'error'
             result['errors'].append(str(e))
             print(f"\n[ERROR] Pipeline failed: {str(e)}")
+            
+            # Log error metrics
+            if self.enable_metrics and self.metrics:
+                document_type = result.get('metadata', {}).get('document_type', 'unknown')
+                self.metrics.log_performance(
+                    operation_type="document_extraction",
+                    document_type=document_type,
+                    success=False,
+                    details={
+                        'error': str(e),
+                        'steps_completed': len(result.get('steps_completed', []))
+                    }
+                )
+            
             return result
     
 

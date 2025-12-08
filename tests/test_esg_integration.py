@@ -20,7 +20,7 @@ def test_esg_validation():
     """Test ESG validation with a real document"""
     
     print("=" * 80)
-    print("🧪 TESTING ESG COMPLIANCE INTEGRATION")
+    print("[TEST] TESTING ESG COMPLIANCE INTEGRATION")
     print("=" * 80)
     print()
     
@@ -32,10 +32,10 @@ def test_esg_validation():
         test_file = "dataset/example_1/1369-PRS-FR-ODDO BHF Génération - 20231231 - FVv1.pptx"
     
     if not Path(test_file).exists():
-        print("❌ No test document found. Please ensure dataset exists.")
+        print("[FAIL] No test document found. Please ensure dataset exists.")
         return
     
-    print(f"📄 Test Document: {test_file}")
+    print(f"[DOC] Test Document: {test_file}")
     print()
     
     # Create mock extraction result with required fields
@@ -94,7 +94,7 @@ def test_esg_validation():
     base_url = os.getenv("TOKEN_FACTORY_BASE_URL") or os.getenv("LLM_BASE_URL")
     
     if not api_key or not base_url:
-        print("❌ Error: TOKEN_FACTORY_API_KEY and TOKEN_FACTORY_BASE_URL must be set in .env")
+        print("[FAIL] Error: TOKEN_FACTORY_API_KEY and TOKEN_FACTORY_BASE_URL must be set in .env")
         print()
         print("Required environment variables:")
         print("  - TOKEN_FACTORY_API_KEY")
@@ -109,9 +109,9 @@ def test_esg_validation():
             esg_base_url=base_url
         )
         
-        print("✅ Agent initialized successfully")
+        print("[OK] Agent initialized successfully")
         print()
-        print("🔍 Running ESG Compliance Validation...")
+        print("[SEARCH] Running ESG Compliance Validation...")
         print("   - Text Analysis: Detecting ESG level (Article 6/8/9)")
         print("   - ESG Percentage Calculation: Measuring ESG content")
         print("   - Vision Analysis: Analyzing slides for visual ESG content")
@@ -121,13 +121,13 @@ def test_esg_validation():
         result = agent.validate(extraction_result, metadata)
         
         print("=" * 80)
-        print("📊 VALIDATION RESULTS")
+        print("[CHART] VALIDATION RESULTS")
         print("=" * 80)
         print()
         
         # Show compliance issues
         if result.compliance_issues:
-            print(f"⚠️  Found {len(result.compliance_issues)} compliance issue(s):")
+            print(f"[WARNING]  Found {len(result.compliance_issues)} compliance issue(s):")
             print()
             
             for i, issue in enumerate(result.compliance_issues, 1):
@@ -140,7 +140,7 @@ def test_esg_validation():
                     print(f"   Suggestion: {issue.suggestion[:150]}...")
                 print()
         else:
-            print("✅ No compliance issues found")
+            print("[OK] No compliance issues found")
             print()
         
         # Show overall status
@@ -176,12 +176,12 @@ def test_esg_validation():
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
         
-        print(f"💾 Results saved to: {output_file}")
+        print(f"[SAVE] Results saved to: {output_file}")
         print()
         
         # Show summary
         print("=" * 80)
-        print("📈 SUMMARY")
+        print("[UP] SUMMARY")
         print("=" * 80)
         print()
         print(f"Total Compliance Issues: {len(result.compliance_issues)}")
@@ -192,17 +192,17 @@ def test_esg_validation():
         warnings = sum(1 for i in result.compliance_issues if i.severity == "warning")
         
         if critical > 0:
-            print(f"  🔴 Critical: {critical}")
+            print(f"  [RED] Critical: {critical}")
         if errors > 0:
-            print(f"  ❌ Errors: {errors}")
+            print(f"  [FAIL] Errors: {errors}")
         if warnings > 0:
-            print(f"  ⚠️  Warnings: {warnings}")
+            print(f"  [WARNING]  Warnings: {warnings}")
         
         print()
-        print("✅ Test completed successfully!")
+        print("[OK] Test completed successfully!")
         
     except Exception as e:
-        print(f"❌ Error during validation: {e}")
+        print(f"[FAIL] Error during validation: {e}")
         import traceback
         traceback.print_exc()
         return

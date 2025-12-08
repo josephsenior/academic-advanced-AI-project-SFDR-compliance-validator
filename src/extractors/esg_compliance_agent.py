@@ -52,7 +52,7 @@ class ESGMentions(BaseModel):
     esg_text_length: int
     esg_percentage: float
     esg_keywords_found: List[str]
-    esg_keywords_by_slide: Dict[str, List[int]] = {}  # ✅ NEW: keyword -> [slide numbers]
+    esg_keywords_by_slide: Dict[str, List[int]] = {}  # [OK] NEW: keyword -> [slide numbers]
     esg_sentences: List[str]
     mandatory_regulatory_mentions: int
     commercial_esg_mentions: int
@@ -151,7 +151,7 @@ def extract_fund_metadata_from_prospectus(prospectus_path: str) -> dict:
         return {}
 
     try:
-        logger.info("📖 Extraction métadonnées du prospectus...")
+        logger.info("[BOOK] Extraction métadonnées du prospectus...")
         if prospectus_path.suffix.lower() == '.pdf':
             doc = fitz.open(str(prospectus_path))
             paragraphs = []
@@ -177,7 +177,7 @@ def extract_fund_metadata_from_prospectus(prospectus_path: str) -> dict:
         elif "article 6" in full_text:
             sfdr_article = 6
 
-        logger.info(f"📄 Métadonnées extraites: Fonds={fund_name}, Article={sfdr_article}")
+        logger.info(f"[DOC] Métadonnées extraites: Fonds={fund_name}, Article={sfdr_article}")
         return {
             "fund_name": fund_name,
             "sfdr_article": sfdr_article
@@ -200,11 +200,11 @@ class DocumentLoader:
             logger.info("📑 Chargement PDF...")
             doc = fitz.open(str(self.file_path))
             full_text = [page.get_text("text") for page in doc]
-            logger.info(f"✅ PDF chargé ({len(doc)} pages)")
+            logger.info(f"[OK] PDF chargé ({len(doc)} pages)")
             return {"full_text": "\n".join(full_text), "images": [], "slides_data": []}
 
         elif self.doc_type == '.pptx':
-            logger.info("🎯 Chargement PPTX...")
+            logger.info("[TARGET] Chargement PPTX...")
             prs = Presentation(str(self.file_path))
             full_text = []
             slide_images = []
@@ -236,7 +236,7 @@ class DocumentLoader:
                     "text": "\n".join(slide_text)
                 })
 
-            logger.info(f"✅ PPTX chargé ({len(prs.slides)} slides, {len(slide_images)} images trouvées)")
+            logger.info(f"[OK] PPTX chargé ({len(prs.slides)} slides, {len(slide_images)} images trouvées)")
             return {
                 "full_text": "\n".join(full_text),
                 "images": slide_images,
@@ -244,10 +244,10 @@ class DocumentLoader:
             }
 
         elif self.doc_type == '.docx':
-            logger.info("📄 Chargement DOCX...")
+            logger.info("[DOC] Chargement DOCX...")
             doc = Document(str(self.file_path))
             full_text = [p.text for p in doc.paragraphs if p.text.strip()]
-            logger.info(f"✅ DOCX chargé ({len(full_text)} paragraphes)")
+            logger.info(f"[OK] DOCX chargé ({len(full_text)} paragraphes)")
             return {"full_text": "\n".join(full_text), "images": [], "slides_data": []}
 
         else:
@@ -290,14 +290,14 @@ class ESGAnalyzer:
         ]
         self.compiled_patterns = [re.compile(p) for p in self.regulatory_patterns]
         
-        # ✅ ENHANCEMENT #8: Pre-compile ESG keyword pattern for performance
+        # [OK] ENHANCEMENT #8: Pre-compile ESG keyword pattern for performance
         all_keywords = [kw.lower() for keywords in self.esg_keywords.values() for kw in keywords]
         self.esg_keyword_pattern = re.compile(
             r'\b(' + '|'.join(re.escape(kw) for kw in all_keywords) + r')\b',
             re.IGNORECASE
         )
         
-        # ✅ ENHANCEMENT #5: LLM result cache
+        # [OK] ENHANCEMENT #5: LLM result cache
         self._esg_level_cache = {}
         self._esg_mentions_cache = {}
 
@@ -312,7 +312,7 @@ class ESGAnalyzer:
             
             prompt = f"""Analyse cette image du slide "{slide_title}" (Slide {slide_number}).
 
-📋 INSTRUCTIONS DÉTAILLÉES:
+[LIST] INSTRUCTIONS DÉTAILLÉES:
 
 1. CONTENU VISUEL : Décris graphiques, logos, couleurs, mise en page
 2. TEXTE VISIBLE : Extrait TOUS les textes (titres, légendes, données)
@@ -381,14 +381,14 @@ Retourne JSON STRUCTURÉ:
             
             compliance_issues = disclaimers.copy()
             if greenwashing in ["MOYEN", "ÉLEVÉ"]:
-                compliance_issues.append(f"⚠️ Risque de greenwashing: {greenwashing}")
+                compliance_issues.append(f"[WARNING] Risque de greenwashing: {greenwashing}")
             
             return ImageAnalysisResult(
                 image_path=image_path,
                 slide_number=slide_number,
                 slide_title=slide_title,
                 extracted_text_ocr=extracted_text,
-                llm_visual_description=f"{visual_desc}\n\n📊 QUALITÉ ESG: {esg_quality}\n💪 INTENSITÉ: {esg_intensity}",
+                llm_visual_description=f"{visual_desc}\n\n[CHART] QUALITÉ ESG: {esg_quality}\n[STRONG] INTENSITÉ: {esg_intensity}",
                 title_image_coherence=title_coherence,
                 esg_keywords_in_image=combined_keywords,
                 compliance_issues=compliance_issues
@@ -409,20 +409,20 @@ Retourne JSON STRUCTURÉ:
 
     def detect_esg_level_v2(self, fund_name: str, text: str, sfdr_article: Optional[int] = None) -> ESGLevel:
         """Détermine le niveau ESG via LLM avec PROMPTS STRICTS."""
-        # ✅ ENHANCEMENT #5: Check cache first
+        # [OK] ENHANCEMENT #5: Check cache first
         import hashlib
         cache_key = hashlib.md5(f"{fund_name}:{text[:1000]}:{sfdr_article}".encode()).hexdigest()
         if cache_key in self._esg_level_cache:
-            logger.info("📋 Using cached ESG level detection")
+            logger.info("[LIST] Using cached ESG level detection")
             return self._esg_level_cache[cache_key]
         
-        logger.info("🤖 Détection ESG level via LLM...")
+        logger.info("[AI] Détection ESG level via LLM...")
         client = openai.OpenAI(api_key=self.api_key, base_url=self.base_url)
 
         article_match = re.search(r"Article\s+([689])\s", text)
         detected_article = int(article_match.group(1)) if article_match else sfdr_article
 
-        # ✅ ENHANCEMENT #6: Retry logic with exponential backoff
+        # [OK] ENHANCEMENT #6: Retry logic with exponential backoff
         max_retries = 3
         for attempt in range(max_retries):
             try:
@@ -460,20 +460,20 @@ Example:
             except openai.RateLimitError as e:
                 if attempt < max_retries - 1:
                     wait_time = 2 ** attempt
-                    logger.warning(f"⚠️ Rate limit hit, retrying in {wait_time}s...")
+                    logger.warning(f"[WARNING] Rate limit hit, retrying in {wait_time}s...")
                     import time
                     time.sleep(wait_time)
                 else:
                     raise
             except openai.APIError as e:
                 if attempt < max_retries - 1:
-                    logger.warning(f"⚠️ API error, retrying... ({e})")
+                    logger.warning(f"[WARNING] API error, retrying... ({e})")
                     import time
                     time.sleep(1)
                 else:
                     raise
 
-        # ✅ ENHANCEMENT #8: Structured output validation with fallback
+        # [OK] ENHANCEMENT #8: Structured output validation with fallback
         try:
             data = json.loads(response.choices[0].message.content)
             logger.info(f"Raw LLM response: {data}")
@@ -482,18 +482,18 @@ Example:
             logger.info(f"Normalized data: {data}")
             
             esg_level = ESGLevel(**data)
-            logger.info(f"✅ ESG Level: {esg_level.level.upper()} (Article {esg_level.sfdr_article})")
+            logger.info(f"[OK] ESG Level: {esg_level.level.upper()} (Article {esg_level.sfdr_article})")
             
             # Cache successful result
             self._esg_level_cache[cache_key] = esg_level
             return esg_level
         except Exception as e:
-            logger.error(f"❌ Erreur parsing ESG Level: {e}")
+            logger.error(f"[FAIL] Erreur parsing ESG Level: {e}")
             logger.error(f"Data reçu: {data if 'data' in locals() else 'N/A'}")
             
             # Fallback: Try to fix JSON with LLM
             try:
-                logger.info("🔧 Attempting to fix invalid JSON...")
+                logger.info("[FIX] Attempting to fix invalid JSON...")
                 fix_response = client.chat.completions.create(
                     model=LLM_MODEL,
                     messages=[{
@@ -509,12 +509,12 @@ Example:
                 fixed_data = json.loads(fix_response.choices[0].message.content)
                 fixed_data = normalize_esg_level(fixed_data)
                 esg_level = ESGLevel(**fixed_data)
-                logger.info(f"✅ Fixed ESG Level: {esg_level.level.upper()}")
+                logger.info(f"[OK] Fixed ESG Level: {esg_level.level.upper()}")
                 self._esg_level_cache[cache_key] = esg_level
                 return esg_level
             except:
                 # Ultimate fallback
-                logger.error("❌ Could not fix JSON, using safe default")
+                logger.error("[FAIL] Could not fix JSON, using safe default")
                 default_level = ESGLevel(
                     level="none",
                     sfdr_article=sfdr_article or 6,
@@ -526,15 +526,15 @@ Example:
                 return default_level
 
     def analyze_esg_mentions_v2(self, text: str, document_type: str = "marketing", slides_data: List[dict] = None) -> ESGMentions:
-        """✅ AMÉLIORÉ: Analyse ESG mentions + track chaque keyword par slide."""
-        # ✅ ENHANCEMENT #5: Check cache first
+        """[OK] AMÉLIORÉ: Analyse ESG mentions + track chaque keyword par slide."""
+        # [OK] ENHANCEMENT #5: Check cache first
         import hashlib
         cache_key = hashlib.md5(f"{text[:1000]}:{document_type}".encode()).hexdigest()
         if cache_key in self._esg_mentions_cache:
-            logger.info("📋 Using cached ESG mentions analysis")
+            logger.info("[LIST] Using cached ESG mentions analysis")
             return self._esg_mentions_cache[cache_key]
         
-        logger.info("📊 Analyse ESG mentions avec localisation par slide...")
+        logger.info("[CHART] Analyse ESG mentions avec localisation par slide...")
         
         total_length = len(text)
         sentences = re.split(r'[.!?]', text)
@@ -551,7 +551,7 @@ Example:
             for slide in slides_data:
                 slides_dict[slide["slide_number"]] = slide["text"].lower()
 
-        # ✅ ENHANCEMENT #7: Use pre-compiled regex for faster matching
+        # [OK] ENHANCEMENT #7: Use pre-compiled regex for faster matching
         for sentence in sentences:
             sentence_lower = sentence.lower()
             
@@ -593,7 +593,7 @@ Example:
         # Cache result
         self._esg_mentions_cache[cache_key] = mentions
         
-        logger.info(f"✅ Mentions: {mentions.esg_percentage}% ({commercial_esg} commerciales)")
+        logger.info(f"[OK] Mentions: {mentions.esg_percentage}% ({commercial_esg} commerciales)")
         return mentions
 
 # ============================================================
@@ -616,7 +616,7 @@ class ESGComplianceAgent:
                         analyze_images: bool = False) -> ESGComplianceOutput:
 
         logger.info("\n" + "="*70)
-        logger.info(f"🔍 ANALYSE: {Path(file_path).name}")
+        logger.info(f"[SEARCH] ANALYSE: {Path(file_path).name}")
         logger.info("="*70)
 
         loader = DocumentLoader(file_path)
@@ -635,9 +635,9 @@ class ESGComplianceAgent:
         client_type = "retail"
         image_results = []
 
-        # ✅ ENHANCEMENT #1 & #3: Fix vision analysis + smart sampling
+        # [OK] ENHANCEMENT #1 & #3: Fix vision analysis + smart sampling
         if analyze_images and "images" in raw_doc and raw_doc["images"]:
-            logger.info(f"📸 Analyzing {len(raw_doc['images'])} image(s) with vision LLM...")
+            logger.info(f"[IMAGE] Analyzing {len(raw_doc['images'])} image(s) with vision LLM...")
             
             # Smart sampling: Only analyze slides with ESG keywords
             slides_dict = {slide['slide_number']: slide['text'].lower() for slide in slides_data}
@@ -655,7 +655,7 @@ class ESGComplianceAgent:
             slides_to_analyze = slides_to_analyze[:5]
             
             if slides_to_analyze:
-                logger.info(f"🎯 Smart sampling: {len(slides_to_analyze)}/{len(raw_doc['images'])} slides selected for vision analysis")
+                logger.info(f"[TARGET] Smart sampling: {len(slides_to_analyze)}/{len(raw_doc['images'])} slides selected for vision analysis")
                 
                 # Parallel vision analysis
                 with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
@@ -677,11 +677,11 @@ class ESGComplianceAgent:
                             image_results.append(result)
                         except Exception as e:
                             img_info = futures[future]
-                            logger.error(f"❌ Vision analysis failed for slide {img_info.get('slide_number')}: {e}")
+                            logger.error(f"[FAIL] Vision analysis failed for slide {img_info.get('slide_number')}: {e}")
             else:
-                logger.info("📋 No slides with ESG keywords found, skipping vision analysis")
+                logger.info("[LIST] No slides with ESG keywords found, skipping vision analysis")
 
-        # ✅ ENHANCEMENT #2: Parallel LLM calls for 2x speedup
+        # [OK] ENHANCEMENT #2: Parallel LLM calls for 2x speedup
         with ThreadPoolExecutor(max_workers=2) as executor:
             future_level = executor.submit(
                 self.analyzer.detect_esg_level_v2,
@@ -698,7 +698,7 @@ class ESGComplianceAgent:
         violations = []
         is_compliant = True
 
-        logger.info("\n⚠️ DÉTECTION VIOLATIONS...")
+        logger.info("\n[WARNING] DÉTECTION VIOLATIONS...")
 
         if esg_level.level == "engaging":
             if (esg_level.exclusion_percentage or 0) < 20 or (esg_level.portfolio_coverage or 0) < 90:
@@ -709,7 +709,7 @@ class ESGComplianceAgent:
                     recommendation="Vérifier la classification du fonds et les critères ESG."
                 ))
                 is_compliant = False
-                logger.warning(" 🔴 HAUTE: Critères Article 9 non respectés")
+                logger.warning(" [RED] HAUTE: Critères Article 9 non respectés")
 
         elif esg_level.level == "reduced":
             if esg_mentions.esg_percentage > 10:
@@ -720,7 +720,7 @@ class ESGComplianceAgent:
                     recommendation="Réduire mentions ESG à < 10%"
                 ))
                 is_compliant = False
-                logger.warning(f" 🔴 CRITIQUE: Ratio ESG trop élevé ({esg_mentions.esg_percentage}%)")
+                logger.warning(f" [RED] CRITIQUE: Ratio ESG trop élevé ({esg_mentions.esg_percentage}%)")
 
         elif esg_level.level in ["limited", "none"]:
             if esg_mentions.commercial_esg_mentions > 2:
@@ -731,7 +731,7 @@ class ESGComplianceAgent:
                     recommendation="Supprimer toutes mentions ESG commerciales"
                 ))
                 is_compliant = False
-                logger.warning(" 🔴 CRITIQUE: Mentions ESG dans Article 6")
+                logger.warning(" [RED] CRITIQUE: Mentions ESG dans Article 6")
 
         for img_result in image_results:
             if img_result.esg_keywords_in_image and esg_level.level == "none":
@@ -743,10 +743,10 @@ class ESGComplianceAgent:
                     recommendation="Retirer éléments ESG visuels"
                 ))
                 is_compliant = False
-                logger.warning(f" ❌ HAUTE: Image Slide {img_result.slide_number}")
+                logger.warning(f" [FAIL] HAUTE: Image Slide {img_result.slide_number}")
 
         if is_compliant:
-            logger.info(" ✅ Aucune violation")
+            logger.info(" [OK] Aucune violation")
 
         output = ESGComplianceOutput(
             document_id=document_id,
@@ -771,31 +771,31 @@ class ESGComplianceAgent:
 
 def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path: str):
     """
-    ✅ RAPPORT AMÉLIORÉ avec keywords + slides où ils apparaissent
+    [OK] RAPPORT AMÉLIORÉ avec keywords + slides où ils apparaissent
     """
     lines = []
     
     lines.append("=" * 80)
-    lines.append("📊 RAPPORT COMPLET DE CONFORMITÉ ESG/SFDR".center(80))
+    lines.append("[CHART] RAPPORT COMPLET DE CONFORMITÉ ESG/SFDR".center(80))
     lines.append("=" * 80)
     lines.append("")
     
-    lines.append(f"📌 FONDS : {result.fund_name}")
-    lines.append(f"📋 ARTICLE SFDR : Article {result.esg_level.sfdr_article}")
-    lines.append(f"🎯 NIVEAU ESG : {result.esg_level.level.upper()}")
+    lines.append(f"[PIN] FONDS : {result.fund_name}")
+    lines.append(f"[LIST] ARTICLE SFDR : Article {result.esg_level.sfdr_article}")
+    lines.append(f"[TARGET] NIVEAU ESG : {result.esg_level.level.upper()}")
     lines.append(f"👥 TYPE CLIENT : {result.client_type.capitalize()}")
-    lines.append(f"📄 TYPE DOCUMENT : {result.document_type.capitalize()}")
+    lines.append(f"[DOC] TYPE DOCUMENT : {result.document_type.capitalize()}")
     lines.append(f"📅 DATE : {result.processed_at.strftime('%d/%m/%Y à %H:%M:%S')}")
-    lines.append(f"📁 FICHIER : {Path(result.file_name).name}")
+    lines.append(f"[FOLDER] FICHIER : {Path(result.file_name).name}")
     lines.append("")
     
     lines.append("-" * 80)
-    status = "✅ CONFORME" if result.is_compliant else "🔴 NON CONFORME"
+    status = "[OK] CONFORME" if result.is_compliant else "[RED] NON CONFORME"
     lines.append(f"STATUT GLOBAL : {status}".center(80))
     lines.append("-" * 80)
     lines.append("")
     
-    lines.append("📈 1. ANALYSE DU TEXTE")
+    lines.append("[UP] 1. ANALYSE DU TEXTE")
     lines.append("─" * 80)
     lines.append(f"  Ratio ESG total : {result.esg_mentions.esg_percentage}%")
     lines.append(f"  Mentions ESG (commerciales) : {result.esg_mentions.commercial_esg_mentions}")
@@ -804,20 +804,20 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
     lines.append("")
     
     if result.esg_level.level == "engaging":
-        lines.append("  ✅ Article 9 (Engaging) : ESG promotion ATTENDUE")
+        lines.append("  [OK] Article 9 (Engaging) : ESG promotion ATTENDUE")
     elif result.esg_level.level == "reduced":
-        lines.append(f"  ⚠️ Article 8 (Reduced) : ESG % doit être < 10% (actuel: {result.esg_mentions.esg_percentage}%)")
+        lines.append(f"  [WARNING] Article 8 (Reduced) : ESG % doit être < 10% (actuel: {result.esg_mentions.esg_percentage}%)")
         if result.esg_mentions.esg_percentage > 10:
-            lines.append("     🔴 DÉPASSE LE SEUIL!")
+            lines.append("     [RED] DÉPASSE LE SEUIL!")
     elif result.esg_level.level in ["limited", "none"]:
-        lines.append(f"  🚫 Article {result.esg_level.sfdr_article} (Non-ESG) : 0 mention ESG autorisée")
+        lines.append(f"  [NO] Article {result.esg_level.sfdr_article} (Non-ESG) : 0 mention ESG autorisée")
         if result.esg_mentions.commercial_esg_mentions > 0:
-            lines.append(f"     🔴 {result.esg_mentions.commercial_esg_mentions} mention(s) détectée(s)!")
+            lines.append(f"     [RED] {result.esg_mentions.commercial_esg_mentions} mention(s) détectée(s)!")
     
     lines.append("")
     
     if result.esg_mentions.esg_keywords_found:
-        lines.append("🔍 2. MOTS-CLÉS ESG DÉTECTÉS (avec localisation slides)")
+        lines.append("[SEARCH] 2. MOTS-CLÉS ESG DÉTECTÉS (avec localisation slides)")
         lines.append("─" * 80)
         
         keywords_sorted = sorted(result.esg_mentions.esg_keywords_found)
@@ -833,7 +833,7 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
         lines.append("")
     
     if result.image_analysis_results:
-        lines.append("📸 3. ANALYSE DES SLIDES/IMAGES")
+        lines.append("[IMAGE] 3. ANALYSE DES SLIDES/IMAGES")
         lines.append("─" * 80)
         
         total_images = len(result.image_analysis_results)
@@ -854,15 +854,15 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
             else:
                 offTopic_slides.append((img.slide_number, img.slide_title))
         
-        lines.append(f"\n  📊 Résumé:")
+        lines.append(f"\n  [CHART] Résumé:")
         lines.append(f"     • Total slides : {total_images}")
-        lines.append(f"     🟢 Slides PARFAITES (ESG complet) : {len(perfect_slides)}")
-        lines.append(f"     🟡 Slides BONNES (ESG basique) : {len(good_slides)}")
-        lines.append(f"     🟠 Slides MANQUANTES (sans ESG) : {len(missing_slides)}")
-        lines.append(f"     ⚪ Slides HORS-SUJET : {len(offTopic_slides)}")
+        lines.append(f"     [GREEN] Slides PARFAITES (ESG complet) : {len(perfect_slides)}")
+        lines.append(f"     [YELLOW] Slides BONNES (ESG basique) : {len(good_slides)}")
+        lines.append(f"     [ORANGE] Slides MANQUANTES (sans ESG) : {len(missing_slides)}")
+        lines.append(f"     [WHITE] Slides HORS-SUJET : {len(offTopic_slides)}")
         
         if perfect_slides:
-            lines.append(f"\n  ✅ SLIDES PARFAITES ({len(perfect_slides)}):")
+            lines.append(f"\n  [OK] SLIDES PARFAITES ({len(perfect_slides)}):")
             for slide_num, title, keywords in perfect_slides:
                 lines.append(f"     • Slide {slide_num}: {title}")
                 if keywords:
@@ -870,7 +870,7 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
                     lines.append(f"       Keywords: {kw}")
         
         if good_slides:
-            lines.append(f"\n  🟡 SLIDES BONNES ({len(good_slides)}):")
+            lines.append(f"\n  [YELLOW] SLIDES BONNES ({len(good_slides)}):")
             for slide_num, title, keywords in good_slides:
                 lines.append(f"     • Slide {slide_num}: {title}")
                 if keywords:
@@ -878,25 +878,25 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
                     lines.append(f"       Keywords: {kw}")
         
         if missing_slides:
-            lines.append(f"\n  🟠 SLIDES MANQUANTES - À AMÉLIORER ({len(missing_slides)}):")
+            lines.append(f"\n  [ORANGE] SLIDES MANQUANTES - À AMÉLIORER ({len(missing_slides)}):")
             for slide_num, title in missing_slides:
-                lines.append(f"     • Slide {slide_num}: {title} ⚠️ Ajouter contenu ESG")
+                lines.append(f"     • Slide {slide_num}: {title} [WARNING] Ajouter contenu ESG")
         
         if offTopic_slides and result.esg_level.level != "none":
-            lines.append(f"\n  ⚪ SLIDES HORS-SUJET ({len(offTopic_slides)}):")
+            lines.append(f"\n  [WHITE] SLIDES HORS-SUJET ({len(offTopic_slides)}):")
             for slide_num, title in offTopic_slides:
                 lines.append(f"     • Slide {slide_num}: {title}")
         
         lines.append("")
     
     if result.violations:
-        lines.append("⚠️ 4. VIOLATIONS DÉTECTÉES")
+        lines.append("[WARNING] 4. VIOLATIONS DÉTECTÉES")
         lines.append("─" * 80)
         for i, violation in enumerate(result.violations, 1):
             severity_map = {
-                "critical": "🔴 CRITIQUE",
-                "high": "❌ HAUTE",
-                "medium": "⚠️ MOYENNE",
+                "critical": "[RED] CRITIQUE",
+                "high": "[FAIL] HAUTE",
+                "medium": "[WARNING] MOYENNE",
                 "low": "ℹ️ BASSE"
             }
             severity_label = severity_map.get(violation.severity, "•")
@@ -904,15 +904,15 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
             lines.append(f"\n  {i}. {severity_label} - {violation.description}")
             if violation.location:
                 lines.append(f"     Localisation: {violation.location}")
-            lines.append(f"     ➜ Recommandation: {violation.recommendation.split(chr(10))[0]}")
+            lines.append(f"     -> Recommandation: {violation.recommendation.split(chr(10))[0]}")
         lines.append("")
     else:
-        lines.append("✅ 4. VIOLATIONS")
+        lines.append("[OK] 4. VIOLATIONS")
         lines.append("─" * 80)
         lines.append("  ✓ Aucune violation détectée")
         lines.append("")
     
-    lines.append("📝 5. ACTIONS REQUISES")
+    lines.append("[NOTE] 5. ACTIONS REQUISES")
     lines.append("─" * 80)
     
     if not result.is_compliant:
@@ -928,7 +928,7 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
             if missing_count > 0:
                 lines.append(f"  {action_count}️⃣ Compléter {missing_count} slide(s) avec contenu ESG approprié")
     else:
-        lines.append("  ✅ Document CONFORME - Aucune action requise")
+        lines.append("  [OK] Document CONFORME - Aucune action requise")
     
     lines.append("")
     
@@ -940,7 +940,7 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(report_text)
     
-    logger.info(f"\n✅ Rapport amélioré sauvegardé: {output_path}")
+    logger.info(f"\n[OK] Rapport amélioré sauvegardé: {output_path}")
     return report_text
 
 # ============================================================
@@ -968,7 +968,7 @@ def save_report_as_pdf(text: str, pdf_path: str):
             y -= line_height
     
     c.save()
-    logger.info(f"📄 Rapport PDF sauvegardé: {pdf_path}")
+    logger.info(f"[DOC] Rapport PDF sauvegardé: {pdf_path}")
 
 # ============================================================
 # MAIN
@@ -976,7 +976,7 @@ def save_report_as_pdf(text: str, pdf_path: str):
 
 def main():
     logger.info("\n" + "="*70)
-    logger.info("🚀 DÉMARRAGE AGENT CONFORMITÉ ESG/SFDR V4")
+    logger.info("[START] DÉMARRAGE AGENT CONFORMITÉ ESG/SFDR V4")
     logger.info("="*70)
 
     agent = ESGComplianceAgent(
@@ -1026,7 +1026,7 @@ def main():
                 output_json = f"{result.document_id}_esg_compliance.json"
                 with open(output_json, "w", encoding="utf-8") as f:
                     f.write(result.model_dump_json(indent=2, exclude_none=True))
-                logger.info(f"\n💾 JSON: {output_json}")
+                logger.info(f"\n[SAVE] JSON: {output_json}")
 
                 output_file_txt = f"{result.document_id}_rapport_complet.txt"
                 report_text = generate_enhanced_compliance_report(result, output_file_txt)
@@ -1035,16 +1035,16 @@ def main():
                 save_report_as_pdf(report_text, output_file_pdf)
 
                 logger.info(f"\n{'='*70}")
-                logger.info(f"📊 FONDS: {result.fund_name}")
-                logger.info(f"📈 ESG LEVEL: {result.esg_level.level.upper()} (Article {result.esg_level.sfdr_article})")
+                logger.info(f"[CHART] FONDS: {result.fund_name}")
+                logger.info(f"[UP] ESG LEVEL: {result.esg_level.level.upper()} (Article {result.esg_level.sfdr_article})")
                 logger.info(f"📉 RATIO ESG: {result.esg_mentions.esg_percentage}%")
-                logger.info(f"✅ CONFORME: {'OUI ✅' if result.is_compliant else 'NON ❌'}")
-                logger.info(f"📋 VIOLATIONS: {len(result.violations)}")
-                logger.info(f"📸 IMAGES: {len(result.image_analysis_results)}")
+                logger.info(f"[OK] CONFORME: {'OUI [OK]' if result.is_compliant else 'NON [FAIL]'}")
+                logger.info(f"[LIST] VIOLATIONS: {len(result.violations)}")
+                logger.info(f"[IMAGE] IMAGES: {len(result.image_analysis_results)}")
                 logger.info(f"{'='*70}\n")
 
                 if not result.is_compliant:
-                    logger.warning("⚠️ VIOLATIONS DÉTECTÉES:")
+                    logger.warning("[WARNING] VIOLATIONS DÉTECTÉES:")
                     for i, v in enumerate(result.violations, 1):
                         logger.warning(f" {i}. [{v.severity.upper()}] {v.description}")
                         if v.location:
@@ -1058,21 +1058,21 @@ def main():
                 })
 
             except Exception as e:
-                logger.error(f"❌ Erreur: {e}")
+                logger.error(f"[FAIL] Erreur: {e}")
                 import traceback
                 traceback.print_exc()
         else:
-            logger.error(f"⚠️ Fichier non trouvé: {file_path}")
+            logger.error(f"[WARNING] Fichier non trouvé: {file_path}")
 
     logger.info("\n" + "="*70)
-    logger.info("📊 RÉSUMÉ FINAL")
+    logger.info("[CHART] RÉSUMÉ FINAL")
     logger.info("="*70)
     for summary in results_summary:
-        status = "✅ CONFORME" if summary["compliant"] else "⚠️ NON CONFORME"
+        status = "[OK] CONFORME" if summary["compliant"] else "[WARNING] NON CONFORME"
         logger.info(f"{summary['fund']:40} | {status:20} | {summary['violations']} violations | ESG: {summary['ratio_esg']}%")
 
     logger.info("="*70)
-    logger.info("✅ ANALYSE TERMINÉE")
+    logger.info("[OK] ANALYSE TERMINÉE")
     logger.info("="*70 + "\n")
 
 if __name__ == "__main__":

@@ -32,12 +32,12 @@ def test_document(file_path: str, metadata_path: str, test_name: str) -> Dict[st
     base_url = os.getenv("TOKEN_FACTORY_BASE_URL") or os.getenv("LLM_BASE_URL")
     
     if not api_key or not base_url:
-        print("❌ Error: API credentials not found")
+        print("[FAIL] Error: API credentials not found")
         return {"status": "error", "message": "Missing API credentials"}
     
     try:
         # Step 1: Extract document
-        print("📄 Extracting document...")
+        print("[DOC] Extracting document...")
         pipeline = ExtractionPipeline(use_llm=False, output_dir="outputs")
         result = pipeline.process_document(
             file_path=file_path,
@@ -46,11 +46,11 @@ def test_document(file_path: str, metadata_path: str, test_name: str) -> Dict[st
         )
         
         if not result.get('success'):
-            print(f"❌ Extraction failed: {result.get('error')}")
+            print(f"[FAIL] Extraction failed: {result.get('error')}")
             return {"status": "error", "message": result.get('error')}
         
         document_id = result.get('document_id')
-        print(f"✅ Document extracted: {document_id}")
+        print(f"[OK] Document extracted: {document_id}")
         
         # Load extraction results
         extraction_path = Path("outputs") / document_id / "extraction.json"
@@ -63,7 +63,7 @@ def test_document(file_path: str, metadata_path: str, test_name: str) -> Dict[st
             metadata = json.load(f)
         
         # Step 2: Validate with ESG
-        print("🔍 Running ESG validation...")
+        print("[SEARCH] Running ESG validation...")
         agent = DataConsistencyAgent(
             reference_data=None,
             enable_esg_validation=True,
@@ -90,7 +90,7 @@ def test_document(file_path: str, metadata_path: str, test_name: str) -> Dict[st
         print(f"Total Issues: {total_issues}")
         print(f"ESG Issues: {len(esg_issues)}")
         print(f"Overall Status: {validation_result.overall_status.upper()}")
-        print(f"ESG Analysis Present: {'✅ Yes' if validation_result.esg_analysis else '❌ No'}")
+        print(f"ESG Analysis Present: {'[OK] Yes' if validation_result.esg_analysis else '[FAIL] No'}")
         
         if validation_result.esg_analysis:
             esg_data = validation_result.esg_analysis
@@ -133,7 +133,7 @@ def test_document(file_path: str, metadata_path: str, test_name: str) -> Dict[st
         }
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"[FAIL] Error: {e}")
         import traceback
         traceback.print_exc()
         return {"status": "error", "message": str(e)}
@@ -199,21 +199,21 @@ def main():
     with_esg = sum(1 for r in results if r.get("has_esg_analysis"))
     
     print(f"Total Tests: {len(results)}")
-    print(f"✅ Successful: {successful}")
-    print(f"❌ Failed: {failed}")
-    print(f"📊 With ESG Analysis: {with_esg}/{successful}")
+    print(f"[OK] Successful: {successful}")
+    print(f"[FAIL] Failed: {failed}")
+    print(f"[CHART] With ESG Analysis: {with_esg}/{successful}")
     
     # Save results
     output_file = "esg_test_results.json"
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
     
-    print(f"\n💾 Detailed results saved to: {output_file}")
+    print(f"\n[SAVE] Detailed results saved to: {output_file}")
     
     if successful == len(results) and with_esg == successful:
-        print("\n🎉 All tests passed with ESG analysis!")
+        print("\n[SUCCESS] All tests passed with ESG analysis!")
     else:
-        print(f"\n⚠️ Some tests incomplete: {successful}/{len(results)} successful, {with_esg}/{successful} with ESG")
+        print(f"\n[WARNING] Some tests incomplete: {successful}/{len(results)} successful, {with_esg}/{successful} with ESG")
 
 if __name__ == "__main__":
     main()

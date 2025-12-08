@@ -23,16 +23,16 @@ def test_api():
         print(f"   Status: {response.status_code}")
         print(f"   Response: {response.json()}")
         assert response.status_code == 200
-        print("   ✅ Health check passed")
+        print("   [OK] Health check passed")
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
         return
     
     # Test 2: Upload Document
     print("\n2. Testing Document Upload...")
     try:
         if not Path(TEST_FILE).exists():
-            print(f"   ⚠️  Test file not found: {TEST_FILE}")
+            print(f"   [WARNING]  Test file not found: {TEST_FILE}")
             print("   Skipping upload test")
             return
         
@@ -52,10 +52,10 @@ def test_api():
         
         assert response.status_code == 201
         document_id = result['document_id']
-        print(f"   ✅ Upload successful. Document ID: {document_id}")
+        print(f"   [OK] Upload successful. Document ID: {document_id}")
         
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
         return
     
     # Test 3: Get Status
@@ -67,9 +67,9 @@ def test_api():
         print(f"   Document Status: {result['status']}")
         print(f"   Progress: {result['progress']}%")
         assert response.status_code == 200
-        print("   ✅ Status check passed")
+        print("   [OK] Status check passed")
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
     
     # Test 4: Start Validation
     print("\n4. Testing Validation...")
@@ -105,14 +105,14 @@ def test_api():
                 print(f"   - Tables Checked: {validation_result['statistics']['total_tables_checked']}")
                 print(f"   - Charts Analyzed: {validation_result['statistics']['total_charts_analyzed']}")
                 
-                print("   ✅ Validation completed")
+                print("   [OK] Validation completed")
             else:
                 print("   ⏳ Validation in progress...")
         else:
-            print(f"   ❌ Error: {result}")
+            print(f"   [FAIL] Error: {result}")
             
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
         import traceback
         traceback.print_exc()
         return
@@ -139,12 +139,12 @@ def test_api():
                 )
                 print(f"   Critical Issues (filtered): {critical_count}")
             
-            print("   ✅ Results retrieval passed")
+            print("   [OK] Results retrieval passed")
         else:
-            print(f"   ⚠️  Results not ready yet: {response.json()}")
+            print(f"   [WARNING]  Results not ready yet: {response.json()}")
             
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
     
     # Test 6: List Documents
     print("\n6. Testing Document List...")
@@ -162,9 +162,9 @@ def test_api():
             print(f"   - Filename: {doc['filename']}")
             print(f"   - Status: {doc['status']}")
         
-        print("   ✅ List documents passed")
+        print("   [OK] List documents passed")
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
     
     # Test 7: Generate Report
     print("\n7. Testing Report Generation...")
@@ -174,15 +174,15 @@ def test_api():
         if response.status_code == 200:
             print(f"   Report generated successfully")
             print(f"   Size: {len(response.content)} bytes")
-            print("   ✅ Report generation passed")
+            print("   [OK] Report generation passed")
         else:
-            print(f"   ⚠️  Report not ready: {response.json()}")
+            print(f"   [WARNING]  Report not ready: {response.json()}")
             
     except Exception as e:
-        print(f"   ❌ Error: {e}")
+        print(f"   [FAIL] Error: {e}")
     
     print("\n" + "=" * 80)
-    print("✅ API Test Suite Complete")
+    print("[OK] API Test Suite Complete")
     print("=" * 80)
     print(f"\nDocument ID for further testing: {document_id}")
     print(f"\nTry these commands:")
@@ -198,6 +198,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\n\n⏸️  Test interrupted")
     except Exception as e:
-        print(f"\n\n❌ Test failed: {e}")
+        print(f"\n\n[FAIL] Test failed: {e}")
         import traceback
         traceback.print_exc()

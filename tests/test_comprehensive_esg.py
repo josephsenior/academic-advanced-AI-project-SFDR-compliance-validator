@@ -15,9 +15,9 @@ from pathlib import Path
 doc_path = 'dataset/example_2/XXX-PRS-GB-ODDO BHF US Equity Active ETF-20250630_6PN.pptx'
 
 print('='*80)
-print('🧪 COMPREHENSIVE ESG INTEGRATION TEST')
+print('[TEST] COMPREHENSIVE ESG INTEGRATION TEST')
 print('='*80)
-print(f'\n📄 Document: {doc_path}')
+print(f'\n[DOC] Document: {doc_path}')
 
 # Step 1: Extract document
 print('\n⚙️  Step 1: Extracting document...')
@@ -25,7 +25,7 @@ extractor = DocumentExtractor()
 extraction_result = extractor.extract(doc_path)
 
 # Debug: Check what's in extraction_result
-print(f'📋 Extraction result keys: {list(extraction_result.keys())}')
+print(f'[LIST] Extraction result keys: {list(extraction_result.keys())}')
 
 # Get slides from correct location
 if 'slides' in extraction_result:
@@ -35,7 +35,7 @@ elif 'structure' in extraction_result and 'slides' in extraction_result['structu
 else:
     slides = []
 
-print(f'✅ Extracted: {len(slides)} slides')
+print(f'[OK] Extracted: {len(slides)} slides')
 
 # Step 2: Prepare metadata
 metadata = {
@@ -68,7 +68,7 @@ esg_issues = [
        'engaging' in issue.issue_type.lower()
 ]
 
-print(f'\n📊 RESULTS:')
+print(f'\n[CHART] RESULTS:')
 print(f'   Total Issues: {len(result.compliance_issues)}')
 print(f'   ESG-Specific Issues: {len(esg_issues)}')
 
@@ -77,20 +77,20 @@ critical = [i for i in result.compliance_issues if i.severity == 'critical']
 errors = [i for i in result.compliance_issues if i.severity == 'error' or i.severity == 'high']
 warnings = [i for i in result.compliance_issues if i.severity == 'warning' or i.severity == 'low' or i.severity == 'medium']
 
-print(f'\n   🔴 Critical: {len(critical)}')
-print(f'   ❌ Errors/High: {len(errors)}')
-print(f'   ⚠️  Warnings: {len(warnings)}')
+print(f'\n   [RED] Critical: {len(critical)}')
+print(f'   [FAIL] Errors/High: {len(errors)}')
+print(f'   [WARNING]  Warnings: {len(warnings)}')
 
-print(f'\n🔍 ESG ISSUES DETAIL:')
+print(f'\n[SEARCH] ESG ISSUES DETAIL:')
 print('='*80)
 
 for i, issue in enumerate(esg_issues, 1):
     severity_emoji = {
-        'critical': '🔴',
-        'high': '❌',
-        'error': '❌',
-        'medium': '⚠️',
-        'warning': '⚠️',
+        'critical': '[RED]',
+        'high': '[FAIL]',
+        'error': '[FAIL]',
+        'medium': '[WARNING]',
+        'warning': '[WARNING]',
         'low': 'ℹ️'
     }.get(issue.severity.lower(), '•')
     
@@ -101,11 +101,11 @@ for i, issue in enumerate(esg_issues, 1):
     if issue.context:
         print(f'   Context: {issue.context}')
     if issue.suggestion:
-        print(f'   💡 Suggestion: {issue.suggestion}')
+        print(f'   [IDEA] Suggestion: {issue.suggestion}')
     
     # Show details if available
     if hasattr(issue, 'details') and issue.details:
-        print(f'   📋 Details:')
+        print(f'   [LIST] Details:')
         for key, value in issue.details.items():
             if isinstance(value, list) and len(value) > 3:
                 print(f'      {key}: {value[:3]} ... ({len(value)} total)')
@@ -115,7 +115,7 @@ for i, issue in enumerate(esg_issues, 1):
 print('\n' + '='*80)
 
 # Show document statistics
-print('\n📈 DOCUMENT STATISTICS:')
+print('\n[UP] DOCUMENT STATISTICS:')
 print('='*80)
 
 # Count text content - check structure first
@@ -157,7 +157,7 @@ if found_keywords:
     print(f'   ESG Keywords Found: {", ".join(found_keywords)}')
 
 print('\n' + '='*80)
-print('✅ COMPREHENSIVE TEST COMPLETE')
+print('[OK] COMPREHENSIVE TEST COMPLETE')
 print('='*80)
 
 # Save detailed output
@@ -186,4 +186,4 @@ with open(output_file, 'w', encoding='utf-8') as f:
         ]
     }, f, indent=2, ensure_ascii=False)
 
-print(f'\n💾 Detailed results saved to: {output_file}')
+print(f'\n[SAVE] Detailed results saved to: {output_file}')

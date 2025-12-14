@@ -1,0 +1,3182 @@
+{
+  "document_id": "d207bbd4-51f8-4c45-b5f9-a6c5fad7802f",
+  "status": "success",
+  "errors": [],
+  "warnings": [
+    "Potential email addresses detected: service_client@oddo-bhf.com...",
+    "Potential phone numbers detected in extracted text"
+  ],
+  "steps_completed": [
+    "metadata_extraction",
+    "family_detection_skipped",
+    "document_record_created",
+    "content_extraction",
+    "feature_extraction_skipped",
+    "finalization"
+  ],
+  "file_checksum": "ee80596ceb8c809f25229dcdb0054ac1dfbbb06b32fcf5999b370d587506e84b",
+  "metadata": {
+    "document_id_extracted": null,
+    "document_type": "6-page",
+    "language_code": "EN",
+    "fund_name": "ODDO_BHF_Algo_Trend_US",
+    "date_extracted": "2025-08-31",
+    "version_number": null,
+    "version_type": null,
+    "status_extracted": null,
+    "filename_parsing_confidence": 0.65,
+    "management_company": "SAS",
+    "management_company_full": "ODDO BHF ASSET MANAGEMENT SAS",
+    "is_sicav_product": true,
+    "is_professional_client": false,
+    "client_type": "Non-professional",
+    "is_new_strategy": false,
+    "is_new_product": false,
+    "has_content_metadata": true,
+    "raw_json_metadata": {
+      "Société de Gestion": "ODDO BHF ASSET MANAGEMENT SAS",
+      "Est ce que le produit fait partie de la Sicav d'Oddo": true,
+      "Le client est-il un professionnel": false,
+      "Le document fait-il référence à une nouvelle Stratégie": false,
+      "Le document fait-il référence à un nouveau Produit": false
+    },
+    "raw_filename_metadata": {
+      "document_id_extracted": null,
+      "document_type": "6-page",
+      "language_code": "EN",
+      "fund_name": "ODDO_BHF_Algo_Trend_US",
+      "date_extracted": "2025-08-31",
+      "version_number": null,
+      "version_type": null,
+      "status_extracted": null,
+      "parsing_confidence": 0.65
+    },
+    "has_json_metadata": true,
+    "has_filename_metadata": true,
+    "file_path": "uploads\\ebebcdfe-f269-4868-b13d-423c9626cc29\\FINAL_47861-6PG-GB-ODDO_BHF_Algo_Trend_US-20250831vdef.pptx",
+    "filename": "FINAL_47861-6PG-GB-ODDO_BHF_Algo_Trend_US-20250831vdef.pptx",
+    "file_directory": "uploads\\ebebcdfe-f269-4868-b13d-423c9626cc29",
+    "extracted_at": "2025-12-14T13:49:16.035363",
+    "pipeline_version": "0.3.0",
+    "file_checksum": "ee80596ceb8c809f25229dcdb0054ac1dfbbb06b32fcf5999b370d587506e84b",
+    "title_information": {
+      "fund_name": "1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.",
+      "currency": "ris",
+      "document_date": "September 2025",
+      "client_type": null,
+      "risk_indicator": null,
+      "management_company": "ODDO BHF AM | Data as of 31/08/2025 Main Risks : ODDO BHF Algo Trend US is principally exposed to the following risks: Risk of capital loss, equity risk, currency risk, discretionary management risk, quantitative model risk ODDO BHF algo trend us – September 2025 ODDO BHF Algo Trend US Capturing momentum in US equities Launched in 2018 Assets under management € 228M Characteristics of the fund Key features The fund offers investors access to the growth potential of US equities through a disciplined, quantitative strategy built on momentum. US equity focus: the fund invests mainly in a dynamic universe of US companies from the S&P 500, across sectors and industries Proprietary quantitative model: the investment process is driven by a smart momentum strategy analysing extensive historical data with to goal to detect stable trends in the market Disciplined approach: by relying on a rule-based model rather than discretionary judgment, the fund avoids emotional biases and ensures consistency across market cycles Diversification & risk management: The portfolio construction process involves a strong focus on diversification and risk management by applying various constraints CHARACTERISTICS OF THE FUND"
+    },
+    "country_entries": [
+      {
+        "country": "United States",
+        "heading": "September 2025",
+        "sentence": "September 2025\n1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent,",
+        "slide_number": 1
+      },
+      {
+        "country": "United States",
+        "heading": "These examples are no investment recommendations.",
+        "sentence": "These examples are no investment recommendations.\nA key component of any equity portfolio\nWhy invest in the USA?\nODDO BHF algo trend us – September 2025\nWorld’s",
+        "slide_number": 2
+      },
+      {
+        "country": "United States",
+        "heading": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025",
+        "sentence": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025\nPast performance is no",
+        "slide_number": 3
+      },
+      {
+        "country": "United States",
+        "heading": "An experienced management team",
+        "sentence": "An experienced management team\nInvestment Process Overview\nSource: ODDO BHF AM |  Current Management team, subject to change.\nYears of investment experience\nOur",
+        "slide_number": 4
+      },
+      {
+        "country": "United States",
+        "heading": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?",
+        "sentence": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?\nODDO BHF Algo Trend US is exposed to the following risks: Risk of capital loss, equity risk, interest rat",
+        "slide_number": 5
+      },
+      {
+        "country": "Belgium",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "France",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "Germany",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "Luxembourg",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "Switzerland",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "United States",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      }
+    ],
+    "disclaimer_glossary_matches": [
+      {
+        "doc_type": "Commercial documentation : management company = OBAM SAS",
+        "language": "ENGLISH",
+        "client_type": "non_professional",
+        "text": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM))\nThe Key Information Document (in the language of the countries of marketing) and the prospectus (in the following languages ) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com",
+        "source": "document"
+      },
+      {
+        "doc_type": "OBAM Presentation",
+        "language": "ENGLISH",
+        "client_type": "non_professional",
+        "text": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS/GmbH/Lux (depending on the management company)) for all market communication. Its investor communication is the responsibility of each distributor or advisor. Potential investors should consult an investment advisor before investing in a strategy. Investor's attention is drawn to the fact that all strategies are not authorised in every country. Should they decide to invest, investors are invited to acquaint themselves with the detailed nature of any risks incurred, in particular the risk of capital loss. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF AM SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. Any opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF AM SAS shall not in any case be held contractually liable for them.",
+        "source": "document"
+      }
+    ]
+  },
+  "family_id": null,
+  "extraction_id": "cb2a311b-645f-4e4e-bb80-60d533526504",
+  "extraction_result": {
+    "text": "September 2025\n1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.\nSource: ODDO BHF AM | Data as of 31/08/2025\nMain Risks : ODDO BHF Algo Trend US is principally exposed to the following risks: Risk of capital loss, equity risk, currency risk, discretionary management risk, quantitative model risk\nODDO BHF algo trend us – September 2025\nODDO BHF Algo Trend US\nCapturing momentum in US equities\nLaunched in\n2018\nAssets under management  \n€ 228M\nCharacteristics of the fund\nKey features\nThe fund offers investors access to the growth potential of US equities through a disciplined, quantitative strategy built on momentum.\nUS equity focus: the fund invests mainly in a dynamic universe of US companies from the S&P 500, across sectors and industries\nProprietary quantitative model: the investment process is driven by a smart momentum strategy analysing extensive historical data with to goal to detect stable trends in the market\nDisciplined approach: by relying on a rule-based model rather than discretionary judgment, the fund avoids emotional biases and ensures consistency across market cycles\nDiversification & risk management: The portfolio construction process involves a strong focus on diversification and risk management by applying various constraints\nCHARACTERISTICS OF THE FUND\nThese examples are no investment recommendations.\nA key component of any equity portfolio\nWhy invest in the USA?\nODDO BHF algo trend us – September 2025\nWorld’s largest economy\nHome to many world-leading technology companies and innovative start-ups.\nAccess to big success stories from both the new and old economy\nMajor Financial Market\nInnovation & Diversification\nSheer Size of the Country\nHistorically attractive performance\nThe 7 largest US Tech companies, which dominate the US stock market and the technology sector globally\nMagnificent 7\nMany Successful companies from various sectors showcase the diversity of the US market\nWorld-leading companies outside of tech\nSource: ODDO BHF AM, Bloomberg, Friedrich Ebert Foundation, IFO, IG, Federal Reserve, Investopedia,WIPO, IMF, MSCI | Data as of 31/08/2025\nSource: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025\nPast performance is not a reliable indicator of future performance and is not constant over time\nODDO BHF algo trend us – September 2025\nSTOCK MARKETS MOVE IN TRENDS!\nThe case for momentum investments\nMomentum historically outperformed the broad market in the USA1\nthe momentum effect & the investment philosophy behind\nBehavioral Finance provides theories To explain irrational investor behavior causing “trends” in the market\nAnchoring\nOverconFidence\nHerding\n… and many more\nBehavioral Biases of investors lead to overreaction/underreaction to news\nContinuation of returns\nStocks that outperformed in the past tend to continue to perform well in the future, creating trends in the market.\n\nA Stock Market “Anomaly”\nThis so-called momentum effect is academically well researched and persists in various markets and for different time periods.\n\nthese market trends can be exploited\nBy systematically capturing these trends a momentum strategy seeks to generate excess returns relative to the broad market.\nAn experienced management team\nInvestment Process Overview\nSource: ODDO BHF AM |  Current Management team, subject to change.\nYears of investment experience\nOur proprietary systematic approach\u000bAiming to capture the momentum effect\nThe fund is exposed to a risk of capital loss.\nStep 2: \u000bConstruction of a diversified Momentum Portfolio\nStep 1: \u000bIdentification of high-quality Trends\nResult:\u000bFinal Portfolio\nBroadly diversified and risk-controlled portfolio\nNumerous portfolio positions selected mainly from the S&P 500 to cover many different  trends\nMonthly rebalancing\nQuantitative portfolio optimization\nBuild a high momentum portfolio respecting strict risk management constraints\nLong-term outperformers\nShort-term trend also positive  relative to the market\nPreference for low volatility\nExpected Active Return\nRisk\nODDO BHF algo trend us – September 2025\nDr. Stefan Braun, CFA\u000bGlobal Head of Systematic Strategies \u000bODDO BHF AM GmbH\n25\nKarsten Seier, CFA\u000bGlobal Head of Systematic Strategies \u000bODDO BHF AM GmbH\n25\nSteffen Fuchs, CFA\u000bSenior Portfolio Manager / Quantitative Analyst\u000bODDO BHF AM GmbH\n10\nWhy invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?\nODDO BHF Algo Trend US is exposed to the following risks: Risk of capital loss, equity risk, interest rate risk, credit risk, risk associated with discretionary management, volatility risk, counterparty risk, liquidity risk of underlying assets, risk associated with commitments on forward financial instruments, currency conversion  and exchange rate risks, emerging markets risk, sustainability risk, quantitative model risk\n\nThe investor is invited to read the Key Information Document and the fund prospectus for detailed information concerning the risks to which the fund is exposed.\nSource: ODDO BHF AM | Data as of 2025\nRisks\nODDO BHF algo trend us – September 2025\nGeneral characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSociété par actions simplifiée with capital of € 21,500,000. Trade Register (RCS) 340 902 857 Paris.\u000b12 boulevard de la Madeleine · 75440 Paris Cedex 09 France · Phone: +33 (0)1 44 51 85 00 · www.am.oddo-bhf.com\nODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM)).\nThe Key Information Document (FR, ENG, GER, ESP) and the prospectus (FR, ENG, GER) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com.\nThe fund is licensed for sale in Switzerland. The Key Information Document, the prospectus, the annual and interim reports for Switzerland can be obtained free of charge from the Swiss Representative and paying agent, RBC INVESTOR SERVICES BANK, succursale de Zürich, Bleicherweg 7, 8027 Zürich.\nODDO BHF algo trend us – September 2025",
+    "slides": [
+      {
+        "slide_number": 1,
+        "text": "September 2025\n1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.\nSource: ODDO BHF AM | Data as of 31/08/2025\nMain Risks : ODDO BHF Algo Trend US is principally exposed to the following risks: Risk of capital loss, equity risk, currency risk, discretionary management risk, quantitative model risk\nODDO BHF algo trend us – September 2025\nODDO BHF Algo Trend US\nCapturing momentum in US equities\nLaunched in\n2018\nAssets under management  \n€ 228M\nCharacteristics of the fund\nKey features\nThe fund offers investors access to the growth potential of US equities through a disciplined, quantitative strategy built on momentum.\nUS equity focus: the fund invests mainly in a dynamic universe of US companies from the S&P 500, across sectors and industries\nProprietary quantitative model: the investment process is driven by a smart momentum strategy analysing extensive historical data with to goal to detect stable trends in the market\nDisciplined approach: by relying on a rule-based model rather than discretionary judgment, the fund avoids emotional biases and ensures consistency across market cycles\nDiversification & risk management: The portfolio construction process involves a strong focus on diversification and risk management by applying various constraints\nCHARACTERISTICS OF THE FUND",
+        "ocr_text": null
+      },
+      {
+        "slide_number": 2,
+        "text": "These examples are no investment recommendations.\nA key component of any equity portfolio\nWhy invest in the USA?\nODDO BHF algo trend us – September 2025\nWorld’s largest economy\nHome to many world-leading technology companies and innovative start-ups.\nAccess to big success stories from both the new and old economy\nMajor Financial Market\nInnovation & Diversification\nSheer Size of the Country\nHistorically attractive performance\nThe 7 largest US Tech companies, which dominate the US stock market and the technology sector globally\nMagnificent 7\nMany Successful companies from various sectors showcase the diversity of the US market\nWorld-leading companies outside of tech\nSource: ODDO BHF AM, Bloomberg, Friedrich Ebert Foundation, IFO, IG, Federal Reserve, Investopedia,WIPO, IMF, MSCI | Data as of 31/08/2025",
+        "ocr_text": null
+      },
+      {
+        "slide_number": 3,
+        "text": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025\nPast performance is not a reliable indicator of future performance and is not constant over time\nODDO BHF algo trend us – September 2025\nSTOCK MARKETS MOVE IN TRENDS!\nThe case for momentum investments\nMomentum historically outperformed the broad market in the USA1\nthe momentum effect & the investment philosophy behind\nBehavioral Finance provides theories To explain irrational investor behavior causing “trends” in the market\nAnchoring\nOverconFidence\nHerding\n… and many more\nBehavioral Biases of investors lead to overreaction/underreaction to news\nContinuation of returns\nStocks that outperformed in the past tend to continue to perform well in the future, creating trends in the market.\n\nA Stock Market “Anomaly”\nThis so-called momentum effect is academically well researched and persists in various markets and for different time periods.\n\nthese market trends can be exploited\nBy systematically capturing these trends a momentum strategy seeks to generate excess returns relative to the broad market.",
+        "ocr_text": null
+      },
+      {
+        "slide_number": 4,
+        "text": "An experienced management team\nInvestment Process Overview\nSource: ODDO BHF AM |  Current Management team, subject to change.\nYears of investment experience\nOur proprietary systematic approach\u000bAiming to capture the momentum effect\nThe fund is exposed to a risk of capital loss.\nStep 2: \u000bConstruction of a diversified Momentum Portfolio\nStep 1: \u000bIdentification of high-quality Trends\nResult:\u000bFinal Portfolio\nBroadly diversified and risk-controlled portfolio\nNumerous portfolio positions selected mainly from the S&P 500 to cover many different  trends\nMonthly rebalancing\nQuantitative portfolio optimization\nBuild a high momentum portfolio respecting strict risk management constraints\nLong-term outperformers\nShort-term trend also positive  relative to the market\nPreference for low volatility\nExpected Active Return\nRisk\nODDO BHF algo trend us – September 2025\nDr. Stefan Braun, CFA\u000bGlobal Head of Systematic Strategies \u000bODDO BHF AM GmbH\n25\nKarsten Seier, CFA\u000bGlobal Head of Systematic Strategies \u000bODDO BHF AM GmbH\n25\nSteffen Fuchs, CFA\u000bSenior Portfolio Manager / Quantitative Analyst\u000bODDO BHF AM GmbH\n10",
+        "ocr_text": null
+      },
+      {
+        "slide_number": 5,
+        "text": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?\nODDO BHF Algo Trend US is exposed to the following risks: Risk of capital loss, equity risk, interest rate risk, credit risk, risk associated with discretionary management, volatility risk, counterparty risk, liquidity risk of underlying assets, risk associated with commitments on forward financial instruments, currency conversion  and exchange rate risks, emerging markets risk, sustainability risk, quantitative model risk\n\nThe investor is invited to read the Key Information Document and the fund prospectus for detailed information concerning the risks to which the fund is exposed.\nSource: ODDO BHF AM | Data as of 2025\nRisks\nODDO BHF algo trend us – September 2025",
+        "ocr_text": null
+      },
+      {
+        "slide_number": 6,
+        "text": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSociété par actions simplifiée with capital of € 21,500,000. Trade Register (RCS) 340 902 857 Paris.\u000b12 boulevard de la Madeleine · 75440 Paris Cedex 09 France · Phone: +33 (0)1 44 51 85 00 · www.am.oddo-bhf.com\nODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM)).\nThe Key Information Document (FR, ENG, GER, ESP) and the prospectus (FR, ENG, GER) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com.\nThe fund is licensed for sale in Switzerland. The Key Information Document, the prospectus, the annual and interim reports for Switzerland can be obtained free of charge from the Swiss Representative and paying agent, RBC INVESTOR SERVICES BANK, succursale de Zürich, Bleicherweg 7, 8027 Zürich.\nODDO BHF algo trend us – September 2025",
+        "ocr_text": null
+      }
+    ],
+    "slide_summaries": [
+      {
+        "slide_number": 1,
+        "is_title_candidate": true,
+        "contains_disclaimer": false,
+        "disclaimer_categories": [],
+        "contains_performance": false,
+        "contains_glossary": false,
+        "countries": [
+          "United States"
+        ],
+        "language": "en"
+      },
+      {
+        "slide_number": 2,
+        "is_title_candidate": false,
+        "contains_disclaimer": false,
+        "disclaimer_categories": [],
+        "contains_performance": false,
+        "contains_glossary": false,
+        "countries": [
+          "United States"
+        ],
+        "language": "en"
+      },
+      {
+        "slide_number": 3,
+        "is_title_candidate": false,
+        "contains_disclaimer": false,
+        "disclaimer_categories": [],
+        "contains_performance": false,
+        "contains_glossary": false,
+        "countries": [
+          "United States"
+        ],
+        "language": "en"
+      },
+      {
+        "slide_number": 4,
+        "is_title_candidate": false,
+        "contains_disclaimer": false,
+        "disclaimer_categories": [],
+        "contains_performance": false,
+        "contains_glossary": false,
+        "countries": [
+          "United States"
+        ],
+        "language": "en"
+      },
+      {
+        "slide_number": 5,
+        "is_title_candidate": false,
+        "contains_disclaimer": false,
+        "disclaimer_categories": [],
+        "contains_performance": false,
+        "contains_glossary": false,
+        "countries": [
+          "United States"
+        ],
+        "language": "en"
+      },
+      {
+        "slide_number": 6,
+        "is_title_candidate": false,
+        "contains_disclaimer": false,
+        "disclaimer_categories": [],
+        "contains_performance": false,
+        "contains_glossary": false,
+        "countries": [
+          "Belgium",
+          "France",
+          "Germany",
+          "Luxembourg",
+          "Switzerland",
+          "United States"
+        ],
+        "language": "en"
+      }
+    ],
+    "tables": [
+      {
+        "slide_number": 1,
+        "table_index": 1,
+        "data": [
+          [
+            "6",
+            "8",
+            "9"
+          ]
+        ]
+      },
+      {
+        "slide_number": 1,
+        "table_index": 2,
+        "data": [
+          [
+            "Fund",
+            "SFDR classification(1)",
+            "Summary risk indicator(2)",
+            "Morningstar Category"
+          ],
+          [
+            "ODDO BHF Algo Trend US",
+            "",
+            "",
+            "US Large-Cap Blend Equity"
+          ]
+        ]
+      },
+      {
+        "slide_number": 5,
+        "table_index": 3,
+        "data": [
+          [
+            "Exploitation of the momentum effect, a market anomaly based on a profound economical basis\n\nStudies have proved for various time periods that markets move in trends. This market anomaly is called momentum effect and is caused by behavioral biases of market participants. Our proprietary trend-following investment strategy is a diversified approach to invest in different market trends with the objective to capture these trends and generate a long-term outperformance.",
+            "Rules-based investment process\n\nFully quantitative investment approach removing emotion from portfolio decisions. A systematic approach ensures that investments are made consistently and objectively, while also making the strategy transparent and repeatable."
+          ],
+          [
+            "Active Risk Management at the core of the strategy\nThe quantitative model rates equities based on a smart momentum strategy which involves a strong focus on diversification and risk management by applying various constraints in the portfolio optimization in order to avoid classic pitfalls of momentum investing like trend reversal and concentration risks.",
+            "Stable management team including the founders of the quantitative model\nStefan Braun and Karsten Seier, the developers of the strategy more than 20 years ago, successfully managed the fund and through the various market cycles and are still managing the portfolio today."
+          ]
+        ]
+      },
+      {
+        "slide_number": 6,
+        "table_index": 4,
+        "data": [
+          [
+            "Fund name",
+            "ODDO BHF Algo Trend US",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Benchmark index",
+            "S&P 500 EUR Net Total",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Investment objective",
+            "The Sub-Fund is actively managed and aims to generate a sustainable return out of income from growth in investments in securities while keeping financial risk low. The Sub-Fund’s benchmark is S&P 500 NR (Net Return) in EUR, dividend reinvested. The Sub-Fund does not precisely track this index but aims to outperform it and the Sub-Fund’s performance can therefore deviate substantially – both positively and negatively – from the benchmark.",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Recommended investment horizon",
+            "5 years",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Inception date",
+            "16/07/2018",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Eligibility for the equity savings scheme PEA",
+            "No",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Class of units",
+            "CR-EUR",
+            "CI-EUR",
+            "CIw-EUR",
+            "CN-EUR"
+          ],
+          [
+            "ISIN code",
+            "LU1833929729",
+            "LU1833929307",
+            "LU1833929992",
+            "LU1833929216"
+          ],
+          [
+            "Currency",
+            "EUR",
+            "EUR",
+            "EUR",
+            "EUR"
+          ],
+          [
+            "Dividend policy",
+            "Accumulation",
+            "Accumulation",
+            "Accumulation",
+            "Accumulation"
+          ],
+          [
+            "Minimum initial subscription",
+            "100 EUR",
+            "250.000 EUR",
+            "250.000 EUR",
+            "100 EUR"
+          ],
+          [
+            "Subscription fees",
+            "5 % (maximum)",
+            "2 % (maximum)",
+            "2 % (maximum)",
+            "5 % (maximum)"
+          ],
+          [
+            "Management fees",
+            "maximum of 1.20%",
+            "maximum of 0.60%,",
+            "maximum of 0.70%",
+            "maximum of 0.75%,"
+          ],
+          [
+            "Redemption fees",
+            "None",
+            "None",
+            "None",
+            "None"
+          ],
+          [
+            "Performance fees",
+            "A maximum of 10% of the Sub-Fund’s outperformance relative to the benchmark index, once past underperformance over the previous five years has been offset, and provided that the absolute return is positive.",
+            "A maximum of 10% of the Sub-Fund's\noutperformance relative to the\nbenchmark index, once past\nunderperformance over the previous\nfive years has been offset.",
+            "N/A",
+            "A maximum of 10% of the Sub-Fund’s outperformance relative to the benchmark index, once past underperformance over the previous five years has been offset, and provided that the absolute return is positive."
+          ],
+          [
+            "Structure and technical information",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Legal structure",
+            "Sub-fund of the ODDO BHF SICAV Lux. Umbrella (UCITS)",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Investment management company",
+            "ODDO BHF AM SAS",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Custodian",
+            "CACEIS Bank, Luxembourg Branch",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Subscription / redemption",
+            "Daily at 12:00 p.m.",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Valuation frequency",
+            "Daily at 12:00",
+            "",
+            "",
+            ""
+          ],
+          [
+            "Authorised for distribution",
+            "France, Germany, Switzerland, Luxembourg, Spain, Belgium",
+            "",
+            "",
+            ""
+          ]
+        ]
+      }
+    ],
+    "total_slides": 6,
+    "total_tables": 4,
+    "table_sources": [
+      {
+        "slide_number": 1,
+        "raw_note": "Source: Source: US Capitol Building Date: 2023-08-31",
+        "source_name": "Source: Source: US Capitol Building Date",
+        "source_date": "2023-08-31"
+      },
+      {
+        "slide_number": 1,
+        "raw_note": "1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.\nSource: ODDO BHF AM | Data as of 31/08/2025",
+        "source_name": "1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.\nSource: ODDO BHF AM | Data as of",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 1,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloommark Date: 31/08/2025",
+        "source_name": "Source: Source: Bloommark Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomvis Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomvis Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: Source: World Bank Date: 2021",
+        "source_name": "Source: Source: World Bank Date: 2021",
+        "source_date": null
+      },
+      {
+        "slide_number": 2,
+        "raw_note": "Source: ODDO BHF AM, Bloomberg, Friedrich Ebert Foundation, IFO, IG, Federal Reserve, Investopedia,WIPO, IMF, MSCI | Data as of 31/08/2025",
+        "source_name": "Source: ODDO BHF AM, Bloomberg, Friedrich Ebert Foundation, IFO, IG, Federal Reserve, Investopedia,WIPO, IMF, MSCI | Data as of",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: Source: World Bank Date: 2021",
+        "source_name": "Source: Source: World Bank Date: 2021",
+        "source_date": null
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025",
+        "source_name": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: Source: ... Date: 31/08/2025",
+        "source_name": "Source: Source: ... Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 3,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 4,
+        "raw_note": "Source: ODDO BHF AM |  Current Management team, subject to change.",
+        "source_name": "Source: ODDO BHF AM |  Current Management team, subject to change",
+        "source_date": null
+      },
+      {
+        "slide_number": 4,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 4,
+        "raw_note": "Source: Source: Bloomberg Date: 31/08/2025",
+        "source_name": "Source: Source: Bloomberg Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 5,
+        "raw_note": "Source: ODDO BHF AM | Data as of 2025",
+        "source_name": "Source: ODDO BHF AM | Data as of 2025",
+        "source_date": null
+      },
+      {
+        "slide_number": 5,
+        "raw_note": "Source: Source: ... Date: 31/08/2025",
+        "source_name": "Source: Source: ... Date",
+        "source_date": "31/08/2025"
+      },
+      {
+        "slide_number": 6,
+        "raw_note": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM)).\nThe Key Information Document (FR, ENG, GER, ESP) and the prospectus (FR, ENG, GER) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com.\nThe fund is licensed for sale in Switzerland. The Key Information Document, the prospectus, the annual and interim reports for Switzerland can be obtained free of charge from the Swiss Representative and paying agent, RBC INVESTOR SERVICES BANK, succursale de Zürich, Bleicherweg 7, 8027 Zürich.",
+        "source_name": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM)).\nThe Key Information Document (FR, ENG, GER, ESP) and the prospectus (FR, ENG, GER) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com.\nThe fund is licensed for sale in Switzerland. The Key Information Document, the prospectus, the annual and interim reports for Switzerland can be obtained free of charge from the Swiss Representative and paying agent, RBC INVESTOR SERVICES BANK, succursale de Zürich, Bleicherweg 7, 8027 Zürich",
+        "source_date": null
+      }
+    ],
+    "performance_sections": [
+      {
+        "slide_number": 1,
+        "sentences": [],
+        "entries": [
+          {
+            "period": "1Y",
+            "value": 10.0,
+            "basis": "gross"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ]
+      },
+      {
+        "slide_number": 2,
+        "sentences": [],
+        "entries": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "2021",
+            "value": 4.4,
+            "basis": "nominal"
+          },
+          {
+            "value": 297.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "United States: 297.0% (2021)"
+          },
+          {
+            "value": 789.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "China: 789.0% (2021)"
+          },
+          {
+            "value": 654.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "India: 654.0% (2021)"
+          },
+          {
+            "value": 123.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "Japan: 123.0% (2021)"
+          }
+        ]
+      },
+      {
+        "slide_number": 3,
+        "sentences": [],
+        "entries": [
+          {
+            "period": "2021",
+            "value": 3318925,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 1439344,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 1380000,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 2241000,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 1640000,
+            "basis": "nominal"
+          },
+          {
+            "value": 3318925.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "United States: 3318925.0% (2021)"
+          },
+          {
+            "value": 1439344.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "China: 1439344.0% (2021)"
+          },
+          {
+            "value": 1380000.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "India: 1380000.0% (2021)"
+          },
+          {
+            "value": 2241000.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "Pakistan: 2241000.0% (2021)"
+          },
+          {
+            "value": 1640000.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "Bangladesh: 1640000.0% (2021)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 50.0,
+            "basis": "net"
+          },
+          {
+            "value": 50.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Anchors: 50.0% (1Y)"
+          },
+          {
+            "value": 50.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Weight: 50.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ]
+      },
+      {
+        "slide_number": 4,
+        "sentences": [],
+        "entries": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          },
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ]
+      },
+      {
+        "slide_number": 5,
+        "sentences": [],
+        "entries": [
+          {
+            "period": "1Y",
+            "value": 10.0,
+            "basis": null
+          }
+        ]
+      }
+    ],
+    "performance_table_entries": [],
+    "charts": [
+      {
+        "slide_number": 1,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "US Capitol Building",
+        "data_points": [
+          {
+            "label": "First Floor",
+            "value": 1.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Second Floor",
+            "value": 2.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Third Floor",
+            "value": 3.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Fourth Floor",
+            "value": 4.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Fifth Floor",
+            "value": 5.0,
+            "period": null,
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.0,
+            "basis": "gross"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: US Capitol Building",
+          "date_text": "2023-08-31"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 1,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloommark",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomvis",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 2,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "Global Connectivity",
+        "data_points": [
+          {
+            "label": "United States",
+            "value": 297.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "China",
+            "value": 789.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "India",
+            "value": 654.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "Japan",
+            "value": 123.0,
+            "period": "2021",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "2021",
+            "value": 4.4,
+            "basis": "nominal"
+          },
+          {
+            "value": 297.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "United States: 297.0% (2021)"
+          },
+          {
+            "value": 789.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "China: 789.0% (2021)"
+          },
+          {
+            "value": 654.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "India: 654.0% (2021)"
+          },
+          {
+            "value": 123.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "Japan: 123.0% (2021)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: World Bank",
+          "date_text": "2021"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 3,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "Statue of Liberty",
+        "data_points": [
+          {
+            "label": "United States",
+            "value": 3318925.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "China",
+            "value": 1439344.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "India",
+            "value": 1380000.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "Pakistan",
+            "value": 2241000.0,
+            "period": "2021",
+            "series": null
+          },
+          {
+            "label": "Bangladesh",
+            "value": 1640000.0,
+            "period": "2021",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "2021",
+            "value": 3318925,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 1439344,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 1380000,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 2241000,
+            "basis": "nominal"
+          },
+          {
+            "period": "2021",
+            "value": 1640000,
+            "basis": "nominal"
+          },
+          {
+            "value": 3318925.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "United States: 3318925.0% (2021)"
+          },
+          {
+            "value": 1439344.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "China: 1439344.0% (2021)"
+          },
+          {
+            "value": 1380000.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "India: 1380000.0% (2021)"
+          },
+          {
+            "value": 2241000.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "Pakistan: 2241000.0% (2021)"
+          },
+          {
+            "value": 1640000.0,
+            "period": "2021",
+            "basis": null,
+            "sentence": "Bangladesh: 1640000.0% (2021)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: World Bank",
+          "date_text": "2021"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 3,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 3,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "Anchors Away",
+        "data_points": [
+          {
+            "label": "Anchors",
+            "value": 50.0,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Weight",
+            "value": 50.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 50.0,
+            "basis": "net"
+          },
+          {
+            "value": 50.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Anchors: 50.0% (1Y)"
+          },
+          {
+            "value": 50.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Weight: 50.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 3,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 3,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "Crown Shadow",
+        "data_points": [
+          {
+            "label": "Crown",
+            "value": 50.0,
+            "period": null,
+            "series": "Crown"
+          },
+          {
+            "label": "Shadow",
+            "value": 100.0,
+            "period": null,
+            "series": "Shadow"
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: ...",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 3,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 4,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 4,
+        "is_chart": true,
+        "chart_type": "bar",
+        "chart_title": "Performance Comparison",
+        "data_points": [
+          {
+            "label": "Fund",
+            "value": 10.5,
+            "period": "1Y",
+            "series": null
+          },
+          {
+            "label": "Benchmark",
+            "value": 8.0,
+            "period": "1Y",
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.5,
+            "basis": "net"
+          },
+          {
+            "value": 10.5,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Fund: 10.5% (1Y)"
+          },
+          {
+            "value": 8.0,
+            "period": "1Y",
+            "basis": null,
+            "sentence": "Benchmark: 8.0% (1Y)"
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: Bloomberg",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      },
+      {
+        "slide_number": 5,
+        "is_chart": true,
+        "chart_type": "pie",
+        "chart_title": "US Capitol Building",
+        "data_points": [
+          {
+            "label": "First Floor",
+            "value": 10.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Second Floor",
+            "value": 20.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Third Floor",
+            "value": 30.0,
+            "period": null,
+            "series": null
+          },
+          {
+            "label": "Fourth Floor",
+            "value": 40.0,
+            "period": null,
+            "series": null
+          }
+        ],
+        "performance_values": [
+          {
+            "period": "1Y",
+            "value": 10.0,
+            "basis": null
+          }
+        ],
+        "source_date_info": {
+          "has_source": true,
+          "has_date": true,
+          "source_text": "Source: ...",
+          "date_text": "31/08/2025"
+        },
+        "confidence": 0.9
+      }
+    ],
+    "total_charts": 34,
+    "structure": {
+      "title_slide": 1,
+      "disclaimer_slides": [],
+      "performance_slides": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "glossary_slides": [],
+      "countries_detected": [
+        "Belgium",
+        "France",
+        "Germany",
+        "Luxembourg",
+        "Switzerland",
+        "United States"
+      ],
+      "disclaimer_categories": {},
+      "country_entries": [
+        {
+          "country": "United States",
+          "heading": "September 2025",
+          "sentence": "September 2025\n1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent,",
+          "slide_number": 1
+        },
+        {
+          "country": "United States",
+          "heading": "These examples are no investment recommendations.",
+          "sentence": "These examples are no investment recommendations.\nA key component of any equity portfolio\nWhy invest in the USA?\nODDO BHF algo trend us – September 2025\nWorld’s",
+          "slide_number": 2
+        },
+        {
+          "country": "United States",
+          "heading": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025",
+          "sentence": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025\nPast performance is no",
+          "slide_number": 3
+        },
+        {
+          "country": "United States",
+          "heading": "An experienced management team",
+          "sentence": "An experienced management team\nInvestment Process Overview\nSource: ODDO BHF AM |  Current Management team, subject to change.\nYears of investment experience\nOur",
+          "slide_number": 4
+        },
+        {
+          "country": "United States",
+          "heading": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?",
+          "sentence": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?\nODDO BHF Algo Trend US is exposed to the following risks: Risk of capital loss, equity risk, interest rat",
+          "slide_number": 5
+        },
+        {
+          "country": "Belgium",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "France",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "Germany",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "Luxembourg",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "Switzerland",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "United States",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        }
+      ],
+      "issuer_mentions": [],
+      "has_glossary": false,
+      "has_management_notice": true,
+      "legal_notice_slide": 1
+    },
+    "identifiers": [],
+    "country_entries": [
+      {
+        "country": "United States",
+        "heading": "September 2025",
+        "sentence": "September 2025\n1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent,",
+        "slide_number": 1
+      },
+      {
+        "country": "United States",
+        "heading": "These examples are no investment recommendations.",
+        "sentence": "These examples are no investment recommendations.\nA key component of any equity portfolio\nWhy invest in the USA?\nODDO BHF algo trend us – September 2025\nWorld’s",
+        "slide_number": 2
+      },
+      {
+        "country": "United States",
+        "heading": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025",
+        "sentence": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025\nPast performance is no",
+        "slide_number": 3
+      },
+      {
+        "country": "United States",
+        "heading": "An experienced management team",
+        "sentence": "An experienced management team\nInvestment Process Overview\nSource: ODDO BHF AM |  Current Management team, subject to change.\nYears of investment experience\nOur",
+        "slide_number": 4
+      },
+      {
+        "country": "United States",
+        "heading": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?",
+        "sentence": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?\nODDO BHF Algo Trend US is exposed to the following risks: Risk of capital loss, equity risk, interest rat",
+        "slide_number": 5
+      },
+      {
+        "country": "Belgium",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "France",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "Germany",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "Luxembourg",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "Switzerland",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      },
+      {
+        "country": "United States",
+        "heading": "General characteristics",
+        "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+        "slide_number": 6
+      }
+    ],
+    "issuer_mentions": [],
+    "title_information": {
+      "fund_name": "1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.",
+      "currency": "ris",
+      "document_date": "September 2025",
+      "client_type": null,
+      "risk_indicator": null,
+      "management_company": "ODDO BHF AM | Data as of 31/08/2025 Main Risks : ODDO BHF Algo Trend US is principally exposed to the following risks: Risk of capital loss, equity risk, currency risk, discretionary management risk, quantitative model risk ODDO BHF algo trend us – September 2025 ODDO BHF Algo Trend US Capturing momentum in US equities Launched in 2018 Assets under management € 228M Characteristics of the fund Key features The fund offers investors access to the growth potential of US equities through a disciplined, quantitative strategy built on momentum. US equity focus: the fund invests mainly in a dynamic universe of US companies from the S&P 500, across sectors and industries Proprietary quantitative model: the investment process is driven by a smart momentum strategy analysing extensive historical data with to goal to detect stable trends in the market Disciplined approach: by relying on a rule-based model rather than discretionary judgment, the fund avoids emotional biases and ensures consistency across market cycles Diversification & risk management: The portfolio construction process involves a strong focus on diversification and risk management by applying various constraints CHARACTERISTICS OF THE FUND"
+    },
+    "ocr": false,
+    "extraction_method": "pptx",
+    "file_path": "uploads\\ebebcdfe-f269-4868-b13d-423c9626cc29\\FINAL_47861-6PG-GB-ODDO_BHF_Algo_Trend_US-20250831vdef.pptx",
+    "file_size": 9664916
+  },
+  "executive_summary": {
+    "document": "FINAL_47861-6PG-GB-ODDO_BHF_Algo_Trend_US-20250831vdef.pptx",
+    "text_characters": 10794,
+    "total_tables": 4,
+    "identifier_count": 0,
+    "issuer_count": 0,
+    "country_mentions_count": 11,
+    "has_glossary": false,
+    "has_management_notice": true,
+    "warnings": [
+      "Potential email addresses detected: service_client@oddo-bhf.com...",
+      "Potential phone numbers detected in extracted text"
+    ]
+  },
+  "output_paths": {
+    "document_dir": "outputs\\d207bbd4-51f8-4c45-b5f9-a6c5fad7802f",
+    "metadata": "outputs\\d207bbd4-51f8-4c45-b5f9-a6c5fad7802f\\metadata.json",
+    "extraction": "outputs\\d207bbd4-51f8-4c45-b5f9-a6c5fad7802f\\extraction.json",
+    "features": null,
+    "manifest": "outputs\\d207bbd4-51f8-4c45-b5f9-a6c5fad7802f\\manifest.json"
+  }
+}

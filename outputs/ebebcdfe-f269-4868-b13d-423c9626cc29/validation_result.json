@@ -1,0 +1,437 @@
+{
+  "document_id": null,
+  "filename": "FINAL_47861-6PG-GB-ODDO_BHF_Algo_Trend_US-20250831vdef.pptx",
+  "overall_status": "non_compliant",
+  "compliance_score": 0,
+  "total_issues": 15,
+  "compliance_issues": [
+    {
+      "issue_type": "missing_standard_disclaimer",
+      "severity": "error",
+      "category": "disclaimer",
+      "location": "Disclaimers",
+      "slide_number": null,
+      "message": "Warning about 'Risk of Capital Loss' (Risque de perte en capital) is missing.",
+      "context": "No capital loss warning found in disclaimers",
+      "suggestion": "Add warning: 'Capital is not guaranteed and you may not get back the amount you invested'",
+      "auto_fixable": false,
+      "rule_reference": "Section 1"
+    },
+    {
+      "issue_type": "missing_performance_disclaimer",
+      "severity": "error",
+      "category": "performance",
+      "location": "Disclaimers",
+      "slide_number": null,
+      "message": "Warning that 'Past performance is not a reliable indicator of future results' is missing.",
+      "context": "Performance data shown without past performance disclaimer",
+      "suggestion": "Add disclaimer: 'Past performance is not a reliable indicator of future results'",
+      "auto_fixable": false,
+      "rule_reference": "Section 4.3"
+    },
+    {
+      "issue_type": "performance_starts_document",
+      "severity": "error",
+      "category": "performance",
+      "location": "Slide 1",
+      "slide_number": 1,
+      "message": "Performance data should not be displayed on the cover page (Slide 1). It must not be the main focus.",
+      "context": "Performance found on first slide",
+      "suggestion": "Move performance data to later slides (typically slide 3 or later)",
+      "auto_fixable": false,
+      "rule_reference": "Section 4.3"
+    },
+    {
+      "issue_type": "insufficient_performance_history",
+      "severity": "warning",
+      "category": "performance",
+      "location": "Performance Section",
+      "slide_number": null,
+      "message": "5-year performance history not found. Required if the fund is older than 5 years.",
+      "context": "Missing 5-year performance history",
+      "suggestion": "Add 5-year performance data if fund is older than 5 years",
+      "auto_fixable": false,
+      "rule_reference": "Section 4.3"
+    },
+    {
+      "issue_type": "insufficient_performance_history",
+      "severity": "warning",
+      "category": "performance",
+      "location": "Performance Section",
+      "slide_number": null,
+      "message": "10-year performance history not found. Required if the fund is older than 10 years.",
+      "context": "Missing 10-year performance history",
+      "suggestion": "Add 10-year performance data if fund is older than 10 years",
+      "auto_fixable": false,
+      "rule_reference": "Section 4.3"
+    },
+    {
+      "issue_type": "missing_benchmark_comparison",
+      "severity": "warning",
+      "category": "performance",
+      "location": "Performance Section",
+      "slide_number": null,
+      "message": "Performance is shown but no benchmark comparison detected. Performance must be compared to the official benchmark.",
+      "context": "No benchmark found in performance data",
+      "suggestion": "Add benchmark comparison alongside fund performance",
+      "auto_fixable": false,
+      "rule_reference": "Section 4.3"
+    },
+    {
+      "issue_type": "nav_format_issue",
+      "severity": "warning",
+      "category": "compliance",
+      "location": "Content",
+      "slide_number": null,
+      "message": "NAV is mentioned but not labeled as 'indicative' or with a disclaimer stating it is for indicative purposes only (Germany rule).",
+      "context": null,
+      "suggestion": "Ensure NAV is labeled as 'indicative' or add disclaimer: 'The Net Asset Value is provided for indicative purposes only.'",
+      "auto_fixable": false,
+      "rule_reference": "Germany Specific"
+    },
+    {
+      "issue_type": "missing_german_specific_disclaimer",
+      "severity": "warning",
+      "category": "disclaimer",
+      "location": "Disclaimers",
+      "slide_number": null,
+      "message": "Document targets Germany but seems to miss the specific German disclaimer regarding rebates/inducements.",
+      "context": null,
+      "suggestion": "Add the standard German disclaimer regarding management fee rebates and inducements.",
+      "auto_fixable": false,
+      "rule_reference": "Germany Specific"
+    },
+    {
+      "issue_type": "missing_promotional_mention",
+      "severity": "error",
+      "category": "structure",
+      "location": "Slide 1",
+      "slide_number": null,
+      "message": "Cover page must include a promotional mention (e.g., 'Document promotionnel', 'Marketing communication').",
+      "context": null,
+      "suggestion": "Add a phrase like 'Document promotionnel' or 'Marketing communication' to the cover page",
+      "auto_fixable": false,
+      "rule_reference": "Section 2"
+    },
+    {
+      "issue_type": "missing_target_audience",
+      "severity": "warning",
+      "category": "structure",
+      "location": "Slide 1",
+      "slide_number": null,
+      "message": "Target audience (Professional/Retail) should be indicated on the cover page.",
+      "context": null,
+      "suggestion": "Add target audience indication (e.g., 'Professional Client' or 'Retail Client')",
+      "auto_fixable": false,
+      "rule_reference": "Section 2"
+    },
+    {
+      "issue_type": "missing_risk_profile",
+      "severity": "error",
+      "category": "structure",
+      "location": "Slide 2",
+      "slide_number": 2,
+      "message": "Risk Scale (SRI) is missing. It is usually required on Slide 2.",
+      "context": "No SRI (Synthetic Risk Indicator) found",
+      "suggestion": "Add SRI scale (typically 1-7 risk scale) on slide 2",
+      "auto_fixable": false,
+      "rule_reference": "Section 3"
+    },
+    {
+      "issue_type": "missing_risk_profile",
+      "severity": "warning",
+      "category": "structure",
+      "location": "Slide 2",
+      "slide_number": 2,
+      "message": "Investment Horizon is missing. It is usually required on Slide 2.",
+      "context": "No investment horizon/recommended holding period found",
+      "suggestion": "Add recommended investment horizon/holding period",
+      "auto_fixable": false,
+      "rule_reference": "Section 3"
+    },
+    {
+      "issue_type": "missing_team_change_disclaimer",
+      "severity": "warning",
+      "category": "disclaimer",
+      "location": "Disclaimers",
+      "slide_number": null,
+      "message": "Management team mentioned, but disclaimer 'The team is subject to change' is missing.",
+      "context": null,
+      "suggestion": "Add disclaimer: 'The management team is subject to change'",
+      "auto_fixable": false,
+      "rule_reference": "Section 4"
+    },
+    {
+      "issue_type": "opinion_not_attenuated",
+      "severity": "warning",
+      "category": "compliance",
+      "location": "Disclaimers",
+      "slide_number": null,
+      "message": "Opinions/Forecasts detected but 'not contractually liable' validation disclaimer is missing.",
+      "context": null,
+      "suggestion": "Add disclaimer: 'Opinions... are subject to change... and [Management Company] shall not be held contractually liable'",
+      "auto_fixable": false,
+      "rule_reference": "Glossary - Opinion"
+    },
+    {
+      "issue_type": "simulation_missing_disclaimer",
+      "severity": "error",
+      "category": "performance",
+      "location": "Disclaimers",
+      "slide_number": null,
+      "message": "Future performance simulation shown but required disclaimer is missing. Simulations must include a disclaimer stating they do not constitute a forecast.",
+      "context": "Simulation detected without proper disclaimer",
+      "suggestion": "Add simulation disclaimer: 'The simulation presented does not constitute a forecast of the future performance of your investments. It is solely designed to illustrate the mechanisms of your investment over the investment period. The value of your investment may deviate upwards or downwards from what is displayed.'",
+      "auto_fixable": false,
+      "rule_reference": "Section 4.3"
+    }
+  ],
+  "issues_by_severity": {
+    "error": 6,
+    "warning": 9,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "issues_by_category": {
+    "disclaimer": [
+      {
+        "issue_type": "missing_standard_disclaimer",
+        "severity": "error",
+        "category": "disclaimer",
+        "location": "Disclaimers",
+        "slide_number": null,
+        "message": "Warning about 'Risk of Capital Loss' (Risque de perte en capital) is missing.",
+        "context": "No capital loss warning found in disclaimers",
+        "suggestion": "Add warning: 'Capital is not guaranteed and you may not get back the amount you invested'",
+        "auto_fixable": false,
+        "rule_reference": "Section 1"
+      },
+      {
+        "issue_type": "missing_german_specific_disclaimer",
+        "severity": "warning",
+        "category": "disclaimer",
+        "location": "Disclaimers",
+        "slide_number": null,
+        "message": "Document targets Germany but seems to miss the specific German disclaimer regarding rebates/inducements.",
+        "context": null,
+        "suggestion": "Add the standard German disclaimer regarding management fee rebates and inducements.",
+        "auto_fixable": false,
+        "rule_reference": "Germany Specific"
+      },
+      {
+        "issue_type": "missing_team_change_disclaimer",
+        "severity": "warning",
+        "category": "disclaimer",
+        "location": "Disclaimers",
+        "slide_number": null,
+        "message": "Management team mentioned, but disclaimer 'The team is subject to change' is missing.",
+        "context": null,
+        "suggestion": "Add disclaimer: 'The management team is subject to change'",
+        "auto_fixable": false,
+        "rule_reference": "Section 4"
+      }
+    ],
+    "performance": [
+      {
+        "issue_type": "missing_performance_disclaimer",
+        "severity": "error",
+        "category": "performance",
+        "location": "Disclaimers",
+        "slide_number": null,
+        "message": "Warning that 'Past performance is not a reliable indicator of future results' is missing.",
+        "context": "Performance data shown without past performance disclaimer",
+        "suggestion": "Add disclaimer: 'Past performance is not a reliable indicator of future results'",
+        "auto_fixable": false,
+        "rule_reference": "Section 4.3"
+      },
+      {
+        "issue_type": "performance_starts_document",
+        "severity": "error",
+        "category": "performance",
+        "location": "Slide 1",
+        "slide_number": 1,
+        "message": "Performance data should not be displayed on the cover page (Slide 1). It must not be the main focus.",
+        "context": "Performance found on first slide",
+        "suggestion": "Move performance data to later slides (typically slide 3 or later)",
+        "auto_fixable": false,
+        "rule_reference": "Section 4.3"
+      },
+      {
+        "issue_type": "insufficient_performance_history",
+        "severity": "warning",
+        "category": "performance",
+        "location": "Performance Section",
+        "slide_number": null,
+        "message": "5-year performance history not found. Required if the fund is older than 5 years.",
+        "context": "Missing 5-year performance history",
+        "suggestion": "Add 5-year performance data if fund is older than 5 years",
+        "auto_fixable": false,
+        "rule_reference": "Section 4.3"
+      },
+      {
+        "issue_type": "insufficient_performance_history",
+        "severity": "warning",
+        "category": "performance",
+        "location": "Performance Section",
+        "slide_number": null,
+        "message": "10-year performance history not found. Required if the fund is older than 10 years.",
+        "context": "Missing 10-year performance history",
+        "suggestion": "Add 10-year performance data if fund is older than 10 years",
+        "auto_fixable": false,
+        "rule_reference": "Section 4.3"
+      },
+      {
+        "issue_type": "missing_benchmark_comparison",
+        "severity": "warning",
+        "category": "performance",
+        "location": "Performance Section",
+        "slide_number": null,
+        "message": "Performance is shown but no benchmark comparison detected. Performance must be compared to the official benchmark.",
+        "context": "No benchmark found in performance data",
+        "suggestion": "Add benchmark comparison alongside fund performance",
+        "auto_fixable": false,
+        "rule_reference": "Section 4.3"
+      },
+      {
+        "issue_type": "simulation_missing_disclaimer",
+        "severity": "error",
+        "category": "performance",
+        "location": "Disclaimers",
+        "slide_number": null,
+        "message": "Future performance simulation shown but required disclaimer is missing. Simulations must include a disclaimer stating they do not constitute a forecast.",
+        "context": "Simulation detected without proper disclaimer",
+        "suggestion": "Add simulation disclaimer: 'The simulation presented does not constitute a forecast of the future performance of your investments. It is solely designed to illustrate the mechanisms of your investment over the investment period. The value of your investment may deviate upwards or downwards from what is displayed.'",
+        "auto_fixable": false,
+        "rule_reference": "Section 4.3"
+      }
+    ],
+    "compliance": [
+      {
+        "issue_type": "nav_format_issue",
+        "severity": "warning",
+        "category": "compliance",
+        "location": "Content",
+        "slide_number": null,
+        "message": "NAV is mentioned but not labeled as 'indicative' or with a disclaimer stating it is for indicative purposes only (Germany rule).",
+        "context": null,
+        "suggestion": "Ensure NAV is labeled as 'indicative' or add disclaimer: 'The Net Asset Value is provided for indicative purposes only.'",
+        "auto_fixable": false,
+        "rule_reference": "Germany Specific"
+      },
+      {
+        "issue_type": "opinion_not_attenuated",
+        "severity": "warning",
+        "category": "compliance",
+        "location": "Disclaimers",
+        "slide_number": null,
+        "message": "Opinions/Forecasts detected but 'not contractually liable' validation disclaimer is missing.",
+        "context": null,
+        "suggestion": "Add disclaimer: 'Opinions... are subject to change... and [Management Company] shall not be held contractually liable'",
+        "auto_fixable": false,
+        "rule_reference": "Glossary - Opinion"
+      }
+    ],
+    "structure": [
+      {
+        "issue_type": "missing_promotional_mention",
+        "severity": "error",
+        "category": "structure",
+        "location": "Slide 1",
+        "slide_number": null,
+        "message": "Cover page must include a promotional mention (e.g., 'Document promotionnel', 'Marketing communication').",
+        "context": null,
+        "suggestion": "Add a phrase like 'Document promotionnel' or 'Marketing communication' to the cover page",
+        "auto_fixable": false,
+        "rule_reference": "Section 2"
+      },
+      {
+        "issue_type": "missing_target_audience",
+        "severity": "warning",
+        "category": "structure",
+        "location": "Slide 1",
+        "slide_number": null,
+        "message": "Target audience (Professional/Retail) should be indicated on the cover page.",
+        "context": null,
+        "suggestion": "Add target audience indication (e.g., 'Professional Client' or 'Retail Client')",
+        "auto_fixable": false,
+        "rule_reference": "Section 2"
+      },
+      {
+        "issue_type": "missing_risk_profile",
+        "severity": "error",
+        "category": "structure",
+        "location": "Slide 2",
+        "slide_number": 2,
+        "message": "Risk Scale (SRI) is missing. It is usually required on Slide 2.",
+        "context": "No SRI (Synthetic Risk Indicator) found",
+        "suggestion": "Add SRI scale (typically 1-7 risk scale) on slide 2",
+        "auto_fixable": false,
+        "rule_reference": "Section 3"
+      },
+      {
+        "issue_type": "missing_risk_profile",
+        "severity": "warning",
+        "category": "structure",
+        "location": "Slide 2",
+        "slide_number": 2,
+        "message": "Investment Horizon is missing. It is usually required on Slide 2.",
+        "context": "No investment horizon/recommended holding period found",
+        "suggestion": "Add recommended investment horizon/holding period",
+        "auto_fixable": false,
+        "rule_reference": "Section 3"
+      }
+    ]
+  },
+  "category_counts": {
+    "disclaimer": {
+      "total": 3,
+      "critical": 1,
+      "high": 2,
+      "medium": 0,
+      "low": 0
+    },
+    "performance": {
+      "total": 6,
+      "critical": 3,
+      "high": 3,
+      "medium": 0,
+      "low": 0
+    },
+    "compliance": {
+      "total": 2,
+      "critical": 0,
+      "high": 2,
+      "medium": 0,
+      "low": 0
+    },
+    "structure": {
+      "total": 4,
+      "critical": 2,
+      "high": 2,
+      "medium": 0,
+      "low": 0
+    }
+  },
+  "statistics": {
+    "total_tables_checked": 0,
+    "tables_with_source_date": 0,
+    "tables_missing_source_date": 0,
+    "total_charts_analyzed": 0,
+    "charts_with_source_date": 0,
+    "charts_missing_source_date": 0,
+    "numerical_values_checked": 0,
+    "values_matching_reference": 0
+  },
+  "metadata": {
+    "Société de Gestion": "ODDO BHF ASSET MANAGEMENT SAS",
+    "Est ce que le produit fait partie de la Sicav d'Oddo": true,
+    "Le client est-il un professionnel": false,
+    "Le document fait-il référence à une nouvelle Stratégie": false,
+    "Le document fait-il référence à un nouveau Produit": false
+  },
+  "summary": [
+    "Found 15 issues."
+  ]
+}

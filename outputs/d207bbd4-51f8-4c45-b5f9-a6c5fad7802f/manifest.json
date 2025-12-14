@@ -1,0 +1,147 @@
+{
+  "document_id": "d207bbd4-51f8-4c45-b5f9-a6c5fad7802f",
+  "original_filename": "FINAL_47861-6PG-GB-ODDO_BHF_Algo_Trend_US-20250831vdef.pptx",
+  "processed_at": "2025-12-14T12:51:28.964986Z",
+  "paths": {
+    "metadata": "d207bbd4-51f8-4c45-b5f9-a6c5fad7802f\\metadata.json",
+    "extraction": "d207bbd4-51f8-4c45-b5f9-a6c5fad7802f\\extraction.json",
+    "features": null
+  },
+  "summary": {
+    "steps_completed": [
+      "metadata_extraction",
+      "family_detection_skipped",
+      "document_record_created",
+      "content_extraction",
+      "feature_extraction_skipped",
+      "finalization"
+    ],
+    "warnings": [
+      "Potential email addresses detected: service_client@oddo-bhf.com...",
+      "Potential phone numbers detected in extracted text"
+    ],
+    "errors": [],
+    "extraction_id": "cb2a311b-645f-4e4e-bb80-60d533526504",
+    "feature_counts": null,
+    "structure": {
+      "title_slide": 1,
+      "disclaimer_slides": [],
+      "performance_slides": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "glossary_slides": [],
+      "countries_detected": [
+        "Belgium",
+        "France",
+        "Germany",
+        "Luxembourg",
+        "Switzerland",
+        "United States"
+      ],
+      "disclaimer_categories": {},
+      "country_entries": [
+        {
+          "country": "United States",
+          "heading": "September 2025",
+          "sentence": "September 2025\n1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent,",
+          "slide_number": 1
+        },
+        {
+          "country": "United States",
+          "heading": "These examples are no investment recommendations.",
+          "sentence": "These examples are no investment recommendations.\nA key component of any equity portfolio\nWhy invest in the USA?\nODDO BHF algo trend us – September 2025\nWorld’s",
+          "slide_number": 2
+        },
+        {
+          "country": "United States",
+          "heading": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025",
+          "sentence": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return in USD as of 31/08/2025\nPast performance is no",
+          "slide_number": 3
+        },
+        {
+          "country": "United States",
+          "heading": "An experienced management team",
+          "sentence": "An experienced management team\nInvestment Process Overview\nSource: ODDO BHF AM |  Current Management team, subject to change.\nYears of investment experience\nOur",
+          "slide_number": 4
+        },
+        {
+          "country": "United States",
+          "heading": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?",
+          "sentence": "Why invest IN ODDO BHF Algo Trend US\nACCORDING TO US ?\nODDO BHF Algo Trend US is exposed to the following risks: Risk of capital loss, equity risk, interest rat",
+          "slide_number": 5
+        },
+        {
+          "country": "Belgium",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "France",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "Germany",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "Luxembourg",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "Switzerland",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        },
+        {
+          "country": "United States",
+          "heading": "General characteristics",
+          "sentence": "General characteristics\nODDO BHF Asset Management SAS (France)\nPortfolio management company approved by the Autorité des Marchés Financiers under GP 99011. \u000bSoc",
+          "slide_number": 6
+        }
+      ],
+      "issuer_mentions": [],
+      "has_glossary": false,
+      "has_management_notice": true,
+      "legal_notice_slide": 1
+    },
+    "countries": [
+      "Belgium",
+      "France",
+      "Germany",
+      "Luxembourg",
+      "Switzerland",
+      "United States"
+    ],
+    "title_information": {
+      "fund_name": "1 The EU Sustainable Finance Disclosure Regulation (SFDR) is a set of EU rules which aim to make the sustainability profile of funds transparent, more comparable and better understood by end investors. Article 6: The management team does not consider sustainability risks or adverse effects of investment decisions on sustainability factors in the investment decision making process. Article 8: The management team addresses sustainability risks by integrating ESG criteria (Environment and/or Social and/or Governance) into its investment decision making process. Article 9: The management team follows a strict sustainable investment objective that significantly contributes to the challenges of the ecological transition, and addresses Sustainability Risks through ratings provided by the Management Company’s external ESG data provider. | 2 The summary risk indicator (SRI) is a guide to the level of risk of this product compared to other products. It shows how likely it is that the product will lose money because of movements in the markets or because we are not able to pay you. It scales in a range from 1 (lowest risk) to 7 (highest risk). The lowest category does not mean a risk-free investment. This indicator is not constant and is updated if the risk profile of the fund changes over time. Historical data, such as is used to calculate the risk indicator, may not be a reliable indication of the future risk profile of the Fund. There is no guarantee that the management objectives in terms of risk will actually be met. The risk indicator assumes you keep the product until the end of the recommended holding period. The actual risk can vary ! significantly if you cash in at an early stage and you may get back less.",
+      "currency": "ris",
+      "document_date": "September 2025",
+      "client_type": null,
+      "risk_indicator": null,
+      "management_company": "ODDO BHF AM | Data as of 31/08/2025 Main Risks : ODDO BHF Algo Trend US is principally exposed to the following risks: Risk of capital loss, equity risk, currency risk, discretionary management risk, quantitative model risk ODDO BHF algo trend us – September 2025 ODDO BHF Algo Trend US Capturing momentum in US equities Launched in 2018 Assets under management € 228M Characteristics of the fund Key features The fund offers investors access to the growth potential of US equities through a disciplined, quantitative strategy built on momentum. US equity focus: the fund invests mainly in a dynamic universe of US companies from the S&P 500, across sectors and industries Proprietary quantitative model: the investment process is driven by a smart momentum strategy analysing extensive historical data with to goal to detect stable trends in the market Disciplined approach: by relying on a rule-based model rather than discretionary judgment, the fund avoids emotional biases and ensures consistency across market cycles Diversification & risk management: The portfolio construction process involves a strong focus on diversification and risk management by applying various constraints CHARACTERISTICS OF THE FUND"
+    },
+    "identifiers_count": 0,
+    "issuer_mentions_count": 0,
+    "country_entries_count": 11,
+    "performance_table_entries_count": 0,
+    "disclaimer_matches_count": 2,
+    "metadata_flags": {
+      "is_new_product": false,
+      "is_new_strategy": false,
+      "is_professional_client": false,
+      "is_sicav_product": true
+    }
+  }
+}

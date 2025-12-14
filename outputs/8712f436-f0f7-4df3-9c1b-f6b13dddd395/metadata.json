@@ -1,0 +1,131 @@
+{
+  "document_id_extracted": "47861",
+  "document_type": "6-page",
+  "language_code": "FR",
+  "fund_name": "ODDO BHF Algo Trend US",
+  "date_extracted": "2025-08-31",
+  "version_number": "V3",
+  "version_type": "draft",
+  "status_extracted": null,
+  "filename_parsing_confidence": 1.0,
+  "management_company": "SAS",
+  "management_company_full": "ODDO BHF ASSET MANAGEMENT SAS",
+  "is_sicav_product": true,
+  "is_professional_client": false,
+  "client_type": "Non-professional",
+  "is_new_strategy": false,
+  "is_new_product": false,
+  "has_content_metadata": true,
+  "raw_json_metadata": {
+    "Société de Gestion": "ODDO BHF ASSET MANAGEMENT SAS",
+    "Est ce que le produit fait partie de la Sicav d'Oddo": true,
+    "Le client est-il un professionnel": false,
+    "Le document fait-il référence à une nouvelle Stratégie": false,
+    "Le document fait-il référence à un nouveau Produit": false
+  },
+  "raw_filename_metadata": {
+    "document_id_extracted": "47861",
+    "document_type": "6-page",
+    "language_code": "FR",
+    "fund_name": "ODDO BHF Algo Trend US",
+    "date_extracted": "2025-08-31",
+    "version_number": "V3",
+    "version_type": "draft",
+    "status_extracted": null,
+    "parsing_confidence": 1.0
+  },
+  "has_json_metadata": true,
+  "has_filename_metadata": true,
+  "file_path": "dataset\\example_1\\47861-6PG-FR-ODDO BHF Algo Trend US-20250831 v3 pn.pptx",
+  "filename": "47861-6PG-FR-ODDO BHF Algo Trend US-20250831 v3 pn.pptx",
+  "file_directory": "dataset\\example_1",
+  "extracted_at": "2025-12-12T19:59:06.264084",
+  "pipeline_version": "0.3.0",
+  "file_checksum": "9dd26e5d2f2529798ca551bd2077ad8b8bb1e6d38e480c39ec585d31f04f1a49",
+  "title_information": {
+    "fund_name": "1 Le règlement européen sur la publication d’informations en matière de durabilité dans le secteur des services financiers (SFDR) est un ensemble de règles européennes visant à rendre le profil de durabilité des fonds transparent, plus comparable et davantage compréhensible par les investisseurs finaux. Article 6 : L'équipe de gestion ne prend pas en compte les risques de durabilité ou les effets négatifs des décisions d'investissement sur les facteurs de durabilité dans le processus de décision d'investissement. Article 8 : L'équipe de gestion traite les risques de durabilité en intégrant des critères ESG (Environnement et/ou Social et/ou Gouvernance) dans son processus de décision d'investissement. Article 9 : L'équipe de gestion suit un objectif d'investissement durable strict qui contribue de manière significative aux défis de la transition écologique, et traite les risques de durabilité par le biais de notations fournies par le fournisseur externe de données ESG de la société de gestion | 2 L'indicateur synthétique de risque (SRI) permet d'apprécier le niveau de risque de ce produit par rapport à d'autres. Il indique la probabilité que ce produit enregistre des pertes en cas de mouvements sur les marchés ou d'une impossibilité de notre part de vous payer. Il s'échelonne dans une fourchette de 1 (risque faible) à 7 (risque élevé). Cet indicateur n'est pas constant et changera en fonction du profil de risque du fonds. La catégorie la plus faible ne signifie pas sans risque. Les données historiques, telles que celles utilisées pour calculer le SRI, pourraient ne pas constituer une indication fiable du profil de risque futur du Fonds. L'atteinte des objectifs de gestion en termes de risque ne peut être garantie.",
+    "currency": "ESG",
+    "document_date": "Septembre 2025",
+    "client_type": null,
+    "risk_indicator": null,
+    "management_company": "ODDO BHF AM | Données au 31/08/2025 Principaux risques : ODDO BHF Algo Trend US est principalement exposé aux risques suivants: Risque de perte en capital, risque lié aux actions, risque de change, risque lié à la gestion discrétionnaire ODDO BHF algo trend us – Septembre 2025 ODDO BHF Algo Trend US Tirer parti du momentum des actions américaines Date de création 2018 Actifs sous gestion 228M€ Characteristics of the fund Caractéristiques principales Le fonds offre aux investisseurs un accès au potentiel de croissance des actions américaines grâce à une stratégie quantitative rigoureuse fondée sur le momentum. Focus sur les actions américaines: Le fonds investit systématiquement dans un univers dynamique d'entreprises américaines issues du S&P 500, dans divers secteurs et industries Modèle quantitatif propriétaire: Le processus d'investissement repose sur une stratégie « smart momentum », qui analyse des données historiques exhaustives afin de détecter les tendances stables du marché Approche rigoureuse / Absence de biais humain: En s'appuyant sur un modèle fondé sur des règles plutôt que sur des jugements discrétionnaires, le fonds évite les biais émotionnels et garantit une cohérence à travers les différents cycles de marché Diversification et gestion des risques: Le processus de construction du portefeuille met l’accent sur la diversification et à la gestion des risques en appliquant diverses contraintes CARACTÉRISTIQUES DU FONDS"
+  },
+  "country_entries": [
+    {
+      "country": "United States",
+      "heading": "Septembre 2025",
+      "sentence": "Septembre 2025\n1 Le règlement européen sur la publication d’informations en matière de durabilité dans le secteur des services financiers (SFDR) est un ensemble",
+      "slide_number": 1
+    },
+    {
+      "country": "United States",
+      "heading": "Ces exemples ne constituent pas des recommandations d'investissement.",
+      "sentence": "Ces exemples ne constituent pas des recommandations d'investissement.\nUn élément clé de tout portefeuille d'actions\nODDO BHF algo trend us – Septembre 2025\nLa p",
+      "slide_number": 2
+    },
+    {
+      "country": "United States",
+      "heading": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return en USD au 31/08/2025",
+      "sentence": "Source: ODDO BHF AM, Bloomberg, DeBondt and Thaler 1985, Jegadesh and Titman 1993, Ethan Zell 2020 | 1 Net Return en USD au 31/08/2025\nLes performances passées ",
+      "slide_number": 3
+    },
+    {
+      "country": "United States",
+      "heading": "une équipe de gestion expérimentée",
+      "sentence": "une équipe de gestion expérimentée\nAperçu du processus d'investissement\nSource: ODDO BHF AM |  Equipe actuelle, susceptible de changer\nAnnées d'expérience en in",
+      "slide_number": 4
+    },
+    {
+      "country": "United States",
+      "heading": "Pourquoi investir dans ODDO BHF Algo Trend US selon nous?",
+      "sentence": "Pourquoi investir dans ODDO BHF Algo Trend US selon nous?\nODDO BHF Algo Trend US est principalement exposé aux risques suivants : Risque de perte en capital, ri",
+      "slide_number": 5
+    },
+    {
+      "country": "Belgium",
+      "heading": "Caractéristiques",
+      "sentence": "Caractéristiques\nODDO BHF Asset Management SAS (France)\nSociété de Gestion de Portefeuille agréée par l’Autorité des Marchés Financiers sous le n° d’agrément GP",
+      "slide_number": 6
+    },
+    {
+      "country": "France",
+      "heading": "Caractéristiques",
+      "sentence": "Caractéristiques\nODDO BHF Asset Management SAS (France)\nSociété de Gestion de Portefeuille agréée par l’Autorité des Marchés Financiers sous le n° d’agrément GP",
+      "slide_number": 6
+    },
+    {
+      "country": "Luxembourg",
+      "heading": "Caractéristiques",
+      "sentence": "Caractéristiques\nODDO BHF Asset Management SAS (France)\nSociété de Gestion de Portefeuille agréée par l’Autorité des Marchés Financiers sous le n° d’agrément GP",
+      "slide_number": 6
+    },
+    {
+      "country": "Switzerland",
+      "heading": "Caractéristiques",
+      "sentence": "Caractéristiques\nODDO BHF Asset Management SAS (France)\nSociété de Gestion de Portefeuille agréée par l’Autorité des Marchés Financiers sous le n° d’agrément GP",
+      "slide_number": 6
+    },
+    {
+      "country": "United States",
+      "heading": "Caractéristiques",
+      "sentence": "Caractéristiques\nODDO BHF Asset Management SAS (France)\nSociété de Gestion de Portefeuille agréée par l’Autorité des Marchés Financiers sous le n° d’agrément GP",
+      "slide_number": 6
+    }
+  ],
+  "disclaimer_glossary_matches": [
+    {
+      "doc_type": "Commercial documentation : management company = OBAM SAS",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM))\nThe Key Information Document (in the language of the countries of marketing) and the prospectus (in the following languages ) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com",
+      "source": "document"
+    },
+    {
+      "doc_type": "OBAM Presentation",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS/GmbH/Lux (depending on the management company)) for all market communication. Its investor communication is the responsibility of each distributor or advisor. Potential investors should consult an investment advisor before investing in a strategy. Investor's attention is drawn to the fact that all strategies are not authorised in every country. Should they decide to invest, investors are invited to acquaint themselves with the detailed nature of any risks incurred, in particular the risk of capital loss. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF AM SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. Any opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF AM SAS shall not in any case be held contractually liable for them.",
+      "source": "document"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 # Files/dirs to skip
-SKIP_DIRS = {'.git', 'node_modules', 'compliance-dashboard/node_modules', 'compliance-dashboard/.next', '.venv', '__pycache__'}
+SKIP_DIRS = {'.git', 'node_modules', 'compliance-dashboard/node_modules', 'compliance-dashboard/.next', '.venv', '__pycache__', 'frontend', 'frontend/node_modules', 'frontend/.next', 'outputs'}
 SKIP_EXT = {'.png', '.jpg', '.jpeg', '.gif', '.woff2', '.woff', '.ttf', '.ico', '.bin', '.exe', '.dll', '.so', '.zip', '.tar', '.gz', '.pdf'}
 
 # Emoji replacements mapping

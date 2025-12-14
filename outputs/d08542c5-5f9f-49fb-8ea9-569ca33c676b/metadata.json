@@ -1,0 +1,566 @@
+{
+  "document_id_extracted": null,
+  "document_type": "presentation",
+  "language_code": "EN",
+  "fund_name": "ODDO_BHF_US_Equity_Active_ETF",
+  "date_extracted": "2025-06-30",
+  "version_number": "FINAL",
+  "version_type": "final",
+  "status_extracted": null,
+  "filename_parsing_confidence": 0.8,
+  "management_company": "SAS",
+  "management_company_full": "ODDO BHF ASSET MANAGEMENT SAS",
+  "is_sicav_product": false,
+  "is_professional_client": false,
+  "client_type": "Non-professional",
+  "is_new_strategy": false,
+  "is_new_product": true,
+  "has_content_metadata": true,
+  "raw_json_metadata": {
+    "Société de Gestion": "ODDO BHF ASSET MANAGEMENT SAS",
+    "Est ce que le produit fait partie de la Sicav d'Oddo": false,
+    "Le client est-il un professionnel": false,
+    "Le document fait-il référence à une nouvelle Stratégie": false,
+    "Le document fait-il référence à un nouveau Produit": true
+  },
+  "raw_filename_metadata": {
+    "document_id_extracted": null,
+    "document_type": "presentation",
+    "language_code": "EN",
+    "fund_name": "ODDO_BHF_US_Equity_Active_ETF",
+    "date_extracted": "2025-06-30",
+    "version_number": "FINAL",
+    "version_type": "final",
+    "status_extracted": null,
+    "parsing_confidence": 0.8
+  },
+  "has_json_metadata": true,
+  "has_filename_metadata": true,
+  "file_path": "uploads\\61bfe71f-761f-4be3-b7da-2bb5135ff4d9\\FINAL-PRS-GB-ODDO_BHF_US_Equity_Active_ETF-20250630_8PN_clean.pptx",
+  "filename": "FINAL-PRS-GB-ODDO_BHF_US_Equity_Active_ETF-20250630_8PN_clean.pptx",
+  "file_directory": "uploads\\61bfe71f-761f-4be3-b7da-2bb5135ff4d9",
+  "extracted_at": "2025-12-13T11:57:55.959651",
+  "pipeline_version": "0.3.0",
+  "file_checksum": "0e87822c6ec0a5ec5b1da6d59df6b823fec592de5938d64805caee3b76a531d3",
+  "title_information": {
+    "fund_name": "An investment solution aiming at investing efficiently in US equities",
+    "currency": null,
+    "document_date": "September 2025",
+    "client_type": null,
+    "risk_indicator": null,
+    "management_company": "ODDO BHF US Equity Active UCITS ETF September 2025 Promotional INFORMATION"
+  },
+  "issuer_mentions": [
+    {
+      "issuer_name": "Concentration risk",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Pro-cyclical beta exposure",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Naïve momentum strategies imply high concentration risk and high tracking error",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Index Performance",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Naïve momentum strategies select stocks which performed well in the past resulting in a high beta portfolio following a market rally and low beta in down-markets",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Trends are likely to end and reverse at a certain point: Risk of large losses when markets correct/rebounds",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "The fund presents a risk of capital loss.",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "The case for momentum investments",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Understanding the Risks of Momentum Investing",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Management of trend reversal risk",
+      "context": "20\nConcentration risk\nPro-cyclical beta exposure\nNaïve momentum strategies imply high concentration risk and high tracking error\nExample: Sector allocation of a",
+      "slide_number": 20,
+      "heading": "20"
+    },
+    {
+      "issuer_name": "Portfolio",
+      "context": "29\nPortfolio\nLargest Positions in the Portfolio\nSource: ODDO BHF AM | Data as of 30/06/2025 | Benchmark: S&P 500 NR\nThese examples are no investment recommendat",
+      "slide_number": 29,
+      "heading": "29"
+    },
+    {
+      "issuer_name": "Largest Positions in the Portfolio",
+      "context": "29\nPortfolio\nLargest Positions in the Portfolio\nSource: ODDO BHF AM | Data as of 30/06/2025 | Benchmark: S&P 500 NR\nThese examples are no investment recommendat",
+      "slide_number": 29,
+      "heading": "29"
+    },
+    {
+      "issuer_name": "These examples are no investment recommendations",
+      "context": "29\nPortfolio\nLargest Positions in the Portfolio\nSource: ODDO BHF AM | Data as of 30/06/2025 | Benchmark: S&P 500 NR\nThese examples are no investment recommendat",
+      "slide_number": 29,
+      "heading": "29"
+    },
+    {
+      "issuer_name": "These examples are no investment recommendations",
+      "context": "30\nTop 10 relative Weights\nBottom 10 relative Weights\nSource: ODDO BHF AM | Data as of 30/06/2025 | Benchmark: S&P 500 NR\nThese examples are no investment recom",
+      "slide_number": 30,
+      "heading": "30"
+    },
+    {
+      "issuer_name": "Portfolio",
+      "context": "30\nTop 10 relative Weights\nBottom 10 relative Weights\nSource: ODDO BHF AM | Data as of 30/06/2025 | Benchmark: S&P 500 NR\nThese examples are no investment recom",
+      "slide_number": 30,
+      "heading": "30"
+    },
+    {
+      "issuer_name": "Largest Over- and Underweights",
+      "context": "30\nTop 10 relative Weights\nBottom 10 relative Weights\nSource: ODDO BHF AM | Data as of 30/06/2025 | Benchmark: S&P 500 NR\nThese examples are no investment recom",
+      "slide_number": 30,
+      "heading": "30"
+    }
+  ],
+  "country_entries": [
+    {
+      "country": "United States",
+      "heading": "An investment solution aiming at investing efficiently in US equities",
+      "sentence": "An investment solution aiming at investing efficiently in US equities\nODDO BHF US Equity Active UCITS ETF\nSeptember 2025\nPromotional INFORMATION",
+      "slide_number": 1
+    },
+    {
+      "country": "Belgium",
+      "heading": "2",
+      "sentence": "2\nDisclaimer\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may",
+      "slide_number": 2
+    },
+    {
+      "country": "France",
+      "heading": "2",
+      "sentence": "2\nDisclaimer\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may",
+      "slide_number": 2
+    },
+    {
+      "country": "Germany",
+      "heading": "2",
+      "sentence": "2\nDisclaimer\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may",
+      "slide_number": 2
+    },
+    {
+      "country": "Ireland",
+      "heading": "2",
+      "sentence": "2\nDisclaimer\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may",
+      "slide_number": 2
+    },
+    {
+      "country": "Luxembourg",
+      "heading": "2",
+      "sentence": "2\nDisclaimer\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may",
+      "slide_number": 2
+    },
+    {
+      "country": "Switzerland",
+      "heading": "2",
+      "sentence": "2\nDisclaimer\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may",
+      "slide_number": 2
+    },
+    {
+      "country": "United States",
+      "heading": "Active ETF format: A cost-efficient and transparent way to benefit from our 20 years of experience with the same strategy in dedicated mandates, passing through various market cycles. The founders of the quantitative model in 2000 still manage the strategy today.*",
+      "sentence": "Active ETF format: A cost-efficient and transparent way to benefit from our 20 years of experience with the same strategy in dedicated mandates, passing through",
+      "slide_number": 4
+    },
+    {
+      "country": "United States",
+      "heading": "9",
+      "sentence": "9\nActive ETF: A growing force in Europe\nAlthough still much more established in the US, Active ETF are rapidly gaining momentum in Europe\nThe fund presents a ri",
+      "slide_number": 9
+    },
+    {
+      "country": "United States",
+      "heading": "Why invest in the US market?",
+      "sentence": "Why invest in the US market?\n02",
+      "slide_number": 11
+    },
+    {
+      "country": "United States",
+      "heading": "Past performance is not a reliable indicator of future performance and is not constant over time",
+      "sentence": "Past performance is not a reliable indicator of future performance and is not constant over time\nSource: ODDO BHF AM, Bloomberg, Friedrich Ebert Foundation, IFO",
+      "slide_number": 12
+    },
+    {
+      "country": "United States",
+      "heading": "The 7 largest US Tech companies, which dominate the US stock market and the technology sector globally with their innovation leadership and impact on technological advancement",
+      "sentence": "The 7 largest US Tech companies, which dominate the US stock market and the technology sector globally with their innovation leadership and impact on technologi",
+      "slide_number": 13
+    },
+    {
+      "country": "United States",
+      "heading": "34",
+      "sentence": "34\nImportant Information\nIf ODDO BHF  Asset Management GmbH receives any rebates on the management fee of target funds or other assets, ODDO BHF  Asset Manageme",
+      "slide_number": 34
+    }
+  ],
+  "performance_table_entries": [
+    {
+      "label": "A",
+      "column": "Short-term active return",
+      "value": 14.3,
+      "raw": "14,3%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "A",
+      "column": "Long-term active return",
+      "value": 18.6,
+      "raw": "18,6%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "A",
+      "column": "Volatilty",
+      "value": 30.1,
+      "raw": "30,1%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "A",
+      "column": "Final Trend Score",
+      "value": 56.79,
+      "raw": "56,79",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "B",
+      "column": "Short-term active return",
+      "value": 12.9,
+      "raw": "12,9%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "B",
+      "column": "Long-term active return",
+      "value": 13.6,
+      "raw": "13,6%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "B",
+      "column": "Volatilty",
+      "value": 23.7,
+      "raw": "23,7%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "B",
+      "column": "Final Trend Score",
+      "value": 56.35,
+      "raw": "56,35",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "C",
+      "column": "Short-term active return",
+      "value": 18.3,
+      "raw": "18,3%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "C",
+      "column": "Long-term active return",
+      "value": 16.7,
+      "raw": "16,7%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "C",
+      "column": "Volatilty",
+      "value": 30.9,
+      "raw": "30,9%",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "C",
+      "column": "Final Trend Score",
+      "value": 55.86,
+      "raw": "55,86",
+      "slide_number": 24,
+      "table_index": 4
+    },
+    {
+      "label": "A",
+      "column": "Final Trend Score",
+      "value": 56.79,
+      "raw": "56,79",
+      "slide_number": 25,
+      "table_index": 5
+    },
+    {
+      "label": "B",
+      "column": "Final Trend Score",
+      "value": 56.35,
+      "raw": "56,35",
+      "slide_number": 25,
+      "table_index": 5
+    },
+    {
+      "label": "C",
+      "column": "Final Trend Score",
+      "value": 55.86,
+      "raw": "55,86",
+      "slide_number": 25,
+      "table_index": 5
+    },
+    {
+      "label": "NVIDIA CORP",
+      "column": "",
+      "value": 8.0,
+      "raw": "8,0%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "NVIDIA CORP",
+      "column": "",
+      "value": 7.3,
+      "raw": "7,3%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "MICROSOFT CORP",
+      "column": "",
+      "value": 6.1,
+      "raw": "6,1%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "MICROSOFT CORP",
+      "column": "",
+      "value": 7.0,
+      "raw": "7,0%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "APPLE INC",
+      "column": "",
+      "value": 5.2,
+      "raw": "5,2%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "APPLE INC",
+      "column": "",
+      "value": 5.9,
+      "raw": "5,9%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "META PLATFORMS INC",
+      "column": "",
+      "value": 3.1,
+      "raw": "3,1%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "META PLATFORMS INC",
+      "column": "",
+      "value": 3.1,
+      "raw": "3,1%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "BROADCOM INC",
+      "column": "",
+      "value": 3.1,
+      "raw": "3,1%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "BROADCOM INC",
+      "column": "",
+      "value": 2.5,
+      "raw": "2,5%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "BOSTON SCIENTIFIC CORP",
+      "column": "",
+      "value": 2.9,
+      "raw": "2,9%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "BOSTON SCIENTIFIC CORP",
+      "column": "",
+      "value": 0.3,
+      "raw": "0,3%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "JPMORGAN CHASE & CO",
+      "column": "",
+      "value": 2.6,
+      "raw": "2,6%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "JPMORGAN CHASE & CO",
+      "column": "",
+      "value": 1.5,
+      "raw": "1,5%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "NETFLIX INC",
+      "column": "",
+      "value": 2.5,
+      "raw": "2,5%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "NETFLIX INC",
+      "column": "",
+      "value": 1.1,
+      "raw": "1,1%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "AMAZON.COM INC",
+      "column": "",
+      "value": 2.4,
+      "raw": "2,4%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "AMAZON.COM INC",
+      "column": "",
+      "value": 3.9,
+      "raw": "3,9%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "WALMART INC",
+      "column": "",
+      "value": 2.4,
+      "raw": "2,4%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "WALMART INC",
+      "column": "",
+      "value": 0.8,
+      "raw": "0,8%",
+      "slide_number": 29,
+      "table_index": 6
+    },
+    {
+      "label": "Inception date",
+      "column": "Ireland, France, Germany, Switzerland",
+      "value": 2025.0,
+      "raw": "2025",
+      "slide_number": 31,
+      "table_index": 7
+    },
+    {
+      "label": "TER",
+      "column": "Ireland, France, Germany, Switzerland",
+      "value": 0.35,
+      "raw": "0,35%",
+      "slide_number": 31,
+      "table_index": 7
+    }
+  ],
+  "disclaimer_glossary_matches": [
+    {
+      "doc_type": "Commercial documentation : management company = OBAM SAS",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS. for market communication. Its communication to any investor is the exclusive responsibility of each distributor or advisor with the exception of Belgium, where this document is intended exclusively for distributors and may not be distributed to non-professional clients.\nPotential investors should consult an investment advisor before subscribing to the fund. The investor is informed that the fund presents a risk of capital loss, but also many risks linked to the financial instruments/strategies in the portfolio. In case of subscription, investors must read the Key Information Document (KID) and the fund’s prospectus in order to acquaint themselves with the detailed nature of any risks incurred and all costs. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF ASSET MANAGEMENT SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. \nAny opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF ASSET MANAGEMENT SAS shall not in any case be held contractually liable for them. The net asset values presented in this document are provided for indicative purposes only. Only the net asset value marked on the transaction statement and the securities account statement is authoritative. Subscriptions and redemptions of mutual funds are processed at an unknown asset value.\nA summary of investor rights is available free of charge in electronic form in English language on the website at :\nhttps://am.oddo-bhf.com/FRANCE/en/non_professional_investor/infos_reglementaire\nThe fund may have been authorized for distribution in different EU member states. Investors are advised to the fact that the management company may decide to withdraw with the arrangements it has made for the distribution of the units of the fund in accordance with Article 93a of Directive 2009/65/EC and Article 32a of Directive 2011/61/EU.\nThe complaints handling policy is available on our website am.oddo-bhf.com in the regulatory information section. Customer complaints can be addressed in the first instance to the following e-mail address: service_client@oddo-bhf.com (or directly to the Consumer Mediation Service: http://mediationconsommateur.be (ONLY FOR BELGIUM))\nThe Key Information Document (in the language of the countries of marketing) and the prospectus (in the following languages ) are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or at am.oddo-bhf.com or at authorized distributors. The annual and interim reports are available free of charge from ODDO BHF ASSET MANAGEMENT SAS or on its internet site am.oddo-bhf.com",
+      "source": "document"
+    },
+    {
+      "doc_type": "OBAM Presentation",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "ODDO BHF AM is the asset management division of the ODDO BHF Group. It is the common brand of three legally separate asset management companies: ODDO BHF AM SAS (France), ODDO BHF  AM GmbH (Germany) and ODDO BHF  AM Lux (Luxembourg).\nThis document has been drawn up by ODDO BHF ASSET MANAGEMENT SAS/GmbH/Lux (depending on the management company)) for all market communication. Its investor communication is the responsibility of each distributor or advisor. Potential investors should consult an investment advisor before investing in a strategy. Investor's attention is drawn to the fact that all strategies are not authorised in every country. Should they decide to invest, investors are invited to acquaint themselves with the detailed nature of any risks incurred, in particular the risk of capital loss. The value of the investment may vary both upwards and downwards and may not be returned in full. The investment must be made in accordance with investors’ investment objectives, their investment horizon and their capacity to deal with the risk arising from the transaction. ODDO BHF AM SAS cannot be held responsible for any direct or indirect damages resulting from the use of this document or the information contained in it. This information is provided for indicative purposes and may be modified at any moment without prior notice. Any opinions presented in this document result from our market forecasts on the publication date. They are subject to change according to market conditions and ODDO BHF AM SAS shall not in any case be held contractually liable for them.",
+      "source": "document"
+    },
+    {
+      "doc_type": "ESG Risk",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "The use of ESG criteria may affect the Fund's performance and therefore the Fund's performance may differ positively or negatively from the performance of similar funds that do not use such criteria. The sector exclusions in place for the Fund may not correspond directly with the investor's views.",
+      "slide_number": 2
+    },
+    {
+      "doc_type": "Opinion",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "Opinions given in this document reflect our market forecasts at the time of the document’s publication. They are subject to change according to market conditions and ODDO BHF AM SAS/GmbH/Lux (depending on the Management Company) shall not in any case be held contractually liable for them",
+      "slide_number": 2
+    },
+    {
+      "doc_type": "Opinion",
+      "language": "ENGLISH",
+      "client_type": "non_professional",
+      "text": "Opinions given in this document reflect our market forecasts at the time of the document’s publication. They are subject to change according to market conditions and ODDO BHF AM SAS/GmbH/Lux (depending on the Management Company) shall not in any case be held contractually liable for them",
+      "slide_number": 34
+    }
+  ]
+}

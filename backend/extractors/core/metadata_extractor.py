@@ -20,6 +20,19 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 
+
+def _import_pydantic_output_parser():
+    """Import PydanticOutputParser from whichever langchain package is available.
+
+    This centralises the import to avoid defining the same name multiple times
+    in different function scopes which can trigger mypy `no-redef` errors.
+    """
+    try:
+        from langchain_core.output_parsers import PydanticOutputParser
+    except Exception:
+        from langchain.output_parsers import PydanticOutputParser
+    return PydanticOutputParser
+
 from ..parsers.filename_parser import FilenameParser, parse_filename
 
 
@@ -214,7 +227,7 @@ class MetadataExtractor:
             
             llm = ChatOpenAI(
                 model=config['model_name'],
-                api_key=config['api_key'],
+                api_key=(lambda: config['api_key']),
                 base_url=config['base_url'],
                 temperature=0.0
             )
@@ -222,6 +235,7 @@ class MetadataExtractor:
             # llm.http_client = http_client
             # llm.http_async_client = http_async_client
             
+            PydanticOutputParser = _import_pydantic_output_parser()
             parser = PydanticOutputParser(pydantic_object=MetadataDetectionResult)
             format_instructions = parser.get_format_instructions()
             
@@ -309,10 +323,7 @@ Your task is to extract specific metadata from the document text that is require
         try:
             # Get format instructions from parser (needed for prompt template)
             # The parser is already created in _create_llm_extractor, but we need format_instructions here
-            try:
-                from langchain_core.output_parsers import PydanticOutputParser
-            except ImportError:
-                from langchain.output_parsers import PydanticOutputParser
+            PydanticOutputParser = _import_pydantic_output_parser()
             parser = PydanticOutputParser(pydantic_object=MetadataDetectionResult)
             format_instructions = parser.get_format_instructions()
             

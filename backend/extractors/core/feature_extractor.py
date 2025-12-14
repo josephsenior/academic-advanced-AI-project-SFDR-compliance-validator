@@ -92,7 +92,7 @@ class ContentFeatureExtractor:
         self.llm = ChatOpenAI(
             model=model_name,
             temperature=temperature,
-            api_key=api_key,
+            api_key=(lambda: api_key),
             base_url=base_url
         )
         # Manually set clients to bypass validation issues in langchain-openai 0.0.2

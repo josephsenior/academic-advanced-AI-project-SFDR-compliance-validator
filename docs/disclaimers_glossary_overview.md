@@ -213,7 +213,7 @@ Apply conditional logic:
 
 ## Example Scenarios
 
-### ✅ Valid Document - Professional Client
+### [OK] Valid Document - Professional Client
 ```
 Document: Presentation about existing ESG fund
 Client Type: Professional
@@ -222,14 +222,14 @@ Language: French
 Content: ESG criteria, past performance, company logos
 
 Required Disclaimers:
-1. OBAM Presentation (FR, Professional) ✅
-2. Commercial Documentation OBAM SAS (FR, Professional) ✅
-3. ESG Risk (FR, Professional) ✅
-4. Performance (FR, Professional) ✅
-5. Issuers Mentioned (FR, Professional) ✅
+1. OBAM Presentation (FR, Professional) [OK]
+2. Commercial Documentation OBAM SAS (FR, Professional) [OK]
+3. ESG Risk (FR, Professional) [OK]
+4. Performance (FR, Professional) [OK]
+5. Issuers Mentioned (FR, Professional) [OK]
 ```
 
-### ✅ Valid Document - Retail Client
+### [OK] Valid Document - Retail Client
 ```
 Document: Presentation about new strategy
 Client Type: Non-professional
@@ -238,34 +238,34 @@ Language: English
 Content: New strategy description, performance projections
 
 Required Disclaimers:
-1. OBAM Presentation (EN, Non-professional) ✅
-2. Commercial Documentation OBAM GmbH (EN, Non-professional) ✅
-3. New Offer Products (Strategy Only) (EN, Non-professional) ✅
-4. Simulations of Future Performance (EN, Non-professional) ✅
+1. OBAM Presentation (EN, Non-professional) [OK]
+2. Commercial Documentation OBAM GmbH (EN, Non-professional) [OK]
+3. New Offer Products (Strategy Only) (EN, Non-professional) [OK]
+4. Simulations of Future Performance (EN, Non-professional) [OK]
 ```
 
-### ❌ Invalid Document - Missing Disclaimer
+### [FAIL] Invalid Document - Missing Disclaimer
 ```
 Document: Presentation with ESG content
 Required: ESG Risk disclaimer
 Found: Not present
-Result: ❌ Violation - Missing ESG Risk disclaimer
+Result: [FAIL] Violation - Missing ESG Risk disclaimer
 ```
 
-### ❌ Invalid Document - Wrong Language
+### [FAIL] Invalid Document - Wrong Language
 ```
 Document: French presentation
 Required: OBAM Presentation (FR)
 Found: OBAM Presentation (EN)
-Result: ❌ Violation - Wrong language disclaimer
+Result: [FAIL] Violation - Wrong language disclaimer
 ```
 
-### ❌ Invalid Document - Wrong Client Type
+### [FAIL] Invalid Document - Wrong Client Type
 ```
 Document: Retail client presentation
 Required: OBAM Presentation (Non-professional)
 Found: OBAM Presentation (Professional)
-Result: ❌ Violation - Professional disclaimer used for retail client
+Result: [FAIL] Violation - Professional disclaimer used for retail client
 ```
 
 ## Integration Requirements

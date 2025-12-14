@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 
 # Apply Pydantic v1 patch for Python 3.12 compatibility
 try:
-    from src.utils import pydantic_v1_patch
+    from backend.utils import pydantic_v1_patch
 except ImportError:
     pass
 
@@ -23,7 +23,7 @@ load_dotenv()
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.extractors.pipeline import ExtractionPipeline
+from backend.extractors.pipeline import ExtractionPipeline
 
 def main():
     # Setup paths

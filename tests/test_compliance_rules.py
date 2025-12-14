@@ -1,31 +1,17 @@
 import unittest
 import sys
 import os
-import importlib.util
+from pathlib import Path
 
 # Add project root to path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = str(Path(__file__).parent.parent)
 if project_root not in sys.path:
-    sys.path.append(project_root)
+    sys.path.insert(0, project_root)
 
-# Import compliance_rules directly to bypass src.extractors.__init__
-file_path_rules = os.path.join(project_root, "src", "extractors", "compliance_rules.py")
-spec_rules = importlib.util.spec_from_file_location("compliance_rules_module", file_path_rules)
-compliance_rules_module = importlib.util.module_from_spec(spec_rules)
-sys.modules["src.extractors.compliance_rules"] = compliance_rules_module # Mock the module in sys.modules
-spec_rules.loader.exec_module(compliance_rules_module)
-
-ComplianceIssueType = compliance_rules_module.ComplianceIssueType
-
-# Import data_consistency_agent directly to bypass src.extractors.__init__
-file_path_agent = os.path.join(project_root, "src", "extractors", "data_consistency_agent.py")
-spec_agent = importlib.util.spec_from_file_location("data_consistency_agent_module", file_path_agent)
-data_consistency_agent_module = importlib.util.module_from_spec(spec_agent)
-sys.modules["data_consistency_agent_module"] = data_consistency_agent_module
-spec_agent.loader.exec_module(data_consistency_agent_module)
-
-DataConsistencyAgent = data_consistency_agent_module.DataConsistencyAgent
-DataConsistencyResult = data_consistency_agent_module.DataConsistencyResult
+# Standard imports - no need for complex importlib hacks since we use 'backend' now
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.rules.models import ComplianceIssue
+from backend.extractors.rules.enums import ComplianceIssueType
 
 class TestComplianceRules(unittest.TestCase):
     def setUp(self):

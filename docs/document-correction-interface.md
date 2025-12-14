@@ -4,18 +4,18 @@
 
 Create an interface where users upload documents, the system validates them, and outputs a corrected version with fixes applied.
 
-## Feasibility: ✅ **MEDIUM COMPLEXITY** - Definitely Possible
+## Feasibility: [OK] **MEDIUM COMPLEXITY** - Definitely Possible
 
 ### What's Already Available
-- ✅ Document extraction (PPTX, DOCX, PDF)
-- ✅ Validation (Data Consistency, Disclaimers, Registration)
-- ✅ Issue detection with precise locations (slide/page numbers)
-- ✅ Libraries for document manipulation (`python-pptx`, `python-docx`)
+- [OK] Document extraction (PPTX, DOCX, PDF)
+- [OK] Validation (Data Consistency, Disclaimers, Registration)
+- [OK] Issue detection with precise locations (slide/page numbers)
+- [OK] Libraries for document manipulation (`python-pptx`, `python-docx`)
 
 ### What Needs to Be Built
-- 🔨 Document correction module
-- 🔨 Fix application logic
-- 🔨 Web interface (optional, can start with CLI/API)
+-  Document correction module
+-  Fix application logic
+-  Web interface (optional, can start with CLI/API)
 
 ---
 
@@ -42,7 +42,7 @@ Return Corrected Document + Report
 
 ### Phase 1: Core Correction Module
 
-Create `src/extractors/document_corrector.py`:
+Create `backend/extractors/document_corrector.py`:
 
 ```python
 class DocumentCorrector:
@@ -91,20 +91,20 @@ class DocumentCorrector:
 ### Phase 3: Supported Formats
 
 #### PowerPoint (.pptx) - **EASIEST**
-- ✅ Can add text boxes for sources/dates
-- ✅ Can add footnotes
-- ✅ Can modify table notes
-- ✅ Can add disclaimer slides
+- [OK] Can add text boxes for sources/dates
+- [OK] Can add footnotes
+- [OK] Can modify table notes
+- [OK] Can add disclaimer slides
 
 #### Word (.docx) - **MEDIUM**
-- ✅ Can add footnotes
-- ✅ Can modify text
-- ✅ Can add disclaimer sections
+- [OK] Can add footnotes
+- [OK] Can modify text
+- [OK] Can add disclaimer sections
 
 #### PDF - **HARDEST**
-- ❌ Cannot easily modify PDFs
-- ⚠️ Would need to convert to editable format first
-- 💡 Alternative: Generate annotated PDF with comments
+- [FAIL] Cannot easily modify PDFs
+- [WARNING] Would need to convert to editable format first
+- [IDEA] Alternative: Generate annotated PDF with comments
 
 ---
 
@@ -212,25 +212,25 @@ Response:
 ### Automatic Fixes (Safe to Apply)
 
 1. **Add Missing Source/Date**
-   - ✅ Low risk
-   - ✅ Clear validation rules
-   - ✅ Easy to verify
+   - [OK] Low risk
+   - [OK] Clear validation rules
+   - [OK] Easy to verify
 
 2. **Add Missing Disclaimers**
-   - ✅ Based on glossary rules
-   - ✅ Standardized text
-   - ⚠️ Need to verify placement
+   - [OK] Based on glossary rules
+   - [OK] Standardized text
+   - [WARNING] Need to verify placement
 
 ### Manual Review Required
 
 1. **Numerical Corrections**
-   - ❌ Don't auto-correct
-   - ✅ Flag in report
-   - ✅ Highlight in document (comments/annotations)
+   - [FAIL] Don't auto-correct
+   - [OK] Flag in report
+   - [OK] Highlight in document (comments/annotations)
 
 2. **Cross-Reference Issues**
-   - ❌ Don't auto-correct
-   - ✅ Flag in report
+   - [FAIL] Don't auto-correct
+   - [OK] Flag in report
 
 ---
 
@@ -320,19 +320,19 @@ def upload_and_correct():
 ## Complexity Assessment
 
 ### Easy (1-2 days)
-- ✅ Add source/date notes to PowerPoint slides
-- ✅ Add source/date footnotes to Word documents
-- ✅ Basic CLI tool
+- [OK] Add source/date notes to PowerPoint slides
+- [OK] Add source/date footnotes to Word documents
+- [OK] Basic CLI tool
 
 ### Medium (3-5 days)
-- ⚠️ Add disclaimers to documents
-- ⚠️ Web interface with file upload/download
-- ⚠️ Fix placement logic (where to add notes)
+- [WARNING] Add disclaimers to documents
+- [WARNING] Web interface with file upload/download
+- [WARNING] Fix placement logic (where to add notes)
 
 ### Hard (1-2 weeks)
-- ❌ PDF modification (would need conversion)
-- ❌ Complex layout preservation
-- ❌ Multi-language disclaimer placement
+- [FAIL] PDF modification (would need conversion)
+- [FAIL] Complex layout preservation
+- [FAIL] Multi-language disclaimer placement
 
 ---
 
@@ -368,7 +368,7 @@ correction = corrector.correct(
     output_path="corrected.pptx"
 )
 
-print(f"✅ Corrected document saved: {correction['corrected_path']}")
+print(f"[OK] Corrected document saved: {correction['corrected_path']}")
 print(f"   Fixes applied: {len(correction['fixes_applied'])}")
 ```
 
@@ -376,12 +376,12 @@ print(f"   Fixes applied: {len(correction['fixes_applied'])}")
 
 ## Next Steps
 
-1. ✅ Create `DocumentCorrector` class
-2. ✅ Implement PowerPoint source/date fixes
-3. ✅ Test with sample documents
-4. ✅ Add disclaimer fixes
-5. ✅ Create web interface
-6. ✅ Add Word document support
+1. [OK] Create `DocumentCorrector` class
+2. [OK] Implement PowerPoint source/date fixes
+3. [OK] Test with sample documents
+4. [OK] Add disclaimer fixes
+5. [OK] Create web interface
+6. [OK] Add Word document support
 
 ---
 

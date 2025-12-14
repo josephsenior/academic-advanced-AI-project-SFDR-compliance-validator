@@ -44,12 +44,12 @@ The server will start on `http://localhost:5000`
 
 ## Features
 
-- ✅ Beautiful, minimalist interface
-- ✅ Drag & drop file upload
-- ✅ Real-time progress tracking
-- ✅ Detailed validation results
-- ✅ Download corrected document
-- ✅ Shows fixes applied and manual review items
+- [OK] Beautiful, minimalist interface
+- [OK] Drag & drop file upload
+- [OK] Real-time progress tracking
+- [OK] Detailed validation results
+- [OK] Download corrected document
+- [OK] Shows fixes applied and manual review items
 
 ## Troubleshooting
 

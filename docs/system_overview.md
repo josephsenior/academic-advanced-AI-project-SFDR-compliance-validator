@@ -1,6 +1,6 @@
 # System Overview
 
-**Status**: ✅ **PRODUCTION-READY**  
+**Status**: [OK] **PRODUCTION-READY**  
 **Last Updated**: Current
 
 ## Quick Summary
@@ -10,23 +10,23 @@ This system automates compliance validation for financial marketing documents us
 ## Core Capabilities
 
 ### Document Processing
-- ✅ Multi-format support (PPTX, DOCX, PDF)
-- ✅ Text, table, and chart extraction
-- ✅ Metadata extraction (from filename + JSON)
-- ✅ Performance data extraction
-- ✅ Source/date detection
-- ✅ Country and issuer detection
+- [OK] Multi-format support (PPTX, DOCX, PDF)
+- [OK] Text, table, and chart extraction
+- [OK] Metadata extraction (from filename + JSON)
+- [OK] Performance data extraction
+- [OK] Source/date detection
+- [OK] Country and issuer detection
 
 ### Chart Analysis
-- ✅ LLM-based chart/graph analysis (LLaVA)
-- ✅ Data point extraction from visualizations
-- ✅ Performance value extraction from charts
-- ✅ Source/date extraction from charts
+- [OK] LLM-based chart/graph analysis (LLaVA)
+- [OK] Data point extraction from visualizations
+- [OK] Performance value extraction from charts
+- [OK] Source/date extraction from charts
 
 ### Compliance Validation
-- ✅ **Data Consistency**: Source/date validation, numerical validation, cross-reference checks
-- ✅ **Disclaimer Validation**: 15+ disclaimer types, Excel glossary integration, multi-language support
-- ✅ **Registration Validation**: Country registration checks via Excel parser
+- [OK] **Data Consistency**: Source/date validation, numerical validation, cross-reference checks
+- [OK] **Disclaimer Validation**: 15+ disclaimer types, Excel glossary integration, multi-language support
+- [OK] **Registration Validation**: Country registration checks via Excel parser
 
 ## System Architecture
 
@@ -44,12 +44,12 @@ Document → ExtractionPipeline → DataConsistencyAgent → Validation Results
 
 ## Key Modules
 
-- **ExtractionPipeline** (`src/extractors/pipeline.py`) - Main orchestrator
-- **DocumentExtractor** (`src/extractors/document_extractor.py`) - Content extraction
-- **ChartAnalyzer** (`src/extractors/chart_analyzer.py`) - Chart/graph analysis
-- **DataConsistencyAgent** (`src/extractors/data_consistency_agent.py`) - Data validation
-- **DisclaimerValidator** (`src/extractors/disclaimer_validator.py`) - Disclaimer validation
-- **RegistrationParser** (`src/extractors/registration_parser.py`) - Country registration validation
+- **ExtractionPipeline** (`backend/extractors/pipeline.py`) - Main orchestrator
+- **DocumentExtractor** (`backend/extractors/document_extractor.py`) - Content extraction
+- **ChartAnalyzer** (`backend/extractors/chart_analyzer.py`) - Chart/graph analysis
+- **DataConsistencyAgent** (`backend/extractors/data_consistency_agent.py`) - Data validation
+- **DisclaimerValidator** (`backend/extractors/disclaimer_validator.py`) - Disclaimer validation
+- **RegistrationParser** (`backend/extractors/registration_parser.py`) - Country registration validation
 
 ## Usage
 

@@ -11,10 +11,10 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.extractors.disclaimer_validator import DisclaimerValidator
-from src.extractors.registration_parser import RegistrationParser
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.validators.disclaimer_validator import DisclaimerValidator
+from backend.extractors.parsers.registration import RegistrationParser
+from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
 
 
 def main():

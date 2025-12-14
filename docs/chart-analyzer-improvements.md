@@ -34,16 +34,16 @@ The chart analyzer prompt has been fine-tuned to produce better structured JSON 
 ## Test Results
 
 ### Before Improvements
-- Chart detection: ✅ Working
-- Structured output: ⚠️ Often fell back to text parsing
-- Source/date extraction: ⚠️ Inconsistent
+- Chart detection: [OK] Working
+- Structured output: [WARNING] Often fell back to text parsing
+- Source/date extraction: [WARNING] Inconsistent
 
 ### After Improvements
-- Chart detection: ✅ Working (100%)
-- Structured output: ✅ JSON extraction working
-- Source/date extraction: ✅ Extracted correctly
-- Data points: ✅ Extracted with labels and values
-- Performance values: ✅ Extracted with periods
+- Chart detection: [OK] Working (100%)
+- Structured output: [OK] JSON extraction working
+- Source/date extraction: [OK] Extracted correctly
+- Data points: [OK] Extracted with labels and values
+- Performance values: [OK] Extracted with periods
 
 ## Key Prompt Features
 

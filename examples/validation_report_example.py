@@ -11,9 +11,9 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.data_consistency_agent import DataConsistencyAgent, ReferenceData
-from src.utils.validation_report_generator import ValidationReportGenerator
+from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent, ReferenceData
+from backend.utils.reporting.validation_report_generator import ValidationReportGenerator
 
 
 def main():

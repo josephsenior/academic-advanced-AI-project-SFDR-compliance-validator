@@ -12,10 +12,10 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.data_consistency_agent import DataConsistencyAgent, ReferenceData
-from src.extractors.document_corrector import DocumentCorrector
-from src.extractors.disclaimer_validator import DisclaimerValidator
+from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent, ReferenceData
+from backend.extractors.document_corrector import DocumentCorrector
+from backend.extractors.validators.disclaimer_validator import DisclaimerValidator
 
 
 def main():
@@ -143,7 +143,7 @@ Examples:
             import json
             with open(args.reference_data, 'r') as f:
                 ref_dict = json.load(f)
-            from src.extractors.data_consistency_agent import create_reference_data_from_dict
+            from backend.extractors.agents.data_consistency_agent import create_reference_data_from_dict
             reference_data = create_reference_data_from_dict(ref_dict)
         
         agent = DataConsistencyAgent(reference_data=reference_data)
@@ -170,7 +170,7 @@ Examples:
     if args.fix_disclaimers:
         print("\nStep 3: Validating disclaimers...")
         try:
-            from src.extractors.disclaimer_validator import DisclaimerValidator
+            from backend.extractors.validators.disclaimer_validator import DisclaimerValidator
             validator = DisclaimerValidator()
             disclaimer_result = validator.validate(
                 extraction_result=extraction_result,

@@ -53,12 +53,12 @@ if result['status'] == 'success':
     extraction_id = result['extraction_id']
     features = result.get('features', {})
     
-    print(f"✅ Document processed successfully!")
+    print(f"[OK] Document processed successfully!")
     print(f"   ESG mentions: {features.get('esg_mentions', 0)}")
     print(f"   Performance data: {features.get('performance_data', 0)}")
     print(f"   Country mentions: {features.get('country_mentions', 0)}")
 else:
-    print(f"❌ Processing failed:")
+    print(f"[FAIL] Processing failed:")
     for error in result.get('errors', []):
         print(f"   - {error}")
 ```
@@ -119,12 +119,12 @@ result = process_document("document.pptx")
 if result['status'] == 'error':
     print("Critical errors:")
     for error in result['errors']:
-        print(f"  ❌ {error}")
+        print(f"  [FAIL] {error}")
 
 if result.get('warnings'):
     print("Warnings:")
     for warning in result['warnings']:
-        print(f"  ⚠️  {warning}")
+        print(f"  [WARNING]  {warning}")
 ```
 
 ## Processing Multiple Documents
@@ -147,9 +147,9 @@ for doc_file in documents_dir.rglob("*.pptx"):
     )
     
     if result['status'] == 'success':
-        print(f"  ✅ Success: {result['document_id']}")
+        print(f"  [OK] Success: {result['document_id']}")
     else:
-        print(f"  ❌ Failed: {result.get('errors', [])}")
+        print(f"  [FAIL] Failed: {result.get('errors', [])}")
 ```
 
 ## Configuration
@@ -224,7 +224,7 @@ for every policy tweak.
   indicator extracted from the opening slide for quick checks.
 - `disclaimer_glossary_matches`: each detected disclaimer is linked to the
   reference text in `dataset/GLOSSAIRE DISCLAIMER…xlsx` (via
-  `src/extractors/data/disclaimer_glossary.json`) using language and client type
+  `backend/extractors/data/disclaimer_glossary.json`) using language and client type
   so the rule engine can check mandatory statements without fuzzy matching.
 - `structure.has_glossary` / `structure.has_management_notice`: quick flags to
   confirm that retail presentations end with the required glossary and legal

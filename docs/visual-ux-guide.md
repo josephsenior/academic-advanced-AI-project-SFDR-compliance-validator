@@ -13,11 +13,11 @@ Simplified user experience for document correction:
 
 ## Features
 
-- ✅ Visual slide preview
-- ✅ Side-by-side comparison
-- ✅ Change annotations on slides
-- ✅ Accept/reject per change
-- ✅ Clean, simple interface
+- [OK] Visual slide preview
+- [OK] Side-by-side comparison
+- [OK] Change annotations on slides
+- [OK] Accept/reject per change
+- [OK] Clean, simple interface
 
 ## Running
 

@@ -25,12 +25,12 @@ Germany, Austria, Belgium, Chile, Spain, France, Italy, Luxembourg, Netherlands,
 
 | Code | Meaning | Compliance Implication |
 |------|---------|------------------------|
-| **R** | Registered | ✅ Fund can be marketed in this country |
-| **RX** | Registered (specific type) | ✅ Registered but with specific conditions |
-| **Y** | Tax Transparency | ✅ Registered + Tax transparency status |
-| **Institutional** | Institutional only | ⚠️ Can only be marketed to professional clients |
-| **Retail** | Retail available | ✅ Can be marketed to both retail and institutional |
-| **NaN/Empty** | Not registered | ❌ Cannot be mentioned in marketing documents |
+| **R** | Registered | [OK] Fund can be marketed in this country |
+| **RX** | Registered (specific type) | [OK] Registered but with specific conditions |
+| **Y** | Tax Transparency | [OK] Registered + Tax transparency status |
+| **Institutional** | Institutional only | [WARNING] Can only be marketed to professional clients |
+| **Retail** | Retail available | [OK] Can be marketed to both retail and institutional |
+| **NaN/Empty** | Not registered | [FAIL] Cannot be mentioned in marketing documents |
 
 ## Compliance Rules
 
@@ -44,8 +44,8 @@ Germany, Austria, Belgium, Chile, Spain, France, Italy, Luxembourg, Netherlands,
 
 ### Rule 3: Client Type Distinction
 - If registration code = "Institutional":
-  - ✅ Valid if document targets professional clients (`"Le client est-il un professionnel": true`)
-  - ❌ Invalid if targeting retail clients
+  - [OK] Valid if document targets professional clients (`"Le client est-il un professionnel": true`)
+  - [FAIL] Invalid if targeting retail clients
 
 ### Rule 4: Multiple Share Classes
 - Each fund can have multiple share classes (different fee structures, currency, investor types)
@@ -68,43 +68,43 @@ Germany, Austria, Belgium, Chile, Spain, France, Italy, Luxembourg, Netherlands,
 
 ### Step 4: Validate Country Claims
 For each country mentioned in the document:
-- ✅ **If code = R, RX, Y, Institutional, or Retail**: Claim is valid (subject to client type check)
-- ❌ **If code = NaN/Empty**: Violation - fund is not registered there
+- [OK] **If code = R, RX, Y, Institutional, or Retail**: Claim is valid (subject to client type check)
+- [FAIL] **If code = NaN/Empty**: Violation - fund is not registered there
 
 ## Example Scenarios
 
-### ✅ Valid Document
+### [OK] Valid Document
 ```
 Fund: ODDO BHF Active Small Cap
 Share: CR-EUR
 Document mentions: "Available in France, Germany, Switzerland"
 Registration status:
-- France: R ✅
-- Germany: R ✅
-- Switzerland: R ✅
-Result: ✅ All claims valid
+- France: R [OK]
+- Germany: R [OK]
+- Switzerland: R [OK]
+Result: [OK] All claims valid
 ```
 
-### ❌ Invalid Document - Unregistered Country
+### [FAIL] Invalid Document - Unregistered Country
 ```
 Fund: ODDO BHF Active Small Cap
 Share: CR-EUR
 Document mentions: "Available in France, Italy, Japan"
 Registration status:
-- France: R ✅
-- Italy: NaN ❌
-- Japan: (not in list) ❌
-Result: ❌ Violation - Cannot mention Italy or Japan
+- France: R [OK]
+- Italy: NaN [FAIL]
+- Japan: (not in list) [FAIL]
+Result: [FAIL] Violation - Cannot mention Italy or Japan
 ```
 
-### ❌ Invalid Document - Institutional Only
+### [FAIL] Invalid Document - Institutional Only
 ```
 Fund: ODDO BHF Active Small Cap
 Share: CI-EUR
 Document metadata: "Le client est-il un professionnel": false (retail)
 Registration status:
-- Germany: Institutional ⚠️
-Result: ❌ Violation - Document targets retail but fund is institutional-only in Germany
+- Germany: Institutional [WARNING]
+Result: [FAIL] Violation - Document targets retail but fund is institutional-only in Germany
 ```
 
 ### ⏭️ New Product - Skip Check

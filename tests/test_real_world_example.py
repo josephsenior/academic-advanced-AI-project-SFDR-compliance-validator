@@ -9,14 +9,17 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
-# Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root to path
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.disclaimer_validator import DisclaimerValidator
-from src.extractors.registration_parser import RegistrationParser
-from src.extractors.data_consistency_agent import DataConsistencyAgent, ReferenceData
-from src.utils.toon_serializer import dump_toon
+from backend.extractors.pipeline.orchestrator import ExtractionPipeline
+from backend.extractors.validators.disclaimer_validator import DisclaimerValidator
+from backend.extractors.parsers.registration import RegistrationParser
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.agents.reference_data import ReferenceData
+from backend.utils.toon_serializer import dump_toon
 
 
 def print_section(title):

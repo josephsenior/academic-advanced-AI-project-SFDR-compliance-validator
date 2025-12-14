@@ -8,9 +8,10 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.data_consistency_agent import DataConsistencyAgent, ReferenceData
-from src.utils.validation_report_generator import ValidationReportGenerator
+from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.agents.reference_data import ReferenceData
+from backend.utils.reporting.validation_report_generator import ValidationReportGenerator
 import json
 
 

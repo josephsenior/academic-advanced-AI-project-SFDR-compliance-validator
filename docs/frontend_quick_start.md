@@ -1,6 +1,6 @@
-# 🚀 Quick Start Guide - Compliance Dashboard
+# [START] Quick Start Guide - Compliance Dashboard
 
-## ✅ Setup Complete!
+## [OK] Setup Complete!
 
 Your UI is ready to connect to the backend API. Follow these steps:
 
@@ -15,7 +15,7 @@ python api.py
 You should see:
 ```
 ================================================================================
-🚀 Document Validation API Server
+[START] Document Validation API Server
 ================================================================================
 Server running on http://localhost:5000
 ```
@@ -24,7 +24,7 @@ Server running on http://localhost:5000
 
 Open a **NEW** terminal and run:
 ```bash
-cd "C:\Users\GIGABYTE\Desktop\Advanced Ai Project\compliance-dashboard"
+cd "C:\Users\GIGABYTE\Desktop\Advanced Ai Project\frontend"
 pnpm install  # If you haven't already
 pnpm dev
 ```
@@ -42,22 +42,22 @@ The UI will start on `http://localhost:3000`
 5. **Watch progress**: Uploading → Extracting → Validating → Complete
 6. **View results**: Issues categorized by severity and category
 
-## 📁 Test with Example Document
+## [FOLDER] Test with Example Document
 
 Use one of the example documents from the dataset:
 ```
 C:\Users\GIGABYTE\Desktop\Advanced Ai Project\dataset\example_1\
 ```
 
-## 🎨 UI Features
+## [DESIGN] UI Features
 
-✅ **Upload Page**
+[OK] **Upload Page**
 - Drag & drop file upload
 - Optional metadata form
 - Recent validations list
 - Dark mode toggle
 
-✅ **Dashboard Page**
+[OK] **Dashboard Page**
 - Real-time validation progress
 - Compliance score gauge (0-100%)
 - Issue browser with filters
@@ -69,19 +69,19 @@ C:\Users\GIGABYTE\Desktop\Advanced Ai Project\dataset\example_1\
 - Download corrected document
 - Export report
 
-## 🔧 Configuration
+## [FIX] Configuration
 
 ### Backend API
 - **URL**: `http://localhost:5000/api/v1`
-- **Config**: `compliance-dashboard/lib/api.ts`
+- **Config**: `frontend/lib/api.ts`
 - **CORS**: Already enabled in `api.py`
 
 ### Frontend
 - **Port**: 3000 (default Next.js)
-- **Config**: `compliance-dashboard/next.config.mjs`
-- **Types**: `compliance-dashboard/lib/types.ts`
+- **Config**: `frontend/next.config.mjs`
+- **Types**: `frontend/lib/types.ts`
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Backend won't start
 ```bash
@@ -105,7 +105,7 @@ python api.py
 2. Check file size (max 100MB)
 3. Check backend terminal for errors
 
-## 📊 What Happens During Validation
+## [CHART] What Happens During Validation
 
 1. **Upload** (5-10s): File is uploaded to backend
 2. **Extract** (30-60s): Document is parsed for content
@@ -127,7 +127,7 @@ python api.py
    - Suggestion
    - Auto-fix availability
 
-## 🎯 Example Workflow
+## [TARGET] Example Workflow
 
 ```bash
 # Terminal 1: Backend
@@ -135,7 +135,7 @@ cd "C:\Users\GIGABYTE\Desktop\Advanced Ai Project"
 python api.py
 
 # Terminal 2: Frontend  
-cd "C:\Users\GIGABYTE\Desktop\Advanced Ai Project\compliance-dashboard"
+cd "C:\Users\GIGABYTE\Desktop\Advanced Ai Project\frontend"
 pnpm dev
 
 # Browser
@@ -145,7 +145,7 @@ pnpm dev
 # View: 10-20 compliance issues with detailed feedback
 ```
 
-## 📋 Testing Checklist
+## [LIST] Testing Checklist
 
 - [ ] Backend API running on port 5000
 - [ ] Frontend running on port 3000
@@ -163,7 +163,7 @@ pnpm dev
 - [ ] Toggle dark mode
 - [ ] View statistics (tables/charts checked)
 
-## 🚀 Next Steps
+## [START] Next Steps
 
 ### Immediate
 - Test with real documents
@@ -180,13 +180,13 @@ pnpm dev
 - Implement rate limiting
 - Add monitoring (Sentry/Datadog)
 
-## 📞 Need Help?
+##  Need Help?
 
 - **API Docs**: `API_DOCUMENTATION.md`
 - **Backend Code**: `api.py`
-- **Frontend Code**: `compliance-dashboard/`
+- **Frontend Code**: `frontend/`
 - **Test Script**: `test_api.py`
 
 ---
 
-**🎉 You're all set! Start both servers and open http://localhost:3000**
+**[SUCCESS] You're all set! Start both servers and open http://localhost:3000**

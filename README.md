@@ -12,7 +12,7 @@ start_web_interface.bat
 
 ### Frontend Dashboard
 ```bash
-cd compliance-dashboard
+cd frontend
 pnpm install
 pnpm dev
 # Opens on http://localhost:3000
@@ -22,12 +22,12 @@ pnpm dev
 
 ### Backend (Python)
 - **API Server**: Flask REST API (`api.py`) on port 5000
-- **Extractors**: Document processing pipeline in `src/extractors/`
-- **Utilities**: Helper functions in `src/utils/`
+- **Extractors**: Document processing pipeline in `backend/extractors/`
+- **Utilities**: Helper functions in `backend/utils/`
 - **Tests**: Comprehensive test suite in `tests/`
 
 ### Frontend (Next.js)
-- **Dashboard**: React/Next.js UI in `compliance-dashboard/`
+- **Dashboard**: React/Next.js UI in `frontend/`
 - **Port**: 3000 (development)
 - **Features**: Upload documents, view validation results, manage compliance
 
@@ -102,7 +102,7 @@ Advanced Ai Project/
 ├── start_web_interface.sh   # Start script (Unix)
 ├── requirements.txt         # Python dependencies
 ├── .env                     # Environment variables
-├── compliance-dashboard/    # Frontend Next.js app
+├── frontend/    # Frontend Next.js app
 ├── src/                     # Python source code
 │   ├── extractors/          # Document processing
 │   └── utils/               # Helper utilities

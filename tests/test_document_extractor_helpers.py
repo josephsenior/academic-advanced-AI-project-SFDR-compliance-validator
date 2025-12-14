@@ -1,6 +1,6 @@
 import pytest
 
-from src.extractors.document_extractor import DocumentExtractor
+from backend.extractors.core.document_extractor import DocumentExtractor
 
 
 @pytest.fixture(scope="module")

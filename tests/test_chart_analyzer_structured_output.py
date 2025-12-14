@@ -23,7 +23,7 @@ try:
 except ImportError:
     HAS_DEPS = False
 
-from src.extractors.chart_analyzer import ChartAnalyzer
+from backend.extractors.core.chart_analyzer import ChartAnalyzer
 
 
 def create_realistic_chart_image() -> bytes:

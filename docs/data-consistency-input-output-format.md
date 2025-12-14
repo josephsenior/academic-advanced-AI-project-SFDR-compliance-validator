@@ -266,10 +266,10 @@ metadata = {
     # Summary messages
     "summary": [                              # List of human-readable summary messages
         "Source/Date Validation: 2/4 tables have complete source and date information",
-        "⚠️  2 table(s) missing source/date information",
+        "[WARNING]  2 table(s) missing source/date information",
         "Numerical Validation: 9/10 values match reference documents",
-        "⚠️  1 value(s) have inconsistencies",
-        "✅ All validations passed"  # or "❌ Validation found errors that require attention"
+        "[WARNING]  1 value(s) have inconsistencies",
+        "[OK] All validations passed"  # or "[FAIL] Validation found errors that require attention"
     ]
 }
 ```

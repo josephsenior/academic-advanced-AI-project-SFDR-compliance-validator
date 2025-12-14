@@ -3,6 +3,27 @@ REST API for Document Validation System
 Modern API endpoints for frontend integration
 """
 
+from __future__ import annotations
+
+import os
+
+from server import create_app
+
+
+# Thin entrypoint: the API is implemented in the `server` package.
+app = create_app()
+
+
+if __name__ == "__main__":
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "5000"))
+    app.run(debug=False, host=host, port=port, threaded=True, use_reloader=False)
+
+'''
+LEGACY MONOLITHIC IMPLEMENTATION (disabled)
+
+Kept temporarily for reference while refactoring. This block is not executed.
+ 
 import os
 import sys
 from pathlib import Path
@@ -11,22 +32,29 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import uuid
 import json
-from datetime import datetime
-from typing import Dict, Any, Optional
+from datetime import datetime, date
+from typing import Dict, Any, Optional, List
 import logging
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.data_consistency_agent import DataConsistencyAgent
-from src.extractors.document_corrector import DocumentCorrector
-from src.extractors.disclaimer_validator import DisclaimerValidator
-from src.utils.validation_report_generator import ValidationReportGenerator
+from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.document_corrector import DocumentCorrector
+from backend.extractors.validators.disclaimer_validator import DisclaimerValidator
+from backend.utils.reporting.validation_report_generator import ValidationReportGenerator
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Custom JSON encoder for date/datetime objects
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (datetime, date)):
+            return obj.isoformat()
+        return super().default(obj)
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend integration
@@ -37,14 +65,13 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['OUTPUT_FOLDER'] = 'outputs'
 app.config['CORRECTED_FOLDER'] = 'corrected_documents'
 
-# Create directories
-for folder in [app.config['UPLOAD_FOLDER'], app.config['OUTPUT_FOLDER'], app.config['CORRECTED_FOLDER']]:
+app = create_app()
     Path(folder).mkdir(exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'pptx', 'pdf', 'docx'}
 
 # In-memory storage for validation jobs (use Redis/DB in production)
-validation_jobs = {}
+validation_jobs: Dict[str, Dict[str, Any]] = {}
 
 
 # ==================== MODELS ====================
@@ -95,8 +122,19 @@ def update_job_status(document_id: str, status: str, progress: int = None, **kwa
         validation_jobs[document_id]['updated_at'] = datetime.utcnow().isoformat()
         if progress is not None:
             validation_jobs[document_id]['progress'] = progress
+        
+        # Convert any date objects to ISO strings before storing
+        def convert_dates(obj):
+            if isinstance(obj, (datetime, date)):
+                return obj.isoformat()
+            elif isinstance(obj, dict):
+                return {k: convert_dates(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_dates(item) for item in obj]
+            return obj
+        
         for key, value in kwargs.items():
-            validation_jobs[document_id][key] = value
+            validation_jobs[document_id][key] = convert_dates(value)
 
 
 def format_validation_result(result: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
@@ -104,9 +142,10 @@ def format_validation_result(result: Any, metadata: Dict[str, Any]) -> Dict[str,
     
     # Calculate compliance score (0-100)
     total_issues = len(result.compliance_issues)
+    # Map error->high and warning->medium for counting
     critical_count = sum(1 for i in result.compliance_issues if i.severity == 'critical')
-    high_count = sum(1 for i in result.compliance_issues if i.severity == 'high')
-    medium_count = sum(1 for i in result.compliance_issues if i.severity == 'medium')
+    high_count = sum(1 for i in result.compliance_issues if i.severity in ['high', 'error'])
+    medium_count = sum(1 for i in result.compliance_issues if i.severity in ['medium', 'warning'])
     low_count = sum(1 for i in result.compliance_issues if i.severity == 'low')
     
     # Score calculation: critical = -10, high = -5, medium = -3, low = -1
@@ -114,7 +153,7 @@ def format_validation_result(result: Any, metadata: Dict[str, Any]) -> Dict[str,
     compliance_score = max(0, min(100, 100 - penalty))
     
     # Group issues by category
-    issues_by_category = {}
+    issues_by_category: Dict[str, List[Dict[str, Any]]] = {}
     for issue in result.compliance_issues:
         category = issue.issue_category or 'general'
         if category not in issues_by_category:
@@ -138,24 +177,45 @@ def format_validation_result(result: Any, metadata: Dict[str, Any]) -> Dict[str,
         category: {
             'total': len(issues),
             'critical': sum(1 for i in issues if i['severity'] == 'critical'),
-            'high': sum(1 for i in issues if i['severity'] == 'high'),
-            'medium': sum(1 for i in issues if i['severity'] == 'medium'),
+            'high': sum(1 for i in issues if i['severity'] in ['high', 'error']),
+            'medium': sum(1 for i in issues if i['severity'] in ['medium', 'warning']),
             'low': sum(1 for i in issues if i['severity'] == 'low'),
         }
         for category, issues in issues_by_category.items()
     }
+    
+    # Create flat compliance_issues array for frontend
+    compliance_issues = [{
+        'issue_type': issue.issue_type,
+        'severity': issue.severity,
+        'category': issue.issue_category,
+        'location': issue.location,
+        'slide_number': issue.slide_number,
+        'message': issue.message,
+        'context': issue.context,
+        'suggestion': issue.suggestion,
+        'auto_fixable': getattr(issue, 'auto_fixable', False),
+        'rule_reference': issue.rule_reference,
+        'details': issue.details
+    } for issue in result.compliance_issues]
+    
+    issues_by_sev = {
+        'error': sum(1 for i in result.compliance_issues if i.severity == 'error'),
+        'warning': sum(1 for i in result.compliance_issues if i.severity == 'warning'),
+        'critical': critical_count,
+        'high': high_count,
+        'medium': medium_count,
+        'low': low_count
+    }
+    print(f"[DEBUG] issues_by_severity: {issues_by_sev}")
     
     return {
         'document_id': result.document_id,
         'overall_status': result.overall_status,
         'compliance_score': compliance_score,
         'total_issues': total_issues,
-        'issues_by_severity': {
-            'critical': critical_count,
-            'high': high_count,
-            'medium': medium_count,
-            'low': low_count
-        },
+        'compliance_issues': compliance_issues,
+        'issues_by_severity': issues_by_sev,
         'issues_by_category': issues_by_category,
         'category_counts': category_counts,
         'statistics': {
@@ -165,9 +225,8 @@ def format_validation_result(result: Any, metadata: Dict[str, Any]) -> Dict[str,
             'total_charts_analyzed': result.total_charts_analyzed,
             'charts_with_source_date': result.charts_with_source_date,
             'charts_missing_source_date': result.charts_missing_source_date,
-            'total_numerical_values_checked': result.total_numerical_values_checked,
-            'values_matching_reference': result.values_matching_reference,
-            'values_mismatched': result.values_mismatched
+            'numerical_values_checked': result.total_numerical_values_checked,
+            'values_matching_reference': result.values_matching_reference
         },
         'metadata': metadata,
         'summary': result.summary
@@ -335,16 +394,19 @@ def validate_document(document_id: str):
         
         # STEP 1: Extract document
         logger.info(f"Starting extraction for {document_id}")
-        pipeline = ExtractionPipeline(use_llm_extraction=options.get('enable_llm', False))
+        pipeline = ExtractionPipeline()
         
-        extraction_result = pipeline.extract(job['file_path'])
+        # Chart analysis is now enabled with 30-second timeout to prevent hanging
+        # If timeout occurs, chart will be marked as not analyzed
+        
+        extraction_result = pipeline.process_document(job['file_path'])
         
         # Save extraction result
         output_dir = Path(app.config['OUTPUT_FOLDER']) / document_id
         output_dir.mkdir(exist_ok=True)
         
         with open(output_dir / 'extraction.json', 'w', encoding='utf-8') as f:
-            json.dump(extraction_result, f, indent=2, ensure_ascii=False)
+            json.dump(extraction_result, f, indent=2, ensure_ascii=False, cls=DateTimeEncoder)
         
         update_job_status(document_id, ValidationStatus.VALIDATING, 50, extraction_result=extraction_result)
         
@@ -365,13 +427,30 @@ def validate_document(document_id: str):
             enable_esg_validation=options.get('enable_esg', False)
         )
         
-        validation_result = agent.validate(extraction_result, job['metadata'], document_id)
+        # Extract the actual extraction data from the pipeline result
+        # Pipeline returns {extraction_result: {...}, metadata: {...}, ...}
+        # Validator needs just the extraction_result dict {text: "", tables: [], charts: [], ...}
+        actual_extraction = extraction_result.get('extraction_result', extraction_result)
+        
+        validation_result = agent.validate(actual_extraction, job['metadata'], document_id)
         
         # Save validation result
         formatted_result = format_validation_result(validation_result, job['metadata'])
         
+        # Helper to convert dates to ISO format for JSON serialization
+        def convert_dates_for_json(obj):
+            if isinstance(obj, (datetime, date)):
+                return obj.isoformat()
+            elif isinstance(obj, dict):
+                return {k: convert_dates_for_json(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_dates_for_json(item) for item in obj]
+            return obj
+        
+        formatted_result = convert_dates_for_json(formatted_result)
+        
         with open(output_dir / 'validation_result.json', 'w', encoding='utf-8') as f:
-            json.dump(formatted_result, f, indent=2, ensure_ascii=False)
+            json.dump(formatted_result, f, indent=2, ensure_ascii=False, cls=DateTimeEncoder)
         
         update_job_status(
             document_id,
@@ -411,8 +490,27 @@ def get_status(document_id: str):
             'updated_at': '2025-12-07T...'
         }
     """
+    # Check memory first
     if document_id not in validation_jobs:
-        return jsonify({'error': 'Document not found'}), 404
+        # Try to load from disk
+        output_path = Path(app.config['OUTPUT_FOLDER']) / document_id
+        if not output_path.exists():
+            return jsonify({'error': 'Document not found'}), 404
+        
+        # Check if validation completed on disk
+        validation_file = output_path / 'validation_result.json'
+        if validation_file.exists():
+            # Return completed status for disk-based document
+            return jsonify({
+                'document_id': document_id,
+                'filename': 'Unknown',
+                'status': 'completed',
+                'progress': 100,
+                'created_at': datetime.fromtimestamp(output_path.stat().st_ctime).isoformat(),
+                'updated_at': datetime.fromtimestamp(validation_file.stat().st_mtime).isoformat()
+            })
+        else:
+            return jsonify({'error': 'Document not found'}), 404
     
     job = validation_jobs[document_id]
     
@@ -440,8 +538,23 @@ def get_results(document_id: str):
     Returns:
         Full validation results with filtering applied
     """
+    # Check memory first
     if document_id not in validation_jobs:
-        return jsonify({'error': 'Document not found'}), 404
+        # Try to load from disk
+        output_path = Path(app.config['OUTPUT_FOLDER']) / document_id / 'validation_result.json'
+        if not output_path.exists():
+            return jsonify({'error': 'Document not found'}), 404
+        
+        # Load from disk
+        try:
+            with open(output_path, 'r', encoding='utf-8') as f:
+                results = json.load(f)
+            
+            # Return directly from disk without filters for now
+            return jsonify(results), 200
+        except Exception as e:
+            logger.error(f"Failed to load results from disk: {e}")
+            return jsonify({'error': 'Failed to load results'}), 500
     
     job = validation_jobs[document_id]
     
@@ -531,12 +644,10 @@ def fix_document(document_id: str):
                         issues_to_fix.append(issue)
         
         # Apply corrections (simplified - you'll need to implement based on your corrector)
-        corrector_result = corrector.correct_document(
+        corrector_result = corrector.correct(
             original_path,
-            str(output_path),
-            job['extraction_result'],
             job['validation_result'],
-            job['metadata']
+            output_path=str(output_path)
         )
         
         fixes_applied = len(issues_to_fix)
@@ -615,15 +726,21 @@ def generate_report(document_id: str):
         output_dir = Path(app.config['OUTPUT_FOLDER']) / document_id
         
         if report_format == 'html':
-            report_path = generator.generate_html_report(
+            output_path = output_dir / 'report.html'
+            generator.generate_html_report(
                 job['validation_result'],
-                str(output_dir / 'report.html')
+                output_path
             )
-            return send_file(report_path, mimetype='text/html')
+            return send_file(str(output_path), mimetype='text/html')
         
         elif report_format == 'pdf':
-            # PDF generation (requires additional implementation)
-            return jsonify({'error': 'PDF format not yet implemented'}), 501
+            output_path = output_dir / 'report.pdf'
+            try:
+                generator.generate_pdf_report(job['validation_result'], output_path, job.get('filename'))
+                return send_file(str(output_path), mimetype='application/pdf', as_attachment=True, download_name=f"validation_report_{document_id}.pdf")
+            except Exception as e:
+                logger.error(f"PDF generation failed for {document_id}: {e}", exc_info=True)
+                return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
         
         else:
             return jsonify({'error': f'Unsupported format: {report_format}'}), 400
@@ -762,4 +879,6 @@ if __name__ == '__main__':
             time.sleep(1)
     except KeyboardInterrupt:
         print("\nShutting down...")
+
+'''
 

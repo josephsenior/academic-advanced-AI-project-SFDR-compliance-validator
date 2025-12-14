@@ -7,12 +7,12 @@ The Document Correction Tool automatically fixes validation issues in PowerPoint
 ## Features
 
 ### Auto-Fixes (Applied Automatically)
-- ✅ **Missing Source/Date**: Adds source and date notes to slides with missing information
-- ✅ **Missing Disclaimers**: Adds required disclaimers (when `--fix-disclaimers` is used)
+- [OK] **Missing Source/Date**: Adds source and date notes to slides with missing information
+- [OK] **Missing Disclaimers**: Adds required disclaimers (when `--fix-disclaimers` is used)
 
 ### Manual Review Required (Flagged, Not Auto-Fixed)
-- ⚠️ **Numerical Inconsistencies**: Values that don't match reference documents
-- ⚠️ **Cross-Reference Issues**: Performance data mismatches between text and tables
+- [WARNING] **Numerical Inconsistencies**: Values that don't match reference documents
+- [WARNING] **Cross-Reference Issues**: Performance data mismatches between text and tables
 
 ## Installation
 

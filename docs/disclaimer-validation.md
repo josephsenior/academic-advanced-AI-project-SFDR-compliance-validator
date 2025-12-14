@@ -9,7 +9,7 @@ The Disclaimer Validation module ensures that marketing documents contain all re
 
 ## Features
 
-### ✅ Complete Disclaimer Type Support
+### [OK] Complete Disclaimer Type Support
 
 All 15+ disclaimer types are now supported:
 
@@ -29,7 +29,7 @@ All 15+ disclaimer types are now supported:
 14. **SRI** - Summary Risk Indicator mentions
 15. **New Offer** - When document references new strategy
 
-### ✅ Excel Integration
+### [OK] Excel Integration
 
 - **Disclaimer Glossary**: Loads from `GLOSSAIRE DISCLAIMERS 20231122 .xlsx`
   - Supports 3 languages (English, French, German)

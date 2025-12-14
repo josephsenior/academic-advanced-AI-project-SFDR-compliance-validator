@@ -2,8 +2,15 @@ import json
 from pathlib import Path
 
 import pytest
+import sys
+from pathlib import Path
 
-from src.extractors.pipeline import ExtractionPipeline, PIPELINE_VERSION
+# Add project root to path
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from backend.extractors.pipeline import ExtractionPipeline, PIPELINE_VERSION
 
 
 @pytest.fixture

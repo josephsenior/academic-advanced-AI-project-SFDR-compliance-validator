@@ -2,7 +2,7 @@ import os
 import json
 from pathlib import Path
 
-from src.extractors.document_extractor import DocumentExtractor
+from backend.extractors.core.document_extractor import DocumentExtractor
 
 
 def main():

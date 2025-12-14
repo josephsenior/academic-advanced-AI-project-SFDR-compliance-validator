@@ -4,10 +4,15 @@ Tests the integrated ESG analyzer with real document extraction
 """
 
 import sys
-sys.path.insert(0, '.')
+from pathlib import Path
 
-from src.extractors.document_extractor import DocumentExtractor
-from src.extractors.data_consistency_agent import DataConsistencyAgent
+# Add project root to path
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from backend.extractors.core.document_extractor import DocumentExtractor
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
 import json
 from pathlib import Path
 
@@ -20,7 +25,7 @@ print('='*80)
 print(f'\n[DOC] Document: {doc_path}')
 
 # Step 1: Extract document
-print('\n⚙️  Step 1: Extracting document...')
+print('\n️  Step 1: Extracting document...')
 extractor = DocumentExtractor()
 extraction_result = extractor.extract(doc_path)
 
@@ -51,7 +56,7 @@ metadata = {
 }
 
 # Step 3: Run integrated ESG validation
-print('\n⚙️  Step 2: Running integrated ESG validation...')
+print('\n️  Step 2: Running integrated ESG validation...')
 agent = DataConsistencyAgent(
     enable_esg_validation=True,
     esg_api_key='dummy',

@@ -12,9 +12,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent))
+# Add project root to path
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-from src.extractors.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
 
 def test_esg_validation():
     """Test ESG validation with a real document"""
@@ -86,7 +89,7 @@ def test_esg_validation():
         'is_professional_client': False
     }
     
-    print("⚙️  Initializing Data Consistency Agent with ESG Validation...")
+    print("️  Initializing Data Consistency Agent with ESG Validation...")
     print()
     
     # Get API credentials

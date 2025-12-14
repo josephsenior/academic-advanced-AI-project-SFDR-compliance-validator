@@ -1,0 +1,119 @@
+from __future__ import annotations
+
+import json
+import logging
+import uuid
+from pathlib import Path
+from typing import Any
+
+from flask import current_app, jsonify, request
+from werkzeug.utils import secure_filename
+
+from ...constants import ALLOWED_EXTENSIONS, ValidationStatus
+from ...store import create_job_record, validation_jobs
+
+from . import bp
+
+logger = logging.getLogger(__name__)
+
+
+def allowed_file(filename: str) -> bool:
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@bp.post("/upload")
+def upload_document():
+    try:
+        # Backward-compatible: older clients/tests use the field name `file`.
+        document_file = request.files.get("document") or request.files.get("file")
+        if document_file is None:
+            return jsonify({"error": "No document file provided. Please upload the main document."}), 400
+
+        if document_file.filename == "":
+            return jsonify({"error": "No document file selected"}), 400
+
+        if not allowed_file(document_file.filename):
+            return (
+                jsonify({"error": f"Document file type not supported. Allowed: {', '.join(sorted(ALLOWED_EXTENSIONS))}"}),
+                400,
+            )
+
+        document_id = str(uuid.uuid4())
+
+        doc_dir = Path(current_app.config["UPLOAD_FOLDER"]) / document_id
+        doc_dir.mkdir(parents=True, exist_ok=True)
+
+        filename = secure_filename(document_file.filename)
+        file_path = doc_dir / filename
+        document_file.save(file_path)
+
+        metadata: Any = None
+        has_metadata = False
+
+        # Option A: metadata provided as uploaded JSON file.
+        metadata_file = request.files.get("metadata")
+        if metadata_file and metadata_file.filename and metadata_file.filename.endswith(".json"):
+            try:
+                metadata = json.load(metadata_file)
+                metadata_path = doc_dir / "metadata.json"
+                with open(metadata_path, "w", encoding="utf-8") as f:
+                    json.dump(metadata, f, indent=2, ensure_ascii=False)
+                has_metadata = True
+                logger.info("Metadata uploaded for %s", document_id)
+            except Exception as e:
+                logger.warning("Failed to parse metadata file: %s", e)
+
+        # Option B (legacy): metadata provided as form field containing JSON.
+        if not has_metadata:
+            metadata_raw = request.form.get("metadata")
+            if metadata_raw:
+                try:
+                    metadata = json.loads(metadata_raw)
+                    metadata_path = doc_dir / "metadata.json"
+                    with open(metadata_path, "w", encoding="utf-8") as f:
+                        json.dump(metadata, f, indent=2, ensure_ascii=False)
+                    has_metadata = True
+                    logger.info("Metadata (form) uploaded for %s", document_id)
+                except Exception as e:
+                    logger.warning("Failed to parse metadata form field: %s", e)
+
+        has_prospectus = False
+        prospectus_file = request.files.get("prospectus")
+        if prospectus_file and prospectus_file.filename:
+            prospectus_filename = secure_filename(prospectus_file.filename)
+            prospectus_path = doc_dir / f"prospectus_{prospectus_filename}"
+            prospectus_file.save(prospectus_path)
+            has_prospectus = True
+            logger.info("Prospectus uploaded for %s: %s", document_id, prospectus_filename)
+
+        job = create_job_record(document_id, filename, str(file_path))
+        job["metadata"] = metadata
+        job["has_prospectus"] = has_prospectus
+        validation_jobs[document_id] = job
+
+        logger.info(
+            "Upload complete: %s - %s (metadata: %s, prospectus: %s)",
+            document_id,
+            filename,
+            has_metadata,
+            has_prospectus,
+        )
+
+        return (
+            jsonify(
+                {
+                    "document_id": document_id,
+                    "filename": filename,
+                    "status": ValidationStatus.PENDING,
+                    "message": "Upload successful. Use /api/v1/validate/{document_id} to start validation.",
+                    "has_metadata": has_metadata,
+                    "has_prospectus": has_prospectus,
+                    "note": "Prospectus is optional. Without it, performance data validation will be limited.",
+                }
+            ),
+            201,
+        )
+
+    except Exception as e:
+        logger.error("Upload error: %s", str(e), exc_info=True)
+        return jsonify({"error": f"Upload failed: {str(e)}"}), 500

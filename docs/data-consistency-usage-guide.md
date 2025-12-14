@@ -297,12 +297,12 @@ validation_result = agent.validate(
 ```python
 # Check status
 if validation_result.overall_status == "error":
-    print("❌ Document has errors - DO NOT PUBLISH")
+    print("[FAIL] Document has errors - DO NOT PUBLISH")
     # Send notification, block publication, etc.
 elif validation_result.overall_status == "warning":
-    print("⚠️ Document has warnings - Review required")
+    print("[WARNING] Document has warnings - Review required")
 else:
-    print("✅ Document passed validation")
+    print("[OK] Document passed validation")
 
 # Get actionable issues
 errors = [

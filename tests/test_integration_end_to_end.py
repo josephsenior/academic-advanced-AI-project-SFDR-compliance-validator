@@ -14,9 +14,10 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.extractors.pipeline import ExtractionPipeline
-from src.extractors.data_consistency_agent import DataConsistencyAgent, ReferenceData
-from src.extractors.chart_analyzer import ChartAnalyzer
+from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.agents.reference_data import ReferenceData
+from backend.extractors.core.chart_analyzer import ChartAnalyzer
 
 
 def test_end_to_end_flow():
@@ -43,7 +44,7 @@ def test_end_to_end_flow():
     pipeline.document_extractor.enable_chart_analysis = True
     if pipeline.document_extractor.enable_chart_analysis:
         try:
-            from src.extractors.chart_analyzer import ChartAnalyzer
+            from backend.extractors.core.chart_analyzer import ChartAnalyzer
             pipeline.document_extractor.chart_analyzer = ChartAnalyzer(use_llm=True)
         except Exception as e:
             print(f"  WARNING: Chart analyzer not available: {e}")

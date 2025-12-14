@@ -21,7 +21,7 @@ All fields below are emitted by `ExtractionPipeline` and saved under `outputs/<d
 | Field | Description | Usage |
 |-------|-------------|-------|
 | `slide/paragraph/page_summaries[].disclaimer_categories` | Keyword-driven tags: performance, ESG risk, backtest, simulation, etc. | Unified compliance engine knows which rules apply per section. |
-| `metadata.disclaimer_glossary_matches` | Each detected disclaimer resolved to official text (language + client type) from `src/extractors/data/disclaimer_glossary.json`. | Rule engine simply checks mandatory entry presence, no fuzzy matching. |
+| `metadata.disclaimer_glossary_matches` | Each detected disclaimer resolved to official text (language + client type) from `backend/extractors/data/disclaimer_glossary.json`. | Rule engine simply checks mandatory entry presence, no fuzzy matching. |
 
 ## Performance Insight
 

@@ -102,10 +102,10 @@ validation_result = agent.validate(
 
 # Access results
 for issue in validation_result.source_date_issues:
-    print(f"❌ {issue.message}")
+    print(f"[FAIL] {issue.message}")
 
 for inconsistency in validation_result.numerical_inconsistencies:
-    print(f"⚠️  {inconsistency.message}")
+    print(f"[WARNING]  {inconsistency.message}")
 ```
 
 ### Without Reference Data

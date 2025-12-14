@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from src.extractors.pipeline import ExtractionPipeline
+from backend.extractors.pipeline import ExtractionPipeline
 
 
 @pytest.fixture

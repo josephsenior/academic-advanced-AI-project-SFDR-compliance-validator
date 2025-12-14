@@ -21,11 +21,11 @@ Clean, organized structure with no duplicate or obsolete files.
 
 ## Folder Organization
 
-### `src/` - Source Code
+### `backend/` - Source Code
 Main application source code with all extraction and validation modules.
 
 **Structure:**
-- `src/extractors/` - All extraction agents and processors
+- `backend/extractors/` - All extraction agents and processors
   - `pipeline.py` - Main extraction pipeline orchestrator
   - `document_extractor.py` - Document content extraction
   - `metadata_extractor.py` - Metadata extraction
@@ -36,7 +36,7 @@ Main application source code with all extraction and validation modules.
   - `registration_parser.py` - Country registration validation
   - `compliance_rules.py` - Compliance rule definitions and models
   
-- `src/utils/` - Utility modules
+- `backend/utils/` - Utility modules
   - `reference_data_manager.py` - Reference data loading/management
   - `metrics.py` - Metrics collection and monitoring
   - `pydantic_v1_patch.py` - Python 3.12 compatibility patch
@@ -163,26 +163,26 @@ HTML templates for web interfaces.
 ## Key Modules
 
 ### Data Consistency Agent
-**File:** `src/extractors/data_consistency_agent.py` (2337 lines)
+**File:** `backend/extractors/data_consistency_agent.py` (2337 lines)
 
 **Main orchestrator for all validation tasks:**
-1. ✅ Source/Date validation - All tables/charts have proper attribution
-2. ✅ Numerical validation - Compare against reference documents
-3. ✅ Cross-reference validation - Performance text vs tables consistency
-4. ✅ Compliance rules validation - All regulatory requirements
-5. ✅ ESG/SFDR compliance - ESG claims validation
-6. ✅ Disclaimer validation - Required disclaimer presence
-7. ✅ Performance rules - 10Y/5Y history, benchmarks
-8. ✅ Structure rules - Cover page, slide 2 requirements
-9. ✅ Content rules - Morningstar ratings, team changes
-10. ✅ Registration rules - Country authorization validation
-11. ✅ Fund type rules - Dated fund, PE, ETF specific rules
-12. ✅ Date recency validation - Date format and age checks
+1. [OK] Source/Date validation - All tables/charts have proper attribution
+2. [OK] Numerical validation - Compare against reference documents
+3. [OK] Cross-reference validation - Performance text vs tables consistency
+4. [OK] Compliance rules validation - All regulatory requirements
+5. [OK] ESG/SFDR compliance - ESG claims validation
+6. [OK] Disclaimer validation - Required disclaimer presence
+7. [OK] Performance rules - 10Y/5Y history, benchmarks
+8. [OK] Structure rules - Cover page, slide 2 requirements
+9. [OK] Content rules - Morningstar ratings, team changes
+10. [OK] Registration rules - Country authorization validation
+11. [OK] Fund type rules - Dated fund, PE, ETF specific rules
+12. [OK] Date recency validation - Date format and age checks
 
 **Output:** Unified `ComplianceIssue` array with all validation results
 
 ### Pipeline Architecture
-**File:** `src/extractors/pipeline.py`
+**File:** `backend/extractors/pipeline.py`
 
 **Complete extraction and validation flow:**
 1. Document extraction (metadata, content, tables, charts)
@@ -195,21 +195,21 @@ HTML templates for web interfaces.
 ## Recent Cleanup (December 7, 2025)
 
 ### Removed Files
-- ❌ `data_consistency_agent_v2.py` - Incomplete modular version (5% complete)
-- ❌ `validators/` folder - Incomplete validator modules
-- ❌ `scripts/convert_issues_to_compliance.py` - Obsolete conversion script
-- ❌ `docs/modular_validation_architecture.md` - Obsolete documentation
+- [FAIL] `data_consistency_agent_v2.py` - Incomplete modular version (5% complete)
+- [FAIL] `validators/` folder - Incomplete validator modules
+- [FAIL] `scripts/convert_issues_to_compliance.py` - Obsolete conversion script
+- [FAIL] `docs/modular_validation_architecture.md` - Obsolete documentation
 
 ### Organized Files
-- ✅ Moved all debug scripts to `debug_scripts/`
-- ✅ Moved all test files to `tests/`
-- ✅ Moved example scripts to `examples/`
-- ✅ Moved test outputs to `test_outputs/`
-- ✅ Clean root directory with only essential files
+- [OK] Moved all debug scripts to `debug_scripts/`
+- [OK] Moved all test files to `tests/`
+- [OK] Moved example scripts to `examples/`
+- [OK] Moved test outputs to `test_outputs/`
+- [OK] Clean root directory with only essential files
 
 ## Current Status
 
-✅ **All 6 modules fully implemented and integrated**
+[OK] **All 6 modules fully implemented and integrated**
 1. Document Extraction
 2. Disclaimer Validation
 3. ESG Compliance
@@ -217,15 +217,15 @@ HTML templates for web interfaces.
 5. Structure Validation
 6. Registration Validation
 
-✅ **Unified output format** - Single `ComplianceIssue` array
-✅ **Complete functionality** - All 16 validation methods working
-✅ **Clean codebase** - No duplicate or obsolete files
-✅ **Well-organized** - Clear folder structure
-✅ **Production-ready** - Tested and validated
+[OK] **Unified output format** - Single `ComplianceIssue` array
+[OK] **Complete functionality** - All 16 validation methods working
+[OK] **Clean codebase** - No duplicate or obsolete files
+[OK] **Well-organized** - Clear folder structure
+[OK] **Production-ready** - Tested and validated
 
 ## Development Workflow
 
-1. **Add new features** → `src/extractors/`
+1. **Add new features** → `backend/extractors/`
 2. **Write tests** → `tests/`
 3. **Create examples** → `examples/`
 4. **Update documentation** → `docs/`

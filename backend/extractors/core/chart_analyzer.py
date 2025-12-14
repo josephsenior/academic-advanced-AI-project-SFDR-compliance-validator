@@ -34,11 +34,7 @@ try:
     from langchain_core.prompts import ChatPromptTemplate
     LANGCHAIN_AVAILABLE = True
     
-    # Import PydanticOutputParser once
-    try:
-        from langchain.output_parsers import PydanticOutputParser
-    except ImportError:
-        from langchain_core.output_parsers import PydanticOutputParser  # type: ignore[no-redef]
+    # Defer PydanticOutputParser imports to runtime if needed; avoid module-level import
 except ImportError:
     ChatOpenAI = None  # type: ignore
     HumanMessage = None  # type: ignore

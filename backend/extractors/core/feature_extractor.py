@@ -17,11 +17,18 @@ from typing import List, Dict, Any, Optional, TYPE_CHECKING
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-# Import PydanticOutputParser once, not in TYPE_CHECKING block
-try:
-    from langchain.output_parsers import PydanticOutputParser
-except ImportError:
-    from langchain_core.output_parsers import PydanticOutputParser  # type: ignore[no-redef]
+from typing import Any as _Any
+
+
+def _import_pydantic_output_parser():
+    """Runtime import for PydanticOutputParser to avoid static import errors when
+    langchain packages are not installed in the type-checking environment.
+    """
+    try:
+        from langchain_core.output_parsers import PydanticOutputParser
+    except Exception:
+        from langchain.output_parsers import PydanticOutputParser
+    return PydanticOutputParser
 
 from dotenv import load_dotenv
 
@@ -100,8 +107,9 @@ class ContentFeatureExtractor:
         # self.llm.http_async_client = async_client
         
 
-        # Ninitializiw Pydantic parser - to convert LLM response to structured format
-        self.parser = PydanticOutputParser(pydantic_object=ContentFeatures)  # type: ignore[type-var]
+        # Initialize parser at runtime (defer import to avoid mypy import-not-found)
+        PydanticOutputParser = _import_pydantic_output_parser()
+        self.parser: _Any = PydanticOutputParser(pydantic_object=ContentFeatures)  # type: ignore[type-var]
         
 
         # Create prompt template - template we send to LLM

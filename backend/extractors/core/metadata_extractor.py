@@ -212,13 +212,8 @@ class MetadataExtractor:
     
     def _create_llm_extractor(self, config: Dict[str, Any]):
         """Create LLM-based metadata extractor using LangChain"""
-        try:
             from langchain_openai import ChatOpenAI
             from langchain_core.prompts import ChatPromptTemplate
-            try:
-                from langchain_core.output_parsers import PydanticOutputParser
-            except ImportError:
-                from langchain.output_parsers import PydanticOutputParser
             import httpx
             
             # Disable SSL verification for self-signed certificates

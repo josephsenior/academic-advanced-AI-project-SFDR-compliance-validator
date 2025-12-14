@@ -18,12 +18,8 @@ except ImportError:
     Presentation = None
     Image = None
 
-# Try to use comtypes for better rendering (Windows)
-try:
-    import comtypes.client
-    HAS_COMTYPES = True
-except ImportError:
-    HAS_COMTYPES = False
+# Defer comtypes import to runtime rendering functions to avoid import-not-found
+HAS_COMTYPES = False
 
 
 def render_slides_to_images(

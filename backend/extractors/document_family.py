@@ -302,7 +302,7 @@ def detect_document_family(metadata: Dict[str, Any]) -> Optional[str]:
 
 if __name__ == "__main__":
     # Test with example metadata
-    from .extractors.metadata_extractor import MetadataExtractor
+    from .core.metadata_extractor import MetadataExtractor
     
     test_files = [
         "dataset/example_1/47861-6PG-FR-ODDO BHF Algo Trend US-20250831 v3 pn.pptx",

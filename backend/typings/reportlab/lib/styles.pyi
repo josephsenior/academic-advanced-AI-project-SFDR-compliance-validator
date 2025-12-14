@@ -1,0 +1,6 @@
+from typing import Any
+
+class ParagraphStyle:
+    def __init__(self, name: str, **kwargs: Any) -> None: ...
+
+def getSampleStyleSheet() -> Any: ...

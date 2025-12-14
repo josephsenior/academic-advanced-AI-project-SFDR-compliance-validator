@@ -77,7 +77,7 @@ def get_vision_model_config() -> dict:
 
 def create_feature_extractor():
     """Create ContentFeatureExtractor with Token Factory LLM"""
-    from .feature_extractor import ContentFeatureExtractor
+    from ..core.feature_extractor import ContentFeatureExtractor
     
     config = get_token_factory_config()
     return ContentFeatureExtractor(**config)

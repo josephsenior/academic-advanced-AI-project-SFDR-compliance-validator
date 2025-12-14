@@ -1,0 +1,6 @@
+from typing import Any
+
+class Image:
+    def save(self, fp: Any, format: str | None = ...) -> None: ...
+
+def open(fp: Any) -> Image: ...

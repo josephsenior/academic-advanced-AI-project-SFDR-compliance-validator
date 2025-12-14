@@ -50,5 +50,7 @@ compliance-dashboard/node_modules/
 compliance-dashboard/.next/
 compliance-dashboard/.turbo/
 compliance-dashboard/tsconfig.tsbuildinfo
-compliance-dashboard/out/
+ 
+# Ignore generated outputs
+outputs/
 \n# Exclude frontend build/deps\nfrontend/node_modules/\nfrontend/.next/\nfrontend/.next/dev/\nfrontend/tsconfig.tsbuildinfo\n

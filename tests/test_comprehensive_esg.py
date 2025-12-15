@@ -73,7 +73,7 @@ esg_issues = [
        'engaging' in issue.issue_type.lower()
 ]
 
-print(f'\n[CHART] RESULTS:')
+print('\n[CHART] RESULTS:')
 print(f'   Total Issues: {len(result.compliance_issues)}')
 print(f'   ESG-Specific Issues: {len(esg_issues)}')
 
@@ -86,7 +86,7 @@ print(f'\n   [RED] Critical: {len(critical)}')
 print(f'   [FAIL] Errors/High: {len(errors)}')
 print(f'   [WARNING]  Warnings: {len(warnings)}')
 
-print(f'\n[SEARCH] ESG ISSUES DETAIL:')
+print('\n[SEARCH] ESG ISSUES DETAIL:')
 print('='*80)
 
 for i, issue in enumerate(esg_issues, 1):
@@ -110,7 +110,7 @@ for i, issue in enumerate(esg_issues, 1):
     
     # Show details if available
     if hasattr(issue, 'details') and issue.details:
-        print(f'   [LIST] Details:')
+        print('   [LIST] Details:')
         for key, value in issue.details.items():
             if isinstance(value, list) and len(value) > 3:
                 print(f'      {key}: {value[:3]} ... ({len(value)} total)')
@@ -129,7 +129,7 @@ if 'structure' in extraction_result and 'slides' in extraction_result['structure
     print(f'   Structure slides: {len(structure_slides)}')
 else:
     structure_slides = []
-    print(f'   No structure.slides found')
+    print('   No structure.slides found')
 
 total_text = ""
 for slide in slides:

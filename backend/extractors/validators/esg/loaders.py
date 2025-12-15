@@ -6,7 +6,7 @@ Classes for loading documents and metadata.
 
 import logging
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict
 import fitz
 from pptx import Presentation
 from docx import Document

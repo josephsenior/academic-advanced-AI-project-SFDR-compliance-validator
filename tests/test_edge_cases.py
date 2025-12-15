@@ -3,10 +3,7 @@ Comprehensive Test Suite - Edge Cases
 Tests edge cases for fund type detection and validation
 """
 
-import json
 import pytest
-from pathlib import Path
-from typing import Dict, Any
 
 # Mock imports for testing
 from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent

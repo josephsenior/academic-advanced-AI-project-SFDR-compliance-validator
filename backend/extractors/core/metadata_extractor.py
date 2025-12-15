@@ -34,7 +34,7 @@ def _import_pydantic_output_parser():
         mod = importlib.import_module("langchain.output_parsers")
     return getattr(mod, "PydanticOutputParser")
 
-from ..parsers.filename_parser import FilenameParser, parse_filename
+from ..parsers.filename_parser import FilenameParser
 
 
 class MetadataDetectionResult(BaseModel):

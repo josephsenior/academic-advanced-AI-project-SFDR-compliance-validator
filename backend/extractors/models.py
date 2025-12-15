@@ -5,7 +5,6 @@ Defines the structure of extracted content features
 
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
-from datetime import date
 
 
 class ESGFeature(BaseModel):

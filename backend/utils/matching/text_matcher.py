@@ -134,7 +134,7 @@ class EnhancedTextMatcher:
         # LEVEL 1: Exact Match (100% confidence)
         if normalized_required in normalized_target:
             if self.debug:
-                print(f"       [OK] EXACT MATCH (100%)")
+                print("       [OK] EXACT MATCH (100%)")
             return True, 1.0, "exact_match"
         
         # LEVEL 2: High Similarity via SequenceMatcher (85%+)

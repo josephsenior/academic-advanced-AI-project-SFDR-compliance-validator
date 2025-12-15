@@ -6,7 +6,6 @@ Runs all test files and provides a comprehensive summary.
 
 import sys
 import subprocess
-import os
 from pathlib import Path
 from dotenv import load_dotenv
 

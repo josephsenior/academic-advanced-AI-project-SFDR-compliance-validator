@@ -4,10 +4,8 @@ Slide Renderer Utility
 Converts PowerPoint slides to images for preview and visualization.
 """
 
-import os
 from pathlib import Path
 from typing import List, Optional
-from io import BytesIO
 
 try:
     from pptx import Presentation

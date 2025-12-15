@@ -19,11 +19,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from backend.extractors.parsers.registration import (
     RegistrationParser,
-    CountryMention,
     FundRegistration,
     COUNTRY_PATTERNS,
-    DISTRIBUTION_KEYWORDS,
-    GENERAL_REFERENCE_KEYWORDS,
 )
 
 
@@ -292,7 +289,7 @@ class TestComprehensiveValidation(unittest.TestCase):
         # Should have issues for Spain, Italy, Portugal (not registered)
         issues = result['issues']
         if len(issues) == 0:
-            print(f"  DEBUG WARNING: No issues detected. Check if distribution context is working.")
+            print("  DEBUG WARNING: No issues detected. Check if distribution context is working.")
             print(f"  DEBUG: Registered countries: {parser.registrations['Test Fund'].registered_countries}")
         
         self.assertGreater(len(issues), 0, "Should detect unregistered countries")

@@ -39,6 +39,6 @@ def download_document(document_id: str):
         logger.info("Serving file for document_id=%s path=%s", document_id, file_path_str)
         return send_file(file_path_str, as_attachment=True, download_name=f"{download_type}_{job.get('filename', document_id)}")
 
-    except Exception as e:
+    except Exception:
         logger.exception("Download error for %s", document_id)
         return jsonify({"error": "Download failed due to server error"}), 500

@@ -13,7 +13,7 @@ except ImportError:
     # Fallback if running as script
     pass
 
-from typing import List, Dict, Any, Optional, TYPE_CHECKING
+from typing import List, Dict, Any, Optional
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -33,7 +33,7 @@ def _import_pydantic_output_parser():
 
 from dotenv import load_dotenv
 
-from ..models import ContentFeatures, ESGFeature, PerformanceFeature, CountryFeature, CompanyFeature, FinancialTermFeature
+from ..models import ContentFeatures
 
 load_dotenv()
 

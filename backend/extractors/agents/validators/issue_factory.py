@@ -3,7 +3,7 @@ Factory functions for creating ComplianceIssue objects
 """
 
 import re
-from typing import Optional, Dict, Any
+from typing import Optional
 
 from ...rules import (
     ComplianceIssue,

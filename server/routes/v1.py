@@ -11,7 +11,6 @@ from flask import Blueprint, current_app, jsonify, request, send_file
 from werkzeug.utils import secure_filename
 
 from ..constants import ALLOWED_EXTENSIONS, ValidationStatus
-from ..serialization import DateTimeEncoder
 from ..store import create_job_record, update_job_status, validation_jobs
 
 logger = logging.getLogger(__name__)

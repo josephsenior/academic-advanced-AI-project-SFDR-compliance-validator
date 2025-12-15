@@ -96,10 +96,10 @@ def test_api():
             
             if result['status'] == 'completed':
                 validation_result = result['results']
-                print(f"\n   Validation Results:")
+                print("\n   Validation Results:")
                 print(f"   - Compliance Score: {validation_result['compliance_score']}%")
                 print(f"   - Total Issues: {validation_result['total_issues']}")
-                print(f"   - By Severity:")
+                print("   - By Severity:")
                 for severity, count in validation_result['issues_by_severity'].items():
                     print(f"     * {severity.capitalize()}: {count}")
                 print(f"   - Tables Checked: {validation_result['statistics']['total_tables_checked']}")
@@ -157,7 +157,7 @@ def test_api():
         
         if result['documents']:
             doc = result['documents'][0]
-            print(f"   Latest Document:")
+            print("   Latest Document:")
             print(f"   - ID: {doc['document_id'][:20]}...")
             print(f"   - Filename: {doc['filename']}")
             print(f"   - Status: {doc['status']}")
@@ -172,7 +172,7 @@ def test_api():
         response = requests.get(f"{API_BASE_URL}/report/{document_id}?format=json")
         
         if response.status_code == 200:
-            print(f"   Report generated successfully")
+            print("   Report generated successfully")
             print(f"   Size: {len(response.content)} bytes")
             print("   [OK] Report generation passed")
         else:
@@ -185,7 +185,7 @@ def test_api():
     print("[OK] API Test Suite Complete")
     print("=" * 80)
     print(f"\nDocument ID for further testing: {document_id}")
-    print(f"\nTry these commands:")
+    print("\nTry these commands:")
     print(f"  curl {API_BASE_URL}/status/{document_id}")
     print(f"  curl {API_BASE_URL}/results/{document_id}")
     print(f"  curl -X POST {API_BASE_URL}/fix/{document_id}")

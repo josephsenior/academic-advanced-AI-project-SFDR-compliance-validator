@@ -25,7 +25,7 @@ load_dotenv()
 sys.path.insert(0, str(Path(__file__).parent))
 
 from backend.extractors.pipeline import ExtractionPipeline
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent, ReferenceData
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
 from backend.extractors.compliance_rules import ClientType, FundType
 
 
@@ -100,7 +100,7 @@ def main():
             return
         
         doc_id = result.get('document_id')
-        print(f"\n[SUCCESS] Extraction complete!")
+        print("\n[SUCCESS] Extraction complete!")
         print(f"Document ID: {doc_id}")
         
     except Exception as e:
@@ -125,7 +125,7 @@ def main():
     metadata = extraction_data.get('metadata', {})
     features = extraction_data.get('features', {})
     
-    print(f"Loaded extraction data:")
+    print("Loaded extraction data:")
     print(f"  - Text length: {len(extraction.get('text', ''))}")
     print(f"  - Tables: {len(extraction.get('tables', []))}")
     print(f"  - Slides: {len(extraction.get('slides', []))}")
@@ -165,7 +165,7 @@ def main():
         document_id=doc_id
     )
     
-    print(f"\n[SUCCESS] Data Consistency Validation complete!")
+    print("\n[SUCCESS] Data Consistency Validation complete!")
     print(f"Overall Status: {consistency_result.overall_status.upper()}")
     
     # ============================================================================
@@ -190,7 +190,7 @@ def main():
     print("=" * 80)
     
     # Source/Date Issues
-    print(f"\nSource & Date Validation:")
+    print("\nSource & Date Validation:")
     print(f"  - Tables checked: {consistency_result.total_tables_checked}")
     print(f"  - Tables with source/date: {consistency_result.tables_with_source_date}")
     print(f"  - Tables missing source/date: {consistency_result.tables_missing_source_date}")
@@ -200,7 +200,7 @@ def main():
             print(f"    • [{issue.severity.upper()}] {issue.message} (at {issue.location})")
     
     # Numerical Inconsistencies
-    print(f"\nNumerical Validation:")
+    print("\nNumerical Validation:")
     print(f"  - Values checked: {consistency_result.total_numerical_values_checked}")
     print(f"  - Values matching reference: {consistency_result.values_matching_reference}")
     print(f"  - Inconsistencies found: {len(consistency_result.numerical_inconsistencies)}")
@@ -210,14 +210,14 @@ def main():
     
     # Cross-Reference Issues
     if consistency_result.cross_reference_issues:
-        print(f"\nCross-Reference Issues:")
+        print("\nCross-Reference Issues:")
         print(f"  - Issues found: {len(consistency_result.cross_reference_issues)}")
         for issue in consistency_result.cross_reference_issues[:5]:  # Show first 5
             print(f"    • [{issue.severity.upper()}] {issue.message}")
     
     # Compliance Issues
     if consistency_result.compliance_issues:
-        print(f"\nCompliance Issues:")
+        print("\nCompliance Issues:")
         print(f"  - Issues found: {len(consistency_result.compliance_issues)}")
         for issue in consistency_result.compliance_issues[:10]:  # Show first 10
             print(f"    • [{issue.severity.upper()}] {issue.message} (at {issue.location})")
@@ -228,11 +228,11 @@ def main():
     print(f"{status_text}: Overall Status: {consistency_result.overall_status.upper()}")
     
     if consistency_result.has_errors:
-        print(f"ERROR: Document has ERRORS - requires correction")
+        print("ERROR: Document has ERRORS - requires correction")
     elif consistency_result.has_warnings:
-        print(f"WARNING: Document has WARNINGS - review recommended")
+        print("WARNING: Document has WARNINGS - review recommended")
     else:
-        print(f"PASS: Document passes all consistency checks")
+        print("PASS: Document passes all consistency checks")
     
     print(f"\n{'='*80}")
     print("Generated Output Files:")

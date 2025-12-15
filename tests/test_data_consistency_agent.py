@@ -10,9 +10,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent, DataConsistencyResult
-from backend.extractors.agents.reference_data import ReferenceData, create_reference_data_from_dict
-from backend.extractors.rules.models import ComplianceIssue
-from backend.extractors.rules.enums import ComplianceIssueType
+from backend.extractors.agents.reference_data import create_reference_data_from_dict
 
 def test_source_date_validation():
     """Test source and date validation"""

@@ -7,7 +7,7 @@ Validates country mentions against registration data.
 from typing import Dict, List, Optional, Set, Tuple, Any
 from datetime import datetime
 
-from .models import FundRegistration, CountryMention
+from .models import FundRegistration
 from .detector import detect_country_mentions
 
 

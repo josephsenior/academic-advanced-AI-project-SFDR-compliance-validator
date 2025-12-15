@@ -10,7 +10,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from backend.extractors.pipeline import ExtractionPipeline
 from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
-from backend.extractors.agents.reference_data import ReferenceData
 from backend.utils.reporting.validation_report_generator import ValidationReportGenerator
 import json
 

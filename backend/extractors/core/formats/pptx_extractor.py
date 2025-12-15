@@ -79,7 +79,7 @@ def extract_pptx(
     charts_data: List[Dict[str, Any]] = []
     
     debug_log = open('c:/temp/extraction_debug.log', 'a', encoding='utf-8')
-    debug_log.write(f"\n=== Starting PowerPoint extraction ===\n")
+    debug_log.write("\n=== Starting PowerPoint extraction ===\n")
     debug_log.flush()
     
     for slide_idx, slide in enumerate(prs.slides, 1):
@@ -131,7 +131,7 @@ def extract_pptx(
                     
                     # Try chart analysis first (if enabled)
                     if enable_chart_analysis and chart_analyzer:
-                        debug_log.write(f"  Calling chart analyzer...\n")
+                        debug_log.write("  Calling chart analyzer...\n")
                         debug_log.flush()
                         try:
                             chart_data = chart_analyzer.extract_chart_data_from_image(

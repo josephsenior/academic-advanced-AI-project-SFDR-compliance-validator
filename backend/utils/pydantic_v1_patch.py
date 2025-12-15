@@ -1,5 +1,4 @@
 import sys
-import os
 
 # --- MONKEYPATCH START ---
 # Fix for Pydantic v1 on Python 3.12 (ForwardRef._evaluate signature change)
@@ -26,7 +25,7 @@ try:
 
     pydantic.v1.typing.evaluate_forwardref = _patched_evaluate_forwardref
     # print("Applied Pydantic v1 ForwardRef monkeypatch for Python 3.12")
-except (ImportError, AttributeError) as e:
+except (ImportError, AttributeError):
     # print(f"Could not apply monkeypatch: {e}")
     pass
 # --- MONKEYPATCH END ---

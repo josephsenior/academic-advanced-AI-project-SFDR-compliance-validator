@@ -6,7 +6,7 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor
 from backend.extractors.rules.models import ComplianceIssue
-from backend.extractors.rules.enums import ComplianceIssueType, ClientType
+from backend.extractors.rules.enums import ComplianceIssueType
 from .base import BaseValidator
 
 logger = logging.getLogger(__name__)

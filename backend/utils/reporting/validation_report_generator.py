@@ -10,8 +10,7 @@ Generates multiple output formats from DataConsistencyResult:
 
 import json
 from pathlib import Path
-from typing import Dict, Any, Optional
-from datetime import datetime
+from typing import Dict, Optional
 
 from backend.extractors.agents.data_consistency_agent import DataConsistencyResult  # type: ignore
 

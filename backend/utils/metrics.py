@@ -12,13 +12,9 @@ from .metrics.core import (
 )
 
 # Import additional functionality if available
-import json
 import logging
-from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
-from dataclasses import asdict
-from collections import defaultdict
+from typing import Dict, List, Any
 
 logger = logging.getLogger(__name__)
 

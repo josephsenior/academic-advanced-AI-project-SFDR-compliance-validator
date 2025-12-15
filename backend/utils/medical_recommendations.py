@@ -9,7 +9,7 @@ Generates actionable compliance recommendations with medical-style reporting:
 - Prognosis and follow-up recommendations
 """
 
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict
 
 
 class ComplianceSeverity:

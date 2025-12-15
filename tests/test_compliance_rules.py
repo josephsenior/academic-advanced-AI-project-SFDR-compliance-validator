@@ -1,6 +1,5 @@
 import unittest
 import sys
-import os
 from pathlib import Path
 
 # Add project root to path
@@ -10,7 +9,6 @@ if project_root not in sys.path:
 
 # Standard imports - no need for complex importlib hacks since we use 'backend' now
 from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
-from backend.extractors.rules.models import ComplianceIssue
 from backend.extractors.rules.enums import ComplianceIssueType
 
 class TestComplianceRules(unittest.TestCase):

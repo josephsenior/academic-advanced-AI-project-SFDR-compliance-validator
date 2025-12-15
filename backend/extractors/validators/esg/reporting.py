@@ -100,7 +100,7 @@ def generate_enhanced_compliance_report(result: ESGComplianceOutput, output_path
             else:
                 offTopic_slides.append((img.slide_number, img.slide_title))
         
-        lines.append(f"\n  [CHART] Résumé:")
+        lines.append("\n  [CHART] Résumé:")
         lines.append(f"     • Total slides : {total_images}")
         lines.append(f"     [GREEN] Slides PARFAITES (ESG complet) : {len(perfect_slides)}")
         lines.append(f"     [YELLOW] Slides BONNES (ESG basique) : {len(good_slides)}")

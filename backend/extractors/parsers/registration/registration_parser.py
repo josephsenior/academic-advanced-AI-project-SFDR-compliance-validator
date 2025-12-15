@@ -9,8 +9,7 @@ from typing import Dict, List, Optional, Any, Set
 from datetime import datetime
 
 from .models import FundRegistration, CountryMention
-from .constants import COUNTRY_PATTERNS
-from .file_utils import find_latest_registration_file, extract_file_version
+from .file_utils import find_latest_registration_file
 from .parser import load_registrations
 from .detector import detect_country_mentions
 from .validator import (
@@ -19,7 +18,6 @@ from .validator import (
     validate_country_mentions,
     validate_temporal,
     validate_document,
-    find_registration,
 )
 
 

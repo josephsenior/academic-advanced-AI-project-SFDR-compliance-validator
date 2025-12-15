@@ -5,7 +5,7 @@ Extracts text and metadata from PDF files using native text extraction or OCR.
 """
 
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 import re
 
 from pdf2image import convert_from_path

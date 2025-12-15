@@ -5,10 +5,8 @@ This script processes documents from the dataset and saves complete extraction r
 including metadata, content extraction, features, and summaries to test_output directory.
 """
 
-import os
 import sys
 from pathlib import Path
-from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -91,14 +89,14 @@ def main():
             
             if result.get('status') == 'success':
                 processed += 1
-                print(f"[SUCCESS] Document processed successfully")
+                print("[SUCCESS] Document processed successfully")
                 print(f"  Document ID: {result.get('document_id')}")
                 print(f"  Output directory: {result.get('output_paths', {}).get('document_dir', 'N/A')}")
                 
                 # Print summary
                 summary = result.get('summary', {})
                 if summary:
-                    print(f"\n  Summary:")
+                    print("\n  Summary:")
                     print(f"    - Slides: {summary.get('total_slides', 0)}")
                     print(f"    - Tables: {summary.get('total_tables', 0)}")
                     print(f"    - Charts: {summary.get('total_charts', 0)}")
@@ -114,13 +112,13 @@ def main():
                 # Print output files
                 output_paths = result.get('output_paths', {})
                 if output_paths:
-                    print(f"\n  Output files:")
+                    print("\n  Output files:")
                     for key, path in output_paths.items():
                         if path:
                             print(f"    - {key}: {path}")
             else:
                 errors += 1
-                print(f"[ERROR] Document processing failed")
+                print("[ERROR] Document processing failed")
                 error_list = result.get('errors', [])
                 for error in error_list:
                     print(f"  - {error}")

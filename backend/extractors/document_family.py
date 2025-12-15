@@ -5,7 +5,7 @@ Groups related documents (versions, languages, presentation + prospectus)
 
 import os
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple, Any
+from typing import Dict, List, Optional, Any
 from collections import defaultdict
 
 import uuid

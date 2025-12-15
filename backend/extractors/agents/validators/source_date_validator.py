@@ -6,7 +6,7 @@ Validates that all tables and charts have proper source and date information.
 
 import re
 from typing import Dict, Any, List, Optional, Tuple
-from datetime import datetime, date
+from datetime import datetime
 from dateutil import parser as date_parser
 
 from ...rules import ComplianceIssue, ClientType, FundType

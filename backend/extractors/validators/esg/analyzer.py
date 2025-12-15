@@ -216,7 +216,7 @@ Example:
                     response_format={"type": "json_object"}
                 )
                 break
-            except openai.RateLimitError as e:
+            except openai.RateLimitError:
                 if attempt < max_retries - 1:
                     wait_time = 2 ** attempt
                     logger.warning(f"[WARNING] Rate limit hit, retrying in {wait_time}s...")

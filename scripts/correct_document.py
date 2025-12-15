@@ -13,9 +13,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from backend.extractors.pipeline import ExtractionPipeline
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent, ReferenceData
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
 from backend.extractors.document_corrector import DocumentCorrector
-from backend.extractors.validators.disclaimer_validator import DisclaimerValidator
 
 
 def main():
@@ -86,7 +85,7 @@ Examples:
         sys.exit(1)
     
     if input_path.suffix.lower() != '.pptx':
-        print(f"[WARN] Only .pptx format is currently supported")
+        print("[WARN] Only .pptx format is currently supported")
         print(f"   File: {input_path.suffix}")
     
     print("=" * 80)
@@ -115,7 +114,7 @@ Examples:
             # Check if it's just a serialization error (extraction may have succeeded)
             if 'extraction_result' in pipeline_result:
                 print(f"[WARN] Pipeline has errors but extraction succeeded: {errors}")
-                print(f"[OK] Continuing with extracted data...")
+                print("[OK] Continuing with extracted data...")
             else:
                 print(f"[ERROR] Pipeline failed: {errors}")
                 sys.exit(1)
@@ -125,7 +124,7 @@ Examples:
         metadata = pipeline_result.get('metadata', {})
         
         if not extraction_result:
-            print(f"[ERROR] No extraction result available")
+            print("[ERROR] No extraction result available")
             sys.exit(1)
         
     except Exception as e:
@@ -153,7 +152,7 @@ Examples:
             document_id=pipeline_result['document_id']
         )
         
-        print(f"[OK] Validation completed")
+        print("[OK] Validation completed")
         print(f"   Status: {validation_result.overall_status.upper()}")
         print(f"   Source/Date issues: {len(validation_result.source_date_issues)}")
         print(f"   Numerical inconsistencies: {len(validation_result.numerical_inconsistencies)}")
@@ -177,7 +176,7 @@ Examples:
                 metadata=metadata,
                 document_id=pipeline_result['document_id']
             )
-            print(f"[OK] Disclaimer validation completed")
+            print("[OK] Disclaimer validation completed")
             if hasattr(disclaimer_result, 'total_missing'):
                 print(f"   Missing disclaimers: {disclaimer_result.total_missing}")
         except Exception as e:
@@ -200,7 +199,7 @@ Examples:
             print(f"[ERROR] Correction failed: {correction_result.error_message}")
             sys.exit(1)
         
-        print(f"[OK] Correction completed!")
+        print("[OK] Correction completed!")
         print(f"   Corrected file: {correction_result.corrected_path}")
         print(f"   Fixes applied: {len(correction_result.fixes_applied)}")
         print(f"   Fixes failed: {len(correction_result.fixes_failed)}")

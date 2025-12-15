@@ -49,7 +49,7 @@ except Exception as e:
     extractor = DocumentExtractor(enable_chart_analysis=True)
     extraction_result = extractor.extract(str(pptx_path))
 
-print(f"[OK] Extraction complete")
+print("[OK] Extraction complete")
 print(f"  - Slides: {extraction_result.get('total_slides', 0)}")
 print(f"  - Tables: {extraction_result.get('total_tables', 0)}")
 print(f"  - Charts: {extraction_result.get('total_charts', 0)}")
@@ -67,7 +67,7 @@ validation_result = validator.validate(
     metadata=metadata
 )
 
-print(f"[OK] Validation complete")
+print("[OK] Validation complete")
 print(f"  - Total issues: {len(validation_result.compliance_issues)}")
 print(f"  - Critical: {sum(1 for i in validation_result.compliance_issues if i.severity == 'critical')}")
 print(f"  - High: {sum(1 for i in validation_result.compliance_issues if i.severity in ['high', 'error'])}")
@@ -128,14 +128,14 @@ extraction_file = output_dir / 'extraction.json'
 with open(extraction_file, 'w', encoding='utf-8') as f:
     json.dump(convert_dates(extraction_result), f, indent=2, ensure_ascii=False)
 
-print(f"[OK] Results saved")
+print("[OK] Results saved")
 print(f"  - {validation_file}")
 print(f"  - {extraction_file}")
 
 print("\n" + "="*70)
 print("PIPELINE COMPLETE")
 print("="*70)
-print(f"\nSummary:")
+print("\nSummary:")
 print(f"  Status: {formatted_result['overall_status']}")
 print(f"  Issues: {formatted_result['total_issues']}")
 print(f"  Charts: {formatted_result['statistics']['total_charts_analyzed']}")
@@ -144,6 +144,6 @@ print(f"  Tables: {formatted_result['statistics']['total_tables_checked']}")
 if formatted_result['statistics']['total_charts_analyzed'] > 0:
     print(f"\n[OK] Chart analysis WORKING - {formatted_result['statistics']['total_charts_analyzed']} charts analyzed!")
 else:
-    print(f"\n[!] Chart analysis NOT working - 0 charts found")
+    print("\n[!] Chart analysis NOT working - 0 charts found")
 
 print(f"\nView full results in: {output_dir.absolute()}")

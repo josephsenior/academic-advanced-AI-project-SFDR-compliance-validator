@@ -14,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from backend.extractors.pipeline import ExtractionPipeline
 from backend.extractors.agents.data_consistency_agent import (
     DataConsistencyAgent,
-    ReferenceData,
-    create_reference_data_from_dict
+    ReferenceData
 )
 
 

@@ -8,7 +8,7 @@ import sys
 import json
 from pathlib import Path
 from dotenv import load_dotenv
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 # Load environment variables
 load_dotenv()
@@ -99,14 +99,14 @@ def run_document(file_path: str, metadata_path: str, test_name: str) -> Dict[str
         
         if validation_result.esg_analysis:
             esg_data = validation_result.esg_analysis
-            print(f"\nESG Enrichment Data:")
+            print("\nESG Enrichment Data:")
             print(f"  - Level: {esg_data.get('esg_level', {}).get('level', 'N/A')}")
             print(f"  - SFDR Article: {esg_data.get('esg_level', {}).get('sfdr_article', 'N/A')}")
             print(f"  - ESG %: {esg_data.get('esg_mentions', {}).get('esg_percentage', 'N/A')}%")
             print(f"  - Commercial Mentions: {esg_data.get('esg_mentions', {}).get('commercial_esg_mentions', 'N/A')}")
         
         if esg_issues:
-            print(f"\nESG Issues:")
+            print("\nESG Issues:")
             for i, issue in enumerate(esg_issues, 1):
                 print(f"  {i}. {issue.issue_type} ({issue.severity})")
                 print(f"     {issue.message}")
@@ -120,7 +120,7 @@ def run_document(file_path: str, metadata_path: str, test_name: str) -> Dict[str
             if issue.fund_type:
                 fund_types.add(issue.fund_type)
         
-        print(f"\nDetected Types:")
+        print("\nDetected Types:")
         print(f"  - Client Types: {', '.join(client_types) if client_types else 'None'}")
         print(f"  - Fund Types: {', '.join(fund_types) if fund_types else 'None'}")
         

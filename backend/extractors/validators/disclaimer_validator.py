@@ -9,9 +9,8 @@ Validates that required disclaimers are present in documents based on:
 Enhanced with multi-level text matching for improved accuracy.
 """
 
-import os
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Any, Tuple
+from typing import Dict, List, Optional, Any, Tuple
 from pydantic import BaseModel, Field
 
 try:

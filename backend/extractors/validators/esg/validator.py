@@ -6,7 +6,7 @@ Validates ESG compliance based on analysis results.
 
 import logging
 from pathlib import Path
-from typing import Optional, List, Literal
+from typing import Optional, Literal
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from .models import ESGComplianceOutput, ESGViolation

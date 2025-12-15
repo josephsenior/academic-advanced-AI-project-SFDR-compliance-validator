@@ -1,5 +1,3 @@
-import pytest
-from pathlib import Path
 
 from backend.extractors.agents.models import DataConsistencyResult
 from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent

@@ -3,7 +3,7 @@ Country Validator
 """
 from typing import Dict, Any, List, Optional
 from backend.extractors.rules.models import ComplianceIssue
-from backend.extractors.rules.enums import ComplianceIssueType, ClientType, FundType
+from backend.extractors.rules.enums import ComplianceIssueType
 from .base import BaseValidator
 
 class CountryValidator(BaseValidator):

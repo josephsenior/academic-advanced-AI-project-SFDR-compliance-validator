@@ -6,10 +6,7 @@ Extracts numerical data, metadata, and validates chart content for data consiste
 """
 
 import base64
-import os
-import sys
 import threading
-import time
 # Apply Pydantic v1 patch for Python 3.12 compatibility
 try:
     from backend.utils import pydantic_v1_patch
@@ -17,7 +14,7 @@ except ImportError:
     # Fallback if running as script
     pass
 
-from typing import Dict, List, Any, Optional, TYPE_CHECKING
+from typing import Dict, List, Any, Optional
 from io import BytesIO
 from pydantic import BaseModel, Field
 
@@ -158,7 +155,7 @@ class ChartAnalyzer:
         """
         # Debug logging at entry point
         with open('c:/temp/chart_entry_debug.log', 'a', encoding='utf-8') as f:
-            f.write(f"\n=== analyze_chart_image called ===\n")
+            f.write("\n=== analyze_chart_image called ===\n")
             f.write(f"Location: {location}\n")
             f.write(f"use_llm: {self.use_llm}\n")
             f.write(f"llm exists: {self.llm is not None}\n")
@@ -167,7 +164,7 @@ class ChartAnalyzer:
         if not self.use_llm or not self.llm:
             # Fallback: basic detection
             with open('c:/temp/chart_analysis_debug.log', 'a', encoding='utf-8') as f:
-                f.write(f"\n=== FALLBACK MODE: LLM not available ===\n")
+                f.write("\n=== FALLBACK MODE: LLM not available ===\n")
                 f.write(f"use_llm: {self.use_llm}\n")
                 f.write(f"llm exists: {self.llm is not None}\n")
                 f.flush()
@@ -296,7 +293,7 @@ class ChartAnalyzer:
             analysis = self._parse_text_response(response.content)
             
             with open('c:/temp/final_analysis.log', 'a', encoding='utf-8') as f:
-                f.write(f"\n=== Final Analysis ===\n")
+                f.write("\n=== Final Analysis ===\n")
                 f.write(f"is_chart: {analysis.is_chart}\n")
                 f.write(f"confidence: {analysis.confidence}\n")
                 if analysis.metadata:
@@ -437,7 +434,7 @@ class ChartAnalyzer:
                     
                     # Debug log
                     with open('c:/temp/json_parse_debug.log', 'a', encoding='utf-8') as f:
-                        f.write(f"\n=== Attempting to parse JSON ===\n")
+                        f.write("\n=== Attempting to parse JSON ===\n")
                         f.write(f"Original (first 300 chars): {match.group(1)[:300]}\n")
                         f.write(f"After fixes (first 300 chars): {json_str[:300]}\n")
                         f.flush()
@@ -488,7 +485,7 @@ class ChartAnalyzer:
                                 return ChartAnalysis(**data)
                             except Exception:
                                 continue
-                except (json.JSONDecodeError, TypeError, ValueError, KeyError) as e:
+                except (json.JSONDecodeError, TypeError, ValueError, KeyError):
                     continue
         
         # If no valid JSON found, try to extract information from text
@@ -633,7 +630,7 @@ class ChartAnalyzer:
         analysis = self.analyze_chart_image(image_bytes, location)
         
         with open('c:/temp/extract_wrapper.log', 'a', encoding='utf-8') as f:
-            f.write(f"\n=== extract_chart_data_from_image ===\n")
+            f.write("\n=== extract_chart_data_from_image ===\n")
             f.write(f"analysis object: {analysis}\n")
             f.write(f"analysis.is_chart: {analysis.is_chart}\n")
             f.write(f"type(analysis): {type(analysis)}\n")
@@ -655,7 +652,7 @@ class ChartAnalyzer:
         # If we have chart data but is_chart is False, override it
         if not analysis.is_chart and has_chart_data:
             with open('c:/temp/extract_wrapper.log', 'a', encoding='utf-8') as f:
-                f.write(f"Auto-detecting as chart because chart data was extracted\n")
+                f.write("Auto-detecting as chart because chart data was extracted\n")
                 f.write(f"  - Has metadata: {analysis.metadata is not None}\n")
                 f.write(f"  - Chart type: {analysis.metadata.chart_type if analysis.metadata else None}\n")
                 f.write(f"  - Data points: {len(analysis.data_points)}\n")
@@ -669,7 +666,7 @@ class ChartAnalyzer:
         
         if not analysis.is_chart:
             with open('c:/temp/extract_wrapper.log', 'a', encoding='utf-8') as f:
-                f.write(f"Returning False because no chart data was found\n")
+                f.write("Returning False because no chart data was found\n")
                 f.flush()
             return {
                 'is_chart': False,

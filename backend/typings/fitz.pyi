@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any
 
 class Page:
     def get_text(self) -> str: ...

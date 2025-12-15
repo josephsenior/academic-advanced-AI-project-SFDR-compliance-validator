@@ -2,7 +2,7 @@
 Utility functions for working with reference data
 """
 
-from typing import Optional, Dict, Any
+from typing import Optional
 from ..reference_data import ReferenceData
 from .utils import periods_match
 

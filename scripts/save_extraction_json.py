@@ -38,7 +38,7 @@ result = convert_dates(result)
 with open(output_file, 'w', encoding='utf-8') as f:
     json.dump(result, f, indent=2, ensure_ascii=False)
 
-print(f" Extraction complete!")
+print(" Extraction complete!")
 print(f"  - Charts: {result.get('total_charts', 0)}")
 print(f"  - Tables: {result.get('total_tables', 0)}")
 print(f"  - Slides: {result.get('total_slides', 0)}")

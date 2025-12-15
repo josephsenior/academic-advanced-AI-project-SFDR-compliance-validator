@@ -5,9 +5,9 @@ from __future__ import annotations
 import logging
 from typing import Dict, Any, List, Optional
 
-from ..rules.models import ComplianceIssue, ValidationResult
+from ..rules.models import ComplianceIssue
 from .models import DataConsistencyResult
-from ..rules.enums import ComplianceIssueType, ClientType, FundType
+from ..rules.enums import ClientType, FundType
 
 # Import new validators
 from ..validators.fund_type import FundTypeValidator
@@ -17,11 +17,8 @@ from ..validators.country import CountryValidator
 from ..validators.content import ContentValidator
 from ..validators.esg_compliance import EsgValidator
 from ..validators.esg.analyzer import ESGAnalyzer
-from .reference_data import ReferenceData, create_reference_data_from_dict
 from datetime import datetime, timezone
-from typing import Any
 import re
-from datetime import datetime
 
 logger = logging.getLogger(__name__)
 

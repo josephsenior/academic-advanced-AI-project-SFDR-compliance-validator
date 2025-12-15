@@ -8,19 +8,17 @@ Orchestrates the complete document extraction pipeline including:
 - Output persistence
 """
 
-import os
 import uuid
 import json
 import re
 import hashlib
 from pathlib import Path
 from typing import Dict, Any, Optional, List
-from datetime import datetime, date, timezone
+from datetime import datetime, timezone
 from functools import lru_cache
 
 from ..core.metadata_extractor import MetadataExtractor
 from ..core.document_extractor import DocumentExtractor
-from ..core.feature_extractor import ContentFeatureExtractor
 from ..config.llm_config import create_feature_extractor
 from ..models import ContentFeatures
 
@@ -478,19 +476,19 @@ class ExtractionPipeline:
             result['metadata']['file_checksum'] = file_checksum
             
             # Step 2: Skip family detection (database removed)
-            print(f"[Step 2/6] Skipping document family detection")
+            print("[Step 2/6] Skipping document family detection")
             family_id = None
             result['family_id'] = family_id
             result['steps_completed'].append('family_detection_skipped')
             
             # Step 3: Create document identifier
-            print(f"[Step 3/6] Creating document record...")
+            print("[Step 3/6] Creating document record...")
             document_id = str(uuid.uuid4())
             result['document_id'] = document_id
             result['steps_completed'].append('document_record_created')
             
             # Step 4: Extract document content
-            print(f"[Step 4/6] Extracting document content...")
+            print("[Step 4/6] Extracting document content...")
             features_dump = None
             try:
                 extraction_result = self.document_extractor.extract(str(file_path_obj))
@@ -555,7 +553,7 @@ class ExtractionPipeline:
             
             # Step 5: Extract features using LLM (if enabled)
             if self.use_llm and self.feature_extractor and extraction_result.get('text'):
-                print(f"[Step 5/6] Extracting content features using LLM...")
+                print("[Step 5/6] Extracting content features using LLM...")
                 try:
                     text_content = extraction_result.get('text', '')
                     
@@ -592,14 +590,14 @@ class ExtractionPipeline:
                     result['warnings'].append(error_msg)
                     print(f"  WARNING: {error_msg}")
             else:
-                print(f"[Step 5/6] Skipping feature extraction (LLM disabled or no text)")
+                print("[Step 5/6] Skipping feature extraction (LLM disabled or no text)")
                 result['steps_completed'].append('feature_extraction_skipped')
             
             # Step 6: Finalize
-            print(f"[Step 6/6] Finalizing...")
+            print("[Step 6/6] Finalizing...")
             result['status'] = 'success'
             result['steps_completed'].append('finalization')
-            print(f"  [OK] Document processing completed successfully!")
+            print("  [OK] Document processing completed successfully!")
             
             # Log performance metrics
             if self.enable_metrics and self.metrics:

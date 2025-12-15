@@ -5,7 +5,7 @@ Extracts text, tables, and metadata from Word documents.
 """
 
 from pathlib import Path
-from typing import Dict, List, Any, Optional, TYPE_CHECKING
+from typing import Dict, List, Any, TYPE_CHECKING
 from io import BytesIO
 import re
 

@@ -10,7 +10,7 @@ Example filenames:
 
 import re
 from datetime import datetime
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional
 from pathlib import Path
 
 

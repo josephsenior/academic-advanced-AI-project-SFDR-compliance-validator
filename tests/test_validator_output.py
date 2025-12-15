@@ -17,6 +17,6 @@ result = agent.validate(extraction, metadata)
 print(f"Validation result type: {type(result)}")
 print(f"Has compliance_issues: {hasattr(result, 'compliance_issues')}")
 print(f"compliance_issues count: {len(result.compliance_issues)}")
-print(f"\nFirst 3 issues:")
+print("\nFirst 3 issues:")
 for i, issue in enumerate(result.compliance_issues[:3], 1):
     print(f"{i}. [{issue.severity}] {issue.issue_type}: {issue.message}")

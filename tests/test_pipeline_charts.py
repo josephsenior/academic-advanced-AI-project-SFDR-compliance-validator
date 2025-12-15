@@ -23,7 +23,7 @@ print(f"Extraction output path: {result['output_paths']['extraction']}")
 with open(result['output_paths']['extraction'], 'r', encoding='utf-8') as f:
     extraction = json.load(f)
 
-print(f"\nExtraction results:")
+print("\nExtraction results:")
 print(f"  Total slides: {extraction.get('total_slides', 0)}")
 print(f"  Total tables: {extraction.get('total_tables', 0)}")
 print(f"  Total charts: {extraction.get('total_charts', 0)}")

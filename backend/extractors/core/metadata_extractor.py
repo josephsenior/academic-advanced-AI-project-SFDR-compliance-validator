@@ -27,11 +27,12 @@ def _import_pydantic_output_parser():
     This centralises the import to avoid defining the same name multiple times
     in different function scopes which can trigger mypy `no-redef` errors.
     """
+    import importlib
     try:
-        from langchain_core.output_parsers import PydanticOutputParser
+        mod = importlib.import_module("langchain_core.output_parsers")
     except Exception:
-        from langchain.output_parsers import PydanticOutputParser
-    return PydanticOutputParser
+        mod = importlib.import_module("langchain.output_parsers")
+    return getattr(mod, "PydanticOutputParser")
 
 from ..parsers.filename_parser import FilenameParser, parse_filename
 
@@ -212,14 +213,15 @@ class MetadataExtractor:
     
     def _create_llm_extractor(self, config: Dict[str, Any]):
         """Create LLM-based metadata extractor using LangChain"""
+        try:
             from langchain_openai import ChatOpenAI
             from langchain_core.prompts import ChatPromptTemplate
             import httpx
-            
+
             # Disable SSL verification for self-signed certificates
             http_client = httpx.Client(verify=False)
             http_async_client = httpx.AsyncClient(verify=False)
-            
+
             llm = ChatOpenAI(
                 model=config['model_name'],
                 api_key=(lambda: config['api_key']),
@@ -229,9 +231,8 @@ class MetadataExtractor:
             # Manually set clients to bypass validation issues in langchain-openai 0.0.2
             # llm.http_client = http_client
             # llm.http_async_client = http_async_client
-            
-            PydanticOutputParser = _import_pydantic_output_parser()
-            parser = PydanticOutputParser(pydantic_object=MetadataDetectionResult)
+
+            parser = _import_pydantic_output_parser()(pydantic_object=MetadataDetectionResult)
             format_instructions = parser.get_format_instructions()
             
             template = """You are an expert in analyzing financial marketing documents for compliance purposes.
@@ -318,8 +319,7 @@ Your task is to extract specific metadata from the document text that is require
         try:
             # Get format instructions from parser (needed for prompt template)
             # The parser is already created in _create_llm_extractor, but we need format_instructions here
-            PydanticOutputParser = _import_pydantic_output_parser()
-            parser = PydanticOutputParser(pydantic_object=MetadataDetectionResult)
+            parser = _import_pydantic_output_parser()(pydantic_object=MetadataDetectionResult)
             format_instructions = parser.get_format_instructions()
             
             # Call LLM with both required variables
@@ -354,9 +354,22 @@ Your task is to extract specific metadata from the document text that is require
             return content_meta
             
         except Exception as e:
-            # If LLM fails, return empty dict (will fall back to keyword detection)
+            # If LLM fails, fall back to keyword-based detection and return that result.
             print(f"LLM metadata extraction error: {e}")
-            return {}
+            try:
+                # Ensure we prefer the `text` field for keyword fallback when full_text is a placeholder
+                fallback_input = dict(extraction_result)
+                txt = extraction_result.get('text') or ''
+                # If full_text is missing or obviously placeholder like '...', prefer 'text'
+                if not fallback_input.get('full_text') or fallback_input.get('full_text') == '...':
+                    fallback_input['full_text'] = txt
+                fallback = self._extract_from_content(fallback_input)
+            except Exception:
+                fallback = {}
+            # Mark confidence low and that detection was attempted
+            fallback['llm_confidence'] = 0.0
+            fallback['content_detection_attempted'] = True
+            return fallback
     
     def _extract_from_content(self, extraction_result: Dict[str, Any]) -> Dict[str, Any]:
         """

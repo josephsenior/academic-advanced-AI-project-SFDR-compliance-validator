@@ -15,7 +15,7 @@ import re
 import hashlib
 from pathlib import Path
 from typing import Dict, Any, Optional, List
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from functools import lru_cache
 
 from ..core.metadata_extractor import MetadataExtractor
@@ -107,14 +107,21 @@ class ExtractionPipeline:
         
         # Ensure required fields
         normalized.setdefault('pipeline_version', PIPELINE_VERSION)
-        normalized.setdefault('extracted_at', datetime.utcnow().isoformat() + 'Z')
+        normalized.setdefault('extracted_at', datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
         
-        # Normalize boolean fields
+        # Trim string fields and normalize simple boolean-like strings
+        for key, value in list(normalized.items()):
+            if isinstance(value, str):
+                normalized[key] = value.strip()
+
         for key in ['is_professional_client', 'is_new_product', 'is_new_strategy', 'is_sicav_product']:
             if key in normalized:
                 value = normalized[key]
                 if isinstance(value, str):
                     normalized[key] = value.lower() in ('true', 'yes', '1', 'y')
+
+        # Ensure pipeline version is present (tests expect 'pipeline_version')
+        normalized.setdefault('pipeline_version', PIPELINE_VERSION)
         
         return normalized
     
@@ -223,10 +230,10 @@ class ExtractionPipeline:
             features_path = document_dir / "features.json"
             self._write_json(features_path, features_dump)
         
-        manifest_payload = {
+            manifest_payload = {
             "document_id": document_id,
             "original_filename": original_filename,
-            "processed_at": datetime.utcnow().isoformat() + "Z",
+                "processed_at": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
             "paths": {
                 "metadata": str(metadata_path.relative_to(self.output_dir)),
                 "extraction": str(extraction_path.relative_to(self.output_dir)),
@@ -403,8 +410,9 @@ class ExtractionPipeline:
         return matches
     
     def process_document(
-        self, 
-        file_path_str: str,
+        self,
+        file_path_str: Optional[str] = None,
+        file_path: Optional[str] = None,
         metadata_json_path: Optional[str] = None,
         uploaded_by: Optional[str] = None,
         chunk_size: int = 10000
@@ -421,12 +429,16 @@ class ExtractionPipeline:
         Returns:
             Dict with processing results and document_id
         """
-        file_path = Path(file_path_str)
-        
-        if not file_path.exists():
-            raise FileNotFoundError(f"Document not found: {file_path}")
-        
-        file_checksum = self._compute_file_hash(file_path)
+        # Backwards-compatible: accept either `file_path_str` or `file_path` keyword
+        effective_path = file_path_str or file_path
+        if effective_path is None:
+            raise TypeError("process_document requires a file path (file_path_str or file_path)")
+        file_path_obj = Path(effective_path)
+
+        if not file_path_obj.exists():
+            raise FileNotFoundError(f"Document not found: {file_path_obj}")
+
+        file_checksum = self._compute_file_hash(file_path_obj)
         
         result: Dict[str, Any] = {
             'document_id': None,
@@ -442,10 +454,10 @@ class ExtractionPipeline:
         
         try:
             # Step 1: Extract basic metadata
-            print(f"[Step 1/6] Extracting metadata from: {file_path.name}")
+            print(f"[Step 1/6] Extracting metadata from: {file_path_obj.name}")
             try:
                 metadata = self.metadata_extractor.extract(
-                    file_path=str(file_path),
+                    file_path=str(file_path_obj),
                     metadata_json_path=metadata_json_path
                 )
                 normalized_metadata = self._normalize_metadata(metadata)
@@ -456,9 +468,9 @@ class ExtractionPipeline:
                 result['errors'].append(error_msg)
                 print(f"  WARNING: {error_msg}")
                 normalized_metadata = {
-                    'filename': file_path.name,
-                    'file_type': file_path.suffix.upper().lstrip('.'),
-                    'file_path': str(file_path),
+                    'filename': file_path_obj.name,
+                    'file_type': file_path_obj.suffix.upper().lstrip('.'),
+                    'file_path': str(file_path_obj),
                     'pipeline_version': PIPELINE_VERSION
                 }
                 result['metadata'] = normalized_metadata
@@ -481,7 +493,7 @@ class ExtractionPipeline:
             print(f"[Step 4/6] Extracting document content...")
             features_dump = None
             try:
-                extraction_result = self.document_extractor.extract(str(file_path))
+                extraction_result = self.document_extractor.extract(str(file_path_obj))
                 
                 if 'error' in extraction_result:
                     raise Exception(extraction_result['error'])
@@ -519,7 +531,7 @@ class ExtractionPipeline:
                 # Enhance metadata with content-based detection
                 try:
                     enhanced_metadata = self.metadata_extractor.extract(
-                        file_path=str(file_path),
+                        file_path=str(file_path_obj),
                         metadata_json_path=metadata_json_path,
                         extraction_result=extraction_result
                     )
@@ -630,7 +642,7 @@ class ExtractionPipeline:
             
             output_paths = self._persist_outputs(
                 document_id=document_id,
-                original_filename=file_path.name,
+                original_filename=file_path_obj.name,
                 metadata=result['metadata'],
                 extraction_result=extraction_result,
                 features_dump=features_dump,
@@ -640,8 +652,8 @@ class ExtractionPipeline:
             
             manifest_payload = {
                 "document_id": document_id,
-                "original_filename": file_path.name,
-                "processed_at": datetime.utcnow().isoformat() + "Z",
+                "original_filename": file_path_obj.name,
+                "processed_at": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
                 "file_checksum": file_checksum,
                 "paths": {
                     "manifest": str(Path(output_paths['manifest']).relative_to(self.output_dir)),

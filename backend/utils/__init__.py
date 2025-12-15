@@ -5,7 +5,7 @@ Utility modules for the extraction pipeline
 # Re-export from new modular structure for backward compatibility
 
 # Serialization
-from .serialization import dump_toon, load_toon
+# TOON serialization removed; JSON-based serialization is used where needed.
 
 # Reporting
 from .reporting import ValidationReportGenerator
@@ -65,8 +65,6 @@ except ImportError:
     ReferenceDataManager = None
 
 __all__ = [
-    'dump_toon',
-    'load_toon',
     'ValidationReportGenerator',
 ]
 

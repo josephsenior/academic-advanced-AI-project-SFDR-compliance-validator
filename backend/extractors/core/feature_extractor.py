@@ -24,11 +24,12 @@ def _import_pydantic_output_parser():
     """Runtime import for PydanticOutputParser to avoid static import errors when
     langchain packages are not installed in the type-checking environment.
     """
+    import importlib
     try:
-        from langchain_core.output_parsers import PydanticOutputParser
+        mod = importlib.import_module("langchain_core.output_parsers")
     except Exception:
-        from langchain.output_parsers import PydanticOutputParser
-    return PydanticOutputParser
+        mod = importlib.import_module("langchain.output_parsers")
+    return getattr(mod, "PydanticOutputParser")
 
 from dotenv import load_dotenv
 
@@ -108,8 +109,7 @@ class ContentFeatureExtractor:
         
 
         # Initialize parser at runtime (defer import to avoid mypy import-not-found)
-        PydanticOutputParser = _import_pydantic_output_parser()
-        self.parser: _Any = PydanticOutputParser(pydantic_object=ContentFeatures)  # type: ignore[type-var]
+        self.parser: _Any = _import_pydantic_output_parser()(pydantic_object=ContentFeatures)  # type: ignore[type-var]
         
 
         # Create prompt template - template we send to LLM

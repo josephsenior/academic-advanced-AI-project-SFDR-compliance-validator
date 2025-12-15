@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import Any, Dict
 
 from .constants import ValidationStatus
@@ -17,8 +17,8 @@ def create_job_record(document_id: str, filename: str, file_path: str) -> Dict[s
         "file_path": file_path,
         "status": ValidationStatus.PENDING,
         "progress": 0,
-        "created_at": datetime.utcnow().isoformat(),
-        "updated_at": datetime.utcnow().isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+        "updated_at": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
         "extraction_result": None,
         "validation_result": None,
         "metadata": None,
@@ -42,7 +42,7 @@ def update_job_status(document_id: str, status: str, progress: int | None = None
 
     job = validation_jobs[document_id]
     job["status"] = status
-    job["updated_at"] = datetime.utcnow().isoformat()
+    job["updated_at"] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     if progress is not None:
         job["progress"] = progress
 

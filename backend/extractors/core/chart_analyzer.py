@@ -33,13 +33,11 @@ try:
     from langchain_core.messages import HumanMessage
     from langchain_core.prompts import ChatPromptTemplate
     LANGCHAIN_AVAILABLE = True
-    
-    # Defer PydanticOutputParser imports to runtime if needed; avoid module-level import
 except ImportError:
     ChatOpenAI = None  # type: ignore
     HumanMessage = None  # type: ignore
     ChatPromptTemplate = None  # type: ignore
-    PydanticOutputParser = None  # type: ignore
+        # Defer PydanticOutputParser imports to runtime if needed; avoid module-level import
 
 from ..config.llm_config import get_vision_model_config
 

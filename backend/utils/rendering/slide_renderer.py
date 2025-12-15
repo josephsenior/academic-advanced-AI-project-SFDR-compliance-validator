@@ -81,7 +81,7 @@ def create_slide_placeholder(slide, output_path: Path, slide_num: int, scale: fl
     draw = ImageDraw.Draw(img)
     
     # Draw slide border
-    draw.rectangle([10, 10, width-10, height-10], outline='#cccccc', width=2)
+    draw.rectangle((10, 10, width-10, height-10), outline='#cccccc', width=2)
     
     # Add slide number
     try:
@@ -161,22 +161,22 @@ def annotate_slide_image(
             y2 = int(bbox[3] * img.height)
             
             # Draw rectangle outline
-            draw.rectangle([x1, y1, x2, y2], outline=color, width=3)
+            draw.rectangle((x1, y1, x2, y2), outline=color, width=3)
             
             # Draw corner markers
             corner_size = 10
             # Top-left
-            draw.rectangle([x1, y1, x1+corner_size, y1+3], fill=color)
-            draw.rectangle([x1, y1, x1+3, y1+corner_size], fill=color)
+            draw.rectangle((x1, y1, x1+corner_size, y1+3), fill=color)
+            draw.rectangle((x1, y1, x1+3, y1+corner_size), fill=color)
             # Top-right
-            draw.rectangle([x2-corner_size, y1, x2, y1+3], fill=color)
-            draw.rectangle([x2-3, y1, x2, y1+corner_size], fill=color)
+            draw.rectangle((x2-corner_size, y1, x2, y1+3), fill=color)
+            draw.rectangle((x2-3, y1, x2, y1+corner_size), fill=color)
             # Bottom-left
-            draw.rectangle([x1, y2-3, x1+corner_size, y2], fill=color)
-            draw.rectangle([x1, y2-corner_size, x1+3, y2], fill=color)
+            draw.rectangle((x1, y2-3, x1+corner_size, y2), fill=color)
+            draw.rectangle((x1, y2-corner_size, x1+3, y2), fill=color)
             # Bottom-right
-            draw.rectangle([x2-corner_size, y2-3, x2, y2], fill=color)
-            draw.rectangle([x2-3, y2-corner_size, x2, y2], fill=color)
+            draw.rectangle((x2-corner_size, y2-3, x2, y2), fill=color)
+            draw.rectangle((x2-3, y2-corner_size, x2, y2), fill=color)
             
             # Position text near the change
             text_x = x1
@@ -188,7 +188,7 @@ def annotate_slide_image(
             
             # Draw marker with number
             radius = 18
-            draw.ellipse([x-radius, y-radius, x+radius, y+radius], fill=color, outline='white', width=3)
+            draw.ellipse((x-radius, y-radius, x+radius, y+radius), fill=color, outline='white', width=3)
             
             # Draw number inside circle
             try:
@@ -248,7 +248,7 @@ def annotate_slide_image(
                 text_bg_y2 = img.height
             
             # Draw background
-            draw.rectangle([text_bg_x1, text_bg_y1, text_bg_x2, text_bg_y2], 
+            draw.rectangle((text_bg_x1, text_bg_y1, text_bg_x2, text_bg_y2), 
                          fill='white', outline=color, width=2)
             
             # Draw text lines

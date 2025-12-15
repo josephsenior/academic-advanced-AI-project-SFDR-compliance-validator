@@ -174,9 +174,10 @@ def test_data_consistency_output():
         print("[FAILED] TEST FAILED: Some files are missing")
         print("=" * 70)
     
-    return document_id
+    assert all_exist, "Some output files are missing for data consistency test"
 
 
 if __name__ == "__main__":
+    # Allow manual invocation for debugging; when run under pytest the function will be collected.
     test_data_consistency_output()
 

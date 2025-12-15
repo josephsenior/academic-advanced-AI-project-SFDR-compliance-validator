@@ -60,68 +60,82 @@ def extract_pdf(
     legal_notice_page = None
     performance_table_entries: List[Dict[str, Any]] = []
 
-    # Try native text extraction first
+    # Try native text extraction first, using dynamic import to avoid static mypy import errors
     try:
-        from PyPDF2 import PdfReader
-        reader = PdfReader(str(file_path))
-        extracted_texts: List[str] = []
-        for page in reader.pages:
-            try:
-                t = page.extract_text() or ""
-            except Exception:
-                t = ""
-            extracted_texts.append(t.strip())
+        import importlib
+        PyPDF2_mod = None
+        try:
+            PyPDF2_mod = importlib.import_module('PyPDF2')
+        except Exception:
+            PyPDF2_mod = None
 
-        total_chars = sum(len(t) for t in extracted_texts)
-        if total_chars > 200:
-            # Good quality text-based PDF; avoid OCR
-            use_ocr = False
-            for page_num, text in enumerate(extracted_texts, 1):
-                pages_data.append({
-                    'page_number': page_num,
-                    'text': text,
-                    'ocr_engine': None
-                })
-                if text:
-                    full_text.append(text)
-                    # Compile regex patterns for detect_countries
-                    compiled_patterns = {country: re.compile(pattern, re.IGNORECASE) for country, pattern in COUNTRY_PATTERNS.items()}
-                    page_countries = detect_countries(text, compiled_patterns)
-                    country_mentions.update(page_countries)
+        if PyPDF2_mod is not None:
+            PdfReader = getattr(PyPDF2_mod, 'PdfReader', None)
+        else:
+            PdfReader = None
 
-                    perf_sentences = detect_performance_blocks(text)
-                    if perf_sentences:
-                        entries = [analyze_performance_sentence(sentence) for sentence in perf_sentences]
-                        performance_sections.append({
-                            'page_number': page_num,
-                            'sentences': perf_sentences,
-                            'entries': entries
-                        })
+        if PdfReader is not None:
+            reader = PdfReader(str(file_path))
+            extracted_texts: List[str] = []
+            for page in reader.pages:
+                try:
+                    t = page.extract_text() or ""
+                except Exception:
+                    t = ""
+                extracted_texts.append(t.strip())
 
-                    if detect_disclaimer_flags(text):
-                        disclaimer_pages.append(page_num)
+            total_chars = sum(len(t) for t in extracted_texts)
+            if total_chars > 200:
+                # Good quality text-based PDF; avoid OCR
+                use_ocr = False
+                for page_num, text in enumerate(extracted_texts, 1):
+                    pages_data.append({
+                        'page_number': page_num,
+                        'text': text,
+                        'ocr_engine': None
+                    })
+                    if text:
+                        full_text.append(text)
+                        # Compile regex patterns for detect_countries
+                        compiled_patterns = {country: re.compile(pattern, re.IGNORECASE) for country, pattern in COUNTRY_PATTERNS.items()}
+                        page_countries = detect_countries(text, compiled_patterns)
+                        country_mentions.update(page_countries)
 
-                    if detect_glossary(text):
-                        glossary_pages.append(page_num)
+                        perf_sentences = detect_performance_blocks(text)
+                        if perf_sentences:
+                            entries = [analyze_performance_sentence(sentence) for sentence in perf_sentences]
+                            performance_sections.append({
+                                'page_number': page_num,
+                                'sentences': perf_sentences,
+                                'entries': entries
+                            })
 
-                    if page_num == 1 and 'title_info' not in locals():
-                        title_info = extract_title_fields(text)
+                        if detect_disclaimer_flags(text):
+                            disclaimer_pages.append(page_num)
 
-                    identifier_entries = extract_identifiers(text, {'page_number': page_num})
-                    if identifier_entries:
-                        identifiers.extend(identifier_entries)
+                        if detect_glossary(text):
+                            glossary_pages.append(page_num)
 
-                    heading = None
-                    country_entries_list.extend(
-                        country_entries(page_countries, heading, text, {'page_number': page_num})
-                    )
+                        if page_num == 1 and 'title_info' not in locals():
+                            title_info = extract_title_fields(text)
 
-                    issuer_mentions.extend(
-                        extract_issuer_mentions(text, {'page_number': page_num})
-                    )
+                        identifier_entries = extract_identifiers(text, {'page_number': page_num})
+                        if identifier_entries:
+                            identifiers.extend(identifier_entries)
 
-                    if legal_notice_page is None and detect_legal_notice(text):
-                        legal_notice_page = page_num
+                        heading = None
+                        country_entries_list.extend(
+                            country_entries(page_countries, heading, text, {'page_number': page_num})
+                        )
+
+                        issuer_mentions.extend(
+                            extract_issuer_mentions(text, {'page_number': page_num})
+                        )
+
+                        if legal_notice_page is None and detect_legal_notice(text):
+                            legal_notice_page = page_num
+            else:
+                use_ocr = True
         else:
             use_ocr = True
     except Exception:

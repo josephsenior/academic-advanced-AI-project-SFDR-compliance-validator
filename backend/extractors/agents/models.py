@@ -4,7 +4,7 @@ Data models for data consistency validation
 
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
-from datetime import datetime
+from datetime import datetime, timezone
 
 from ..rules import ComplianceIssue
 
@@ -12,7 +12,7 @@ from ..rules import ComplianceIssue
 class DataConsistencyResult(BaseModel):
     """Complete result of data consistency validation"""
     document_id: Optional[str] = Field(None, description="Document identifier")
-    validation_timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat() + "Z")
+    validation_timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
     
     # Unified compliance issues array (includes all types: source/date, numerical, cross-reference, compliance)
     compliance_issues: List[ComplianceIssue] = Field(default_factory=list, description="All validation issues unified")
@@ -44,4 +44,27 @@ class DataConsistencyResult(BaseModel):
     
     # Summary messages
     summary: List[str] = Field(default_factory=list)
+
+    # Legacy/compatibility fields used by older code/tests
+    source_date_issues: List[Any] = Field(default_factory=list)
+    numerical_inconsistencies: List[Any] = Field(default_factory=list)
+    cross_reference_issues: List[Any] = Field(default_factory=list)
+
+    @property
+    def issues(self) -> List[ComplianceIssue]:
+        return self.compliance_issues
+
+    @property
+    def violations(self) -> List[ComplianceIssue]:
+        return self.compliance_issues
+
+    @property
+    def numerical_issues(self) -> List[Any]:
+        """Backward-compatible alias used in some tests/examples."""
+        return self.numerical_inconsistencies
+
+    @property
+    def cross_references(self) -> List[Any]:
+        """Backward-compatible alias for cross-reference issues."""
+        return self.cross_reference_issues
 

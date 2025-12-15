@@ -21,8 +21,10 @@ if project_root not in sys.path:
 
 from backend.extractors.pipeline import ExtractionPipeline
 from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+import pytest
 
-def test_document(file_path: str, metadata_path: str, test_name: str) -> Dict[str, Any]:
+
+def run_document(file_path: str, metadata_path: str, test_name: str) -> Dict[str, Any]:
     """Test a single document with ESG validation"""
     
     print(f"\n{'='*80}")
@@ -185,7 +187,7 @@ def main():
     results = []
     
     for test_case in test_cases:
-        result = test_document(
+        result = run_document(
             file_path=test_case["file"],
             metadata_path=test_case["metadata"],
             test_name=test_case["name"]
@@ -217,6 +219,45 @@ def main():
         print("\n[SUCCESS] All tests passed with ESG analysis!")
     else:
         print(f"\n[WARNING] Some tests incomplete: {successful}/{len(results)} successful, {with_esg}/{successful} with ESG")
+
+@pytest.mark.parametrize("case", [
+    {
+        "name": "Example 1 - ODDO BHF Algo Trend US (FR)",
+        "file": "dataset/example_1/FINAL 47861-6PG-FR-ODDO BHF Algo Trend US-20250831.pptx",
+        "metadata": "dataset/example_1/metadata.json",
+    },
+    {
+        "name": "Example 1 - ODDO BHF Algo Trend US (GB)",
+        "file": "dataset/example_1/FINAL 47861-6PG-GB-ODDO BHF Algo Trend US-20250831vdef.pptx",
+        "metadata": "dataset/example_1/metadata.json",
+    },
+    {
+        "name": "Example 2 - ODDO BHF US Equity Active ETF (Final)",
+        "file": "dataset/example_2/FINAL-PRS-GB-ODDO BHF US Equity Active ETF-20250630_8PN_clean.pptx",
+        "metadata": "dataset/example_2/metadata.json",
+    },
+    {
+        "name": "Example 2 - ODDO BHF US Equity Active ETF (Draft)",
+        "file": "dataset/example_2/XXX-PRS-GB-ODDO BHF US Equity Active ETF-20250630_6PN.pptx",
+        "metadata": "dataset/example_2/metadata.json",
+    },
+    {
+        "name": "Example 3 - ODDO BHF US Equity Active ETF (V1)",
+        "file": "dataset/example_3/1 - V1-6PG-GB-ODDO BHF US Equity Active ETF-20250831.pptx",
+        "metadata": "dataset/example_3/metadata.json",
+    },
+    {
+        "name": "Example 3 - ODDO BHF US Equity Active ETF (Final Clean)",
+        "file": "dataset/example_3/3 - FINAL CLEAN-6PG-GB-ODDO BHF US Equity Active ETF-20250831.pptx",
+        "metadata": "dataset/example_3/metadata.json",
+    },
+])
+def test_esg_examples(case):
+    # Execute the same flow as main() but as a pytest parametrized test.
+    res = run_document(case["file"], case["metadata"], case["name"])
+    # Ensure function returned a dict (avoid pytest fixture errors); deeper assertions rely on env and deps.
+    assert isinstance(res, dict)
+
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,231 @@
+{
+  "document_path": "dataset/example_2/XXX-PRS-GB-ODDO BHF US Equity Active ETF-20250630_6PN.pptx",
+  "total_issues": 24,
+  "esg_issues": 1,
+  "severity_breakdown": {
+    "critical": 0,
+    "errors_high": 11,
+    "warnings": 13
+  },
+  "all_issues": [
+    {
+      "issue_type": "missing_standard_disclaimer",
+      "severity": "error",
+      "location": "Disclaimers",
+      "message": "Warning about 'Risk of Capital Loss' (Risque de perte en capital) is missing.",
+      "context": "No capital loss warning found in disclaimers",
+      "suggestion": "Add warning: 'Capital is not guaranteed and you may not get back the amount you invested'",
+      "details": null
+    },
+    {
+      "issue_type": "missing_performance_disclaimer",
+      "severity": "error",
+      "location": "Disclaimers",
+      "message": "Warning that 'Past performance is not a reliable indicator of future results' is missing.",
+      "context": "Performance data shown without past performance disclaimer",
+      "suggestion": "Add disclaimer: 'Past performance is not a reliable indicator of future results'",
+      "details": null
+    },
+    {
+      "issue_type": "insufficient_performance_history",
+      "severity": "warning",
+      "location": "Performance Section",
+      "message": "5-year performance history not found. Required if the fund is older than 5 years.",
+      "context": "Missing 5-year performance history",
+      "suggestion": "Add 5-year performance data if fund is older than 5 years",
+      "details": null
+    },
+    {
+      "issue_type": "insufficient_performance_history",
+      "severity": "warning",
+      "location": "Performance Section",
+      "message": "10-year performance history not found. Required if the fund is older than 10 years.",
+      "context": "Missing 10-year performance history",
+      "suggestion": "Add 10-year performance data if fund is older than 10 years",
+      "details": null
+    },
+    {
+      "issue_type": "missing_benchmark_comparison",
+      "severity": "warning",
+      "location": "Performance Section",
+      "message": "Performance is shown but no benchmark comparison detected. Performance must be compared to the official benchmark.",
+      "context": "No benchmark found in performance data",
+      "suggestion": "Add benchmark comparison alongside fund performance",
+      "details": null
+    },
+    {
+      "issue_type": "nav_format_issue",
+      "severity": "warning",
+      "location": "Content",
+      "message": "NAV is mentioned but not labeled as 'indicative' or with a disclaimer stating it is for indicative purposes only (Germany rule).",
+      "context": null,
+      "suggestion": "Ensure NAV is labeled as 'indicative' or add disclaimer: 'The Net Asset Value is provided for indicative purposes only.'",
+      "details": null
+    },
+    {
+      "issue_type": "missing_german_specific_disclaimer",
+      "severity": "warning",
+      "location": "Disclaimers",
+      "message": "Document targets Germany but seems to miss the specific German disclaimer regarding rebates/inducements.",
+      "context": null,
+      "suggestion": "Add the standard German disclaimer regarding management fee rebates and inducements.",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "2",
+      "message": "Document mentions 'France' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: France. ",
+      "suggestion": "Either remove country mention or register the fund in France before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "2",
+      "message": "Document mentions 'Belgium' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: Belgium. ",
+      "suggestion": "Either remove country mention or register the fund in Belgium before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "An investment solution aiming at investing efficiently in US equities",
+      "message": "Document mentions 'United States' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: United States. ",
+      "suggestion": "Either remove country mention or register the fund in United States before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "2",
+      "message": "Document mentions 'Switzerland' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: Switzerland. ",
+      "suggestion": "Either remove country mention or register the fund in Switzerland before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "2",
+      "message": "Document mentions 'Luxembourg' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: Luxembourg. ",
+      "suggestion": "Either remove country mention or register the fund in Luxembourg before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "2",
+      "message": "Document mentions 'Germany' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: Germany. ",
+      "suggestion": "Either remove country mention or register the fund in Germany before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "missing_promotional_mention",
+      "severity": "error",
+      "location": "Slide 1",
+      "message": "Cover page must include a promotional mention (e.g., 'Document promotionnel', 'Marketing communication').",
+      "context": null,
+      "suggestion": "Add a phrase like 'Document promotionnel' or 'Marketing communication' to the cover page",
+      "details": null
+    },
+    {
+      "issue_type": "missing_target_audience",
+      "severity": "warning",
+      "location": "Slide 1",
+      "message": "Target audience (Professional/Retail) should be indicated on the cover page.",
+      "context": null,
+      "suggestion": "Add target audience indication (e.g., 'Professional Client' or 'Retail Client')",
+      "details": null
+    },
+    {
+      "issue_type": "missing_risk_profile",
+      "severity": "error",
+      "location": "Slide 2",
+      "message": "Risk Scale (SRI) is missing. It is usually required on Slide 2.",
+      "context": "No SRI (Synthetic Risk Indicator) found",
+      "suggestion": "Add SRI scale (typically 1-7 risk scale) on slide 2",
+      "details": null
+    },
+    {
+      "issue_type": "missing_risk_profile",
+      "severity": "warning",
+      "location": "Slide 2",
+      "message": "Investment Horizon is missing. It is usually required on Slide 2.",
+      "context": "No investment horizon/recommended holding period found",
+      "suggestion": "Add recommended investment horizon/holding period",
+      "details": null
+    },
+    {
+      "issue_type": "morningstar_missing_date",
+      "severity": "warning",
+      "location": "Content",
+      "message": "Morningstar rating mentioned but no date found nearby. Ratings must be dated.",
+      "context": null,
+      "suggestion": "Add date to Morningstar rating (e.g., 'Morningstar Rating as of [date]')",
+      "details": null
+    },
+    {
+      "issue_type": "morningstar_missing_category",
+      "severity": "warning",
+      "location": "Content",
+      "message": "Morningstar rating mentioned but category not found nearby. Ratings must include category.",
+      "context": null,
+      "suggestion": "Add Morningstar category (e.g., 'Morningstar Category: [category]')",
+      "details": null
+    },
+    {
+      "issue_type": "missing_team_change_disclaimer",
+      "severity": "warning",
+      "location": "Disclaimers",
+      "message": "Management team mentioned, but disclaimer 'The team is subject to change' is missing.",
+      "context": null,
+      "suggestion": "Add disclaimer: 'The management team is subject to change'",
+      "details": null
+    },
+    {
+      "issue_type": "opinion_not_attenuated",
+      "severity": "warning",
+      "location": "Disclaimers",
+      "message": "Opinions/Forecasts detected but 'not contractually liable' validation disclaimer is missing.",
+      "context": null,
+      "suggestion": "Add disclaimer: 'Opinions... are subject to change... and [Management Company] shall not be held contractually liable'",
+      "details": null
+    },
+    {
+      "issue_type": "simulation_missing_disclaimer",
+      "severity": "error",
+      "location": "Disclaimers",
+      "message": "Future performance simulation shown but required disclaimer is missing. Simulations must include a disclaimer stating they do not constitute a forecast.",
+      "context": "Simulation detected without proper disclaimer",
+      "suggestion": "Add simulation disclaimer: 'The simulation presented does not constitute a forecast of the future performance of your investments. It is solely designed to illustrate the mechanisms of your investment over the investment period. The value of your investment may deviate upwards or downwards from what is displayed.'",
+      "details": null
+    },
+    {
+      "issue_type": "investment_recommendation",
+      "severity": "warning",
+      "location": "Disclaimers",
+      "message": "Specific securities are mentioned, but disclaimer stating 'This is not a recommendation to buy or sell' is missing.",
+      "context": null,
+      "suggestion": "Add disclaimer: 'This does not constitute an investment recommendation'",
+      "details": null
+    },
+    {
+      "issue_type": "esg_level_mismatch",
+      "severity": "medium",
+      "location": "ESG Analyzer",
+      "message": "ESG validation could not be completed: Connection error.",
+      "context": null,
+      "suggestion": null,
+      "details": {
+        "error": "Connection error.",
+        "fallback": "validation_failure"
+      }
+    }
+  ]
+}

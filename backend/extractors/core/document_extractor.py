@@ -35,6 +35,15 @@ from typing import Dict, Any
 from .utils import configure_tesseract
 # Import format-specific extractors
 from .formats import extract_pptx, extract_docx, extract_pdf
+from .utils import (
+    extract_title_fields,
+    extract_identifiers,
+    categorize_disclaimer,
+    analyze_performance_sentence,
+    extract_issuer_mentions,
+    country_entries,
+    detect_legal_notice,
+)
 
 
 class DocumentExtractor:
@@ -136,6 +145,28 @@ class DocumentExtractor:
                 'extraction_method': file_ext[1:],
                 'file_path': str(file_path)
             }
+
+    # Compatibility wrappers for legacy test helpers
+    def _extract_title_fields(self, text: str):
+        return extract_title_fields(text)
+
+    def _extract_identifiers(self, text: str, location: Dict[str, Any]):
+        return extract_identifiers(text, location)
+
+    def _categorize_disclaimer(self, text: str):
+        return categorize_disclaimer(text)
+
+    def _analyze_performance_sentence(self, sentence: str):
+        return analyze_performance_sentence(sentence)
+
+    def _extract_issuer_mentions(self, text: str, location: Dict[str, Any]):
+        return extract_issuer_mentions(text, location)
+
+    def _country_entries(self, countries, heading, sentence, location: Dict[str, Any]):
+        return country_entries(countries, heading, sentence, location)
+
+    def _detect_legal_notice(self, text: str) -> bool:
+        return detect_legal_notice(text)
     
 
 def extract_document(file_path: str) -> Dict[str, Any]:

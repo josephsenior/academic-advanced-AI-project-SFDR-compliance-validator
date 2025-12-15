@@ -248,6 +248,18 @@ class RegistrationParser:
             "countries_covered": len(set(
                 country for reg in self.registrations.values()
                 for country in reg.registered_countries
-            ))
+            )),
+            # Backwards-compatible flags expected by older callers/tests
+            "context_awareness_enabled": bool(self.enable_context_awareness),
+            "temporal_validation_enabled": bool(self.enable_temporal_validation),
         }
+
+    # Backwards-compatible helper to extract file version from filename
+    def _extract_file_version(self) -> tuple[Optional[str], Optional[datetime]]:
+        # reuse file_utils.extract_file_version logic
+        try:
+            from .file_utils import extract_file_version
+            return extract_file_version(self.registration_path)
+        except Exception:
+            return (self.file_version, self.file_date)
 

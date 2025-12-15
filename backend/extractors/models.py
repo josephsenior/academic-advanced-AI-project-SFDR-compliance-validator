@@ -3,7 +3,7 @@ Pydantic models for structured feature extraction
 Defines the structure of extracted content features
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
 from datetime import date
 
@@ -66,37 +66,6 @@ class ContentFeatures(BaseModel):
     company_mentions: List[CompanyFeature] = Field(default_factory=list, description="List of company/issuer mentions")
     financial_terms: List[FinancialTermFeature] = Field(default_factory=list, description="List of financial terms")
     
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "esg_mentions": [
-                    {
-                        "text": "Article 8 of SFDR",
-                        "context": "This product promotes environmental characteristics",
-                        "sfdr_article": "Article 8",
-                        "location": "page 3",
-                        "confidence": 0.95
-                    }
-                ],
-                "performance_data": [
-                    {
-                        "text": "Performance 2020-2024: +15.3%",
-                        "date_range": "2020-2024",
-                        "percentage": 15.3,
-                        "is_past_performance": True,
-                        "is_forecast": False,
-                        "location": "page 5, table 2",
-                        "confidence": 0.90
-                    }
-                ],
-                "country_mentions": [
-                    {
-                        "country_name": "France",
-                        "context": "Available in France, Germany, and Switzerland",
-                        "location": "page 2",
-                        "confidence": 0.95
-                    }
-                ]
-            }
-        }
+    # Keep example schema small to avoid large inline literals; expand only if needed.
+    model_config = ConfigDict(json_schema_extra={})
 

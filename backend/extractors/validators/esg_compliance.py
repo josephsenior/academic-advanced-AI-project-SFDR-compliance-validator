@@ -3,7 +3,7 @@ ESG Compliance Validator
 """
 import logging
 from typing import Dict, Any, List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor
 from backend.extractors.rules.models import ComplianceIssue
 from backend.extractors.rules.enums import ComplianceIssueType, ClientType
@@ -344,7 +344,7 @@ class EsgValidator(BaseValidator):
                     "keywords_found": esg_mentions.esg_keywords_found,
                     "keywords_by_slide": esg_mentions.esg_keywords_by_slide
                 },
-                "analysis_timestamp": datetime.utcnow().isoformat() + "Z"
+                "analysis_timestamp": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
             }
             
             if esg_level.level == "none" or esg_level.sfdr_article == 6:

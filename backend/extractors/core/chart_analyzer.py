@@ -7,13 +7,7 @@ Extracts numerical data, metadata, and validates chart content for data consiste
 
 import base64
 import threading
-# Apply Pydantic v1 patch for Python 3.12 compatibility
-try:
-    from backend.utils import pydantic_v1_patch
-except ImportError:
-    # Fallback if running as script
-    pass
-
+# Note: pydantic v1 compatibility handled centrally when needed
 from typing import Dict, List, Any, Optional
 from io import BytesIO
 from pydantic import BaseModel, Field
@@ -36,7 +30,7 @@ except ImportError:
     ChatPromptTemplate = None  # type: ignore
         # Defer PydanticOutputParser imports to runtime if needed; avoid module-level import
 
-from ..config.llm_config import get_vision_model_config
+from ..config.llm_config import get_vision_model_config  # noqa: E402
 
 # Import performance utilities
 try:
@@ -121,8 +115,8 @@ class ChartAnalyzer:
                 config = get_vision_model_config()
                 # Disable SSL verification for self-signed certificates
                 import httpx
-                http_client = httpx.Client(verify=False)
-                http_async_client = httpx.AsyncClient(verify=False)
+                _http_client = httpx.Client(verify=False)
+                _http_async_client = httpx.AsyncClient(verify=False)
                 
                 self.llm = ChatOpenAI(
                     model=config.get("model_name", "hosted_vllm/llava-1.5-7b-hf"),
@@ -214,7 +208,7 @@ class ChartAnalyzer:
                     if isinstance(cached_result, dict):
                          try:
                              return ChartAnalysis(**cached_result)
-                         except:
+                         except Exception:
                              pass
                     elif isinstance(cached_result, ChartAnalysis):
                         return cached_result

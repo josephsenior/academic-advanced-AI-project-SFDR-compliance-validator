@@ -23,9 +23,7 @@ from ..config.llm_config import create_feature_extractor
 from ..models import ContentFeatures
 
 try:
-    from backend.utils.cache.llm_cache import get_llm_cache  # type: ignore
     from backend.utils.metrics import get_metrics_collector  # type: ignore
-    from backend.utils.processing.parallel_processor import ChartBatchProcessor  # type: ignore
     UTILS_AVAILABLE = True
 except ImportError:
     UTILS_AVAILABLE = False

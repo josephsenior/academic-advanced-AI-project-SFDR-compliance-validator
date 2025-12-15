@@ -74,6 +74,6 @@ def extract_file_version(registration_path: Path) -> Tuple[Optional[str], Option
         mod_time = datetime.fromtimestamp(registration_path.stat().st_mtime)
         version = mod_time.strftime("%Y-%m-%d")
         return version, mod_time
-    except:
+    except Exception:
         return None, None
 

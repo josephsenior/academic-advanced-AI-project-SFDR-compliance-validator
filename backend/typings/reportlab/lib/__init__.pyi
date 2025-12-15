@@ -1,2 +1,2 @@
-from .pagesizes import *
-from .styles import *
+from .pagesizes import *  # noqa: F403
+from .styles import *  # noqa: F403

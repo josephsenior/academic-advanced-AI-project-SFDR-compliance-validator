@@ -8,8 +8,8 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 # Standard imports - no need for complex importlib hacks since we use 'backend' now
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
-from backend.extractors.rules.enums import ComplianceIssueType
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent  # noqa: E402
+from backend.extractors.rules.enums import ComplianceIssueType  # noqa: E402
 
 class TestComplianceRules(unittest.TestCase):
     def setUp(self):

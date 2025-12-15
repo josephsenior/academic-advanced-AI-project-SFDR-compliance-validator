@@ -6,13 +6,7 @@ Extracts structured features from document text for compliance validation
 
 import os
 import sys
-# Apply Pydantic v1 patch for Python 3.12 compatibility
-try:
-    from backend.utils import pydantic_v1_patch
-except ImportError:
-    # Fallback if running as script
-    pass
-
+# Note: pydantic v1 compatibility handled centrally when needed
 from typing import List, Dict, Any, Optional
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -31,9 +25,9 @@ def _import_pydantic_output_parser():
         mod = importlib.import_module("langchain.output_parsers")
     return getattr(mod, "PydanticOutputParser")
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # noqa: E402
 
-from ..models import ContentFeatures
+from ..models import ContentFeatures  # noqa: E402
 
 load_dotenv()
 
@@ -94,8 +88,8 @@ class ContentFeatureExtractor:
         # Initialize Token Factory LLM using OpenAI-compatible API
         # Disable SSL verification for self-signed certificates
         import httpx
-        sync_client = httpx.Client(verify=False)
-        async_client = httpx.AsyncClient(verify=False)
+        _sync_client = httpx.Client(verify=False)
+        _async_client = httpx.AsyncClient(verify=False)
         
         self.llm = ChatOpenAI(
             model=model_name,
@@ -124,8 +118,7 @@ class ContentFeatureExtractor:
         """Create prompt template for feature extraction"""
         
 
-        # Get format instructions from parser
-        format_instructions = self.parser.get_format_instructions()
+        # Get format instructions from parser (use inline where needed)
         
 
         # This is the prompt we send to LLM - asks it to extract specific features

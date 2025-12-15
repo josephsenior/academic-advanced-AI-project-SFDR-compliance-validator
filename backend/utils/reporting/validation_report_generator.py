@@ -256,11 +256,11 @@ class ValidationReportGenerator:
 """
             for issue in validation_result.source_date_issues:
                 severity_class = issue.severity
-                html += f"""                <tr>
-                    <td>{issue.location}</td>
-                    <td>{issue.issue_type.replace('_', ' ').title()}</td>
-                    <td class="{severity_class}">{issue.severity.upper()}</td>
-                    <td>{issue.message}</td>
+                html += """                <tr>
+                    <td>""" + str(issue.location) + """</td>
+                    <td>""" + str(issue.issue_type.replace('_', ' ').title()) + """</td>
+                    <td class=""" + str(severity_class) + """>""" + str(issue.severity.upper()) + """</td>
+                    <td>""" + str(issue.message) + """</td>
                 </tr>
 """
             html += """            </tbody>
@@ -298,13 +298,13 @@ class ValidationReportGenerator:
 """
                 for inc in validation_result.numerical_inconsistencies:
                     severity_class = inc.severity
-                    html += f"""                <tr>
-                    <td>{inc.location}</td>
-                    <td>{inc.document_value}%</td>
-                    <td>{inc.reference_value or 'N/A'}%</td>
-                    <td>{inc.period or 'N/A'}</td>
-                    <td class="{severity_class}">{inc.severity.upper()}</td>
-                    <td>{inc.message}</td>
+                    html += """                <tr>
+                    <td>""" + str(inc.location) + """</td>
+                    <td>""" + str(inc.document_value) + "%" + """</td>
+                    <td>""" + str(inc.reference_value or 'N/A') + "%" + """</td>
+                    <td>""" + str(inc.period or 'N/A') + """</td>
+                    <td class=\""" + str(severity_class) + ""\">""" + str(inc.severity.upper()) + """</td>
+                    <td>""" + str(inc.message) + """</td>
                 </tr>
 """
                 html += """            </tbody>
@@ -336,15 +336,16 @@ class ValidationReportGenerator:
 """
             for issue in validation_result.cross_reference_issues:
                 severity_class = issue.severity
-                html += f"""                <tr>
-                    <td>{issue.location}</td>
-                    <td>{issue.issue_type.replace('_', ' ').title()}</td>
-                    <td>{issue.value1 or 'N/A'}</td>
-                    <td>{issue.value2 or 'N/A'}</td>
-                    <td class="{severity_class}">{issue.severity.upper()}</td>
-                    <td>{issue.message}</td>
-                </tr>
-"""
+                html += (
+                    "                <tr>\n"
+                    f"                    <td>{issue.location}</td>\n"
+                    f"                    <td>{issue.issue_type.replace('_', ' ').title()}</td>\n"
+                    f"                    <td>{issue.value1 or 'N/A'}</td>\n"
+                    f"                    <td>{issue.value2 or 'N/A'}</td>\n"
+                    f"                    <td class=\"{severity_class}\">{issue.severity.upper()}</td>\n"
+                    f"                    <td>{issue.message}</td>\n"
+                    "                </tr>\n"
+                )
             html += """            </tbody>
         </table>
     </div>

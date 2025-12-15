@@ -246,8 +246,6 @@ def validate_document(
     # Get unique countries from distribution claims
     distribution_countries = list(set(m.country for m in distribution_mentions))
     
-    # Validate registration
-    validation_results = []
     issues = []
     warnings = []
     
@@ -291,7 +289,7 @@ def validate_document(
         "unique_countries_mentioned": len(set(m.country for m in all_mentions)),
         "unique_distribution_countries": len(distribution_countries),
         "critical_issues": len([i for i in issues if i["severity"] == "CRITICAL"]),
-        "warnings": len(warnings),
+        "warnings_count": len(warnings),
         "all_mentions": [
             {
                 "country": m.country,

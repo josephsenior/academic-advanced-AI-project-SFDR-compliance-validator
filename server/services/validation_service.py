@@ -50,10 +50,10 @@ def run_validation(document_id: str, job: Dict[str, Any], options: Dict[str, Any
 
     logger.info("Starting validation for %s", document_id)
 
-    disclaimer_validator = None
+    _disclaimer_validator = None
     if options.get("enable_disclaimers", True):
         try:
-            disclaimer_validator = DisclaimerValidator()
+            _disclaimer_validator = DisclaimerValidator()
         except Exception as e:
             logger.warning("Could not initialize disclaimer validator: %s", e)
 

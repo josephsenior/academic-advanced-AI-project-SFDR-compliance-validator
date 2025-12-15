@@ -8,13 +8,7 @@ Combines all sources for complete metadata
 import json
 import os
 import sys
-# Apply Pydantic v1 patch for Python 3.12 compatibility
-try:
-    from backend.utils import pydantic_v1_patch
-except ImportError:
-    # Fallback if running as script
-    pass
-
+# Note: pydantic v1 compatibility handled centrally when needed
 from pathlib import Path
 from typing import Dict, Any, Optional
 from datetime import datetime
@@ -34,7 +28,7 @@ def _import_pydantic_output_parser():
         mod = importlib.import_module("langchain.output_parsers")
     return getattr(mod, "PydanticOutputParser")
 
-from ..parsers.filename_parser import FilenameParser
+from ..parsers.filename_parser import FilenameParser  # noqa: E402
 
 
 class MetadataDetectionResult(BaseModel):
@@ -219,8 +213,8 @@ class MetadataExtractor:
             import httpx
 
             # Disable SSL verification for self-signed certificates
-            http_client = httpx.Client(verify=False)
-            http_async_client = httpx.AsyncClient(verify=False)
+            _http_client = httpx.Client(verify=False)
+            _http_async_client = httpx.AsyncClient(verify=False)
 
             llm = ChatOpenAI(
                 model=config['model_name'],
@@ -233,7 +227,6 @@ class MetadataExtractor:
             # llm.http_async_client = http_async_client
 
             parser = _import_pydantic_output_parser()(pydantic_object=MetadataDetectionResult)
-            format_instructions = parser.get_format_instructions()
             
             template = """You are an expert in analyzing financial marketing documents for compliance purposes.
 

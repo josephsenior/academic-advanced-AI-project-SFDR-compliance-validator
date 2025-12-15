@@ -17,7 +17,7 @@ project_root = str(Path(__file__).parent.parent)
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent  # noqa: E402
 
 def test_esg_validation():
     """Test ESG validation with a real document"""

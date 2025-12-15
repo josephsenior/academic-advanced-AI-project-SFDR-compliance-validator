@@ -269,7 +269,7 @@ Example:
                 logger.info(f"[OK] Fixed ESG Level: {esg_level.level.upper()}")
                 self._esg_level_cache[cache_key] = esg_level
                 return esg_level
-            except:
+            except Exception:
                 # Ultimate fallback
                 logger.error("[FAIL] Could not fix JSON, using safe default")
                 default_sfdr = cast(Literal[6,8,9], sfdr_article if sfdr_article in [6, 8, 9] else 6)

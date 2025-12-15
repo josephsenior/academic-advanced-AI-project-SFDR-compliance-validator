@@ -105,17 +105,17 @@ class MedicalRecommendationEngine:
         if total_incorrect > 0:
             return (
                 f"Contamination by inappropriate disclaimers detected ({total_incorrect} cases). "
-                f"High regulatory risk requiring immediate intervention."
+                "High regulatory risk requiring immediate intervention."
             )
         elif score < 50:
             return (
                 f"Severe compliance deficiency (score: {score}/100). "
-                f"Document does not meet regulatory standards."
+                "Document does not meet regulatory standards."
             )
         elif score < 70:
             return (
                 f"Moderate insufficiency in required disclaimers ({total_missing} missing). "
-                f"Partial compliance requiring corrections."
+                "Partial compliance requiring corrections."
             )
         elif score < 90:
             return (
@@ -125,7 +125,7 @@ class MedicalRecommendationEngine:
         else:
             return (
                 f"Document in good regulatory health (score: {score}/100). "
-                f"Satisfactory compliance."
+                "Satisfactory compliance."
             )
     
     @staticmethod
@@ -156,7 +156,7 @@ class MedicalRecommendationEngine:
             count = len(structural_errors)
             diagnoses.append(
                 f"Structural anomalies detected ({count} cases): "
-                f"document architecture non-compliant"
+                "document architecture non-compliant"
             )
         
         # Inconsistencies
@@ -164,7 +164,7 @@ class MedicalRecommendationEngine:
             count = len(inconsistent_items)
             diagnoses.append(
                 f"Inter-section inconsistencies ({count} items): "
-                f"non-uniform distribution of required elements"
+                "non-uniform distribution of required elements"
             )
         
         # Non-compliant sections
@@ -179,7 +179,7 @@ class MedicalRecommendationEngine:
         if low_quality_matches:
             diagnoses.append(
                 f"Sub-optimal match quality: {len(low_quality_matches)} "
-                f"item(s) with score < 70%"
+                "item(s) with score < 70%"
             )
         
         return diagnoses

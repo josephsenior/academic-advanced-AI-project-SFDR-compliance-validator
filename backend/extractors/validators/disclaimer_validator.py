@@ -127,13 +127,13 @@ class DisclaimerValidator:
                     continue
                 
                 # Find language column and client type columns
-                lang_col_idx = None
+                _lang_col_idx = None
                 prof_col_idx = None
                 non_prof_col_idx = None
                 
                 for idx, header in enumerate(headers):
                     if 'language' in header or sheet_name.lower() in header:
-                        lang_col_idx = idx
+                            _lang_col_idx = idx
                     elif 'professional' in header:
                         prof_col_idx = idx
                     elif 'non' in header and 'professional' in header:
@@ -194,7 +194,7 @@ class DisclaimerValidator:
         client_type = "professional" if metadata.get('is_professional_client', False) else "non_professional"
         management_company = metadata.get('management_company', '').upper()
         is_new_strategy = metadata.get('is_new_strategy', False)
-        is_new_product = metadata.get('is_new_product', False)
+        _is_new_product = metadata.get('is_new_product', False)
         document_type = metadata.get('document_type', 'presentation').lower()
         
         # 1. OBAM Presentation - ALWAYS REQUIRED for presentations

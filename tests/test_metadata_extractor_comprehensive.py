@@ -12,9 +12,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from dotenv import load_dotenv
 load_dotenv()
 
-from backend.extractors.core.metadata_extractor import MetadataExtractor
-from backend.extractors.core.document_extractor import DocumentExtractor
-from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.core.metadata_extractor import MetadataExtractor  # noqa: E402
+from backend.extractors.core.document_extractor import DocumentExtractor  # noqa: E402
+from backend.extractors.pipeline import ExtractionPipeline  # noqa: E402
 
 def get_api_credentials():
     api_key = os.getenv("TOKEN_FACTORY_API_KEY") or os.getenv("LLM_API_KEY")

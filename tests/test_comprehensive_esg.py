@@ -11,10 +11,9 @@ project_root = str(Path(__file__).parent.parent)
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from backend.extractors.core.document_extractor import DocumentExtractor
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
-import json
-from pathlib import Path
+from backend.extractors.core.document_extractor import DocumentExtractor  # noqa: E402
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent  # noqa: E402
+import json  # noqa: E402
 
 # Real document extraction
 doc_path = 'dataset/example_2/XXX-PRS-GB-ODDO BHF US Equity Active ETF-20250630_6PN.pptx'

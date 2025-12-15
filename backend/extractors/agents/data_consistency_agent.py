@@ -127,7 +127,7 @@ class DataConsistencyAgent:
             # EsgValidator stores cache in _esg_analysis_cache
              try:
                  esg_data = getattr(self.validators[-1], '_esg_analysis_cache', None)
-             except:
+             except Exception:
                  pass
 
         return DataConsistencyResult(
@@ -185,12 +185,18 @@ class DataConsistencyAgent:
         # Check metadata
         if metadata and metadata.get('fund_type'):
             ft_str = metadata.get('fund_type', '').lower()
-            if 'etf' in ft_str: return FundType.ETF
-            if 'bond' in ft_str or 'oblig' in ft_str or 'rent' in ft_str: return FundType.BOND
-            if 'equity' in ft_str or 'action' in ft_str or 'aktien' in ft_str: return FundType.EQUITY
-            if 'money market' in ft_str or 'monétaire' in ft_str or 'geldmarkt' in ft_str: return FundType.MONEY_MARKET
-            if 'private equity' in ft_str: return FundType.PRIVATE_EQUITY
-            if 'real estate' in ft_str or 'immobilie' in ft_str: return FundType.REAL_ESTATE
+            if 'etf' in ft_str:
+                return FundType.ETF
+            if 'bond' in ft_str or 'oblig' in ft_str or 'rent' in ft_str:
+                return FundType.BOND
+            if 'equity' in ft_str or 'action' in ft_str or 'aktien' in ft_str:
+                return FundType.EQUITY
+            if 'money market' in ft_str or 'monétaire' in ft_str or 'geldmarkt' in ft_str:
+                return FundType.MONEY_MARKET
+            if 'private equity' in ft_str:
+                return FundType.PRIVATE_EQUITY
+            if 'real estate' in ft_str or 'immobilie' in ft_str:
+                return FundType.REAL_ESTATE
             
         # Check content
         all_text = ""
@@ -256,7 +262,7 @@ class DataConsistencyAgent:
         """Compatibility wrapper to infer client type from simple features."""
         min_inv = features.get('minimum_investment', '')
         eligible = (features.get('eligible_investors') or '').lower()
-        channels = features.get('distribution_channels') or []
+        _channels = features.get('distribution_channels') or []
 
         if any(token in eligible for token in ['institution', 'qualified']):
             return {"client_type": "INSTITUTIONAL", "confidence": "high"}
@@ -384,9 +390,7 @@ class DataConsistencyAgent:
         return result
 
 
-        # Re-export for backward-compatible imports used in tests/examples
-        __all__ = [
-            'DataConsistencyAgent',
-            'ReferenceData',
-            'create_reference_data_from_dict',
-        ]
+# Re-export public API for backward-compatible imports used in tests/examples
+__all__ = [
+    'DataConsistencyAgent',
+]

@@ -24,7 +24,7 @@ def generate_summary(result: DataConsistencyResult) -> List[str]:
     if result.total_tables_checked > 0:
         summary.append(
             f"Source/Date Validation: {result.tables_with_source_date}/{result.total_tables_checked} "
-            f"tables have complete source and date information"
+            "tables have complete source and date information"
         )
         if result.tables_missing_source_date > 0:
             summary.append(
@@ -42,7 +42,7 @@ def generate_summary(result: DataConsistencyResult) -> List[str]:
     if result.total_numerical_values_checked > 0:
         summary.append(
             f"Numerical Validation: {result.values_matching_reference}/{result.total_numerical_values_checked} "
-            f"values match reference documents"
+            "values match reference documents"
         )
         if result.values_with_inconsistencies > 0:
             summary.append(

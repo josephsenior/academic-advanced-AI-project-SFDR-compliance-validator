@@ -75,27 +75,9 @@
       "issue_type": "unregistered_country",
       "severity": "error",
       "location": "2",
-      "message": "Document mentions 'France' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
-      "context": "Country mentioned: France. ",
-      "suggestion": "Either remove country mention or register the fund in France before distribution",
-      "details": null
-    },
-    {
-      "issue_type": "unregistered_country",
-      "severity": "error",
-      "location": "2",
-      "message": "Document mentions 'Belgium' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
-      "context": "Country mentioned: Belgium. ",
-      "suggestion": "Either remove country mention or register the fund in Belgium before distribution",
-      "details": null
-    },
-    {
-      "issue_type": "unregistered_country",
-      "severity": "error",
-      "location": "An investment solution aiming at investing efficiently in US equities",
-      "message": "Document mentions 'United States' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
-      "context": "Country mentioned: United States. ",
-      "suggestion": "Either remove country mention or register the fund in United States before distribution",
+      "message": "Document mentions 'Luxembourg' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: Luxembourg. ",
+      "suggestion": "Either remove country mention or register the fund in Luxembourg before distribution",
       "details": null
     },
     {
@@ -111,9 +93,27 @@
       "issue_type": "unregistered_country",
       "severity": "error",
       "location": "2",
-      "message": "Document mentions 'Luxembourg' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
-      "context": "Country mentioned: Luxembourg. ",
-      "suggestion": "Either remove country mention or register the fund in Luxembourg before distribution",
+      "message": "Document mentions 'France' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: France. ",
+      "suggestion": "Either remove country mention or register the fund in France before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "An investment solution aiming at investing efficiently in US equities",
+      "message": "Document mentions 'United States' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: United States. ",
+      "suggestion": "Either remove country mention or register the fund in United States before distribution",
+      "details": null
+    },
+    {
+      "issue_type": "unregistered_country",
+      "severity": "error",
+      "location": "2",
+      "message": "Document mentions 'Belgium' but fund 'ODDO BHF US Equity Active ETF' is not registered for distribution in this country.",
+      "context": "Country mentioned: Belgium. ",
+      "suggestion": "Either remove country mention or register the fund in Belgium before distribution",
       "details": null
     },
     {

@@ -808,7 +808,7 @@ def delete_document(document_id: str):
         # Delete files
         try:
             Path(job['file_path']).unlink(missing_ok=True)
-        except:
+        except Exception:
             pass
         
         try:
@@ -816,13 +816,13 @@ def delete_document(document_id: str):
             if output_dir.exists():
                 import shutil
                 shutil.rmtree(output_dir)
-        except:
+        except Exception:
             pass
         
         try:
             corrected_path = Path(app.config['CORRECTED_FOLDER']) / f"{document_id}_corrected.pptx"
             corrected_path.unlink(missing_ok=True)
-        except:
+        except Exception:
             pass
         
         # Remove from jobs

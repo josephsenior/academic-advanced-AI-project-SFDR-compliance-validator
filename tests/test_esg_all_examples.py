@@ -19,9 +19,9 @@ project_root = str(Path(__file__).parent.parent)
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from backend.extractors.pipeline import ExtractionPipeline
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
-import pytest
+from backend.extractors.pipeline import ExtractionPipeline  # noqa: E402
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent  # noqa: E402
+import pytest  # noqa: E402
 
 
 def run_document(file_path: str, metadata_path: str, test_name: str) -> Dict[str, Any]:

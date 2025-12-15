@@ -84,7 +84,7 @@ def create_slide_placeholder(slide, output_path: Path, slide_num: int, scale: fl
     # Add slide number
     try:
         font = ImageFont.truetype("arial.ttf", 24)
-    except:
+    except Exception:
         font = ImageFont.load_default()
     
     draw.text((20, 20), f"Slide {slide_num}", fill='#666666', font=font)
@@ -191,7 +191,7 @@ def annotate_slide_image(
             # Draw number inside circle
             try:
                 font_num = ImageFont.truetype("arial.ttf", 14)
-            except:
+            except Exception:
                 font_num = ImageFont.load_default()
             
             num_text = str(idx + 1)
@@ -211,7 +211,7 @@ def annotate_slide_image(
             try:
                 font = ImageFont.truetype("arial.ttf", 11)
                 font_bold = ImageFont.truetype("arialbd.ttf", 11)
-            except:
+            except Exception:
                 font = ImageFont.load_default()
                 font_bold = font
             

@@ -9,13 +9,20 @@ from .base import BaseValidator
 def infer_period_from_column(column_name: str) -> Optional[str]:
     """Infer time period from column name."""
     col = column_name.lower()
-    if 'ytd' in col: return 'YTD'
-    if 'mtd' in col: return 'MTD'
-    if '1y' in col or '1 an' in col or '1 year' in col: return '1Y'
-    if '3y' in col or '3 ans' in col or '3 year' in col: return '3Y'
-    if '5y' in col or '5 ans' in col or '5 year' in col: return '5Y'
-    if '10y' in col or '10 ans' in col or '10 year' in col: return '10Y'
-    if 'inception' in col or 'création' in col or 'lancierung' in col: return 'Since Inception'
+    if 'ytd' in col:
+        return 'YTD'
+    if 'mtd' in col:
+        return 'MTD'
+    if '1y' in col or '1 an' in col or '1 year' in col:
+        return '1Y'
+    if '3y' in col or '3 ans' in col or '3 year' in col:
+        return '3Y'
+    if '5y' in col or '5 ans' in col or '5 year' in col:
+        return '5Y'
+    if '10y' in col or '10 ans' in col or '10 year' in col:
+        return '10Y'
+    if 'inception' in col or 'création' in col or 'lancierung' in col:
+        return 'Since Inception'
     return None
 
 class PerformanceValidator(BaseValidator):

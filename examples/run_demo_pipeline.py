@@ -11,19 +11,14 @@ from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Apply Pydantic v1 patch for Python 3.12 compatibility
-try:
-    from backend.utils import pydantic_v1_patch
-except ImportError:
-    pass
-
+# Note: pydantic v1 compatibility handled centrally when needed
 # Load environment variables
 load_dotenv()
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from backend.extractors.pipeline import ExtractionPipeline
+from backend.extractors.pipeline import ExtractionPipeline  # noqa: E402
 
 def main():
     # Setup paths

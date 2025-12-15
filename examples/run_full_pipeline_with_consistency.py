@@ -12,21 +12,16 @@ from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Apply Pydantic v1 patch for Python 3.12 compatibility
-try:
-    from backend.utils import pydantic_v1_patch
-except ImportError:
-    pass
-
+# Note: pydantic v1 compatibility handled centrally when needed
 # Load environment variables
 load_dotenv()
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from backend.extractors.pipeline import ExtractionPipeline
-from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent
-from backend.extractors.compliance_rules import ClientType, FundType
+from backend.extractors.pipeline import ExtractionPipeline  # noqa: E402
+from backend.extractors.agents.data_consistency_agent import DataConsistencyAgent  # noqa: E402
+from backend.extractors.compliance_rules import ClientType, FundType  # noqa: E402
 
 
 def load_extraction_result(output_dir: Path, doc_id: str) -> dict:

@@ -9,7 +9,7 @@ project_root = str(Path(__file__).parent.parent)
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from backend.extractors.pipeline import ExtractionPipeline, PIPELINE_VERSION
+from backend.extractors.pipeline import ExtractionPipeline, PIPELINE_VERSION  # noqa: E402
 
 
 @pytest.fixture

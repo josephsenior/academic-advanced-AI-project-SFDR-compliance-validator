@@ -83,11 +83,25 @@ class ValidationReportGenerator:
     ) -> None:
         """Generate human-readable HTML report"""
         
+        def get_val(obj, key, default=None):
+            if hasattr(obj, key):
+                return getattr(obj, key)
+            if isinstance(obj, dict):
+                val = obj.get(key)
+                if val is not None:
+                    return val
+                # Check inside nested 'statistics' if present
+                stats = obj.get('statistics', {})
+                return stats.get(key, default)
+            return default
+
         status_color = {
             "pass": "#28a745",
             "warning": "#ffc107",
-            "error": "#dc3545"
-        }.get(validation_result.overall_status, "#6c757d")
+            "error": "#dc3545",
+            "compliant": "#28a745",
+            "non_compliant": "#dc3545"
+        }.get(get_val(validation_result, 'overall_status'), "#6c757d")
         
         html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -196,29 +210,30 @@ class ValidationReportGenerator:
 <body>
     <div class="header">
         <h1>Data Consistency Validation Report</h1>
-        <p><strong>Document:</strong> {document_name or validation_result.document_id or 'N/A'}</p>
-        <p><strong>Document ID:</strong> {validation_result.document_id or 'N/A'}</p>
-        <p><strong>Validation Date:</strong> {validation_result.validation_timestamp}</p>
-        <p><strong>Status:</strong> <span class="status-badge">{validation_result.overall_status.upper()}</span></p>
+        <p><strong>Document:</strong> {document_name or get_val(validation_result, 'filename') or get_val(validation_result, 'document_id') or 'N/A'}</p>
+        <p><strong>Document ID:</strong> {get_val(validation_result, 'document_id') or 'N/A'}</p>
+        <p><strong>Validation Date:</strong> {get_val(validation_result, 'validation_timestamp')}</p>
+        <p><strong>Compliance Status:</strong> <strong>{get_val(validation_result, 'compliance_status_label', 'N/A')}</strong></p>
+        <p><strong>Validation Status:</strong> <span class="status-badge">{str(get_val(validation_result, 'overall_status', 'N/A')).upper()}</span></p>
     </div>
     
     <div class="section">
         <h2>Summary</h2>
         <div class="summary-stats">
             <div class="stat-card">
-                <div class="stat-value">{validation_result.total_tables_checked}</div>
+                <div class="stat-value">{get_val(validation_result, 'total_tables_checked', 0)}</div>
                 <div class="stat-label">Tables/Charts Checked</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">{validation_result.tables_with_source_date}</div>
+                <div class="stat-value">{get_val(validation_result, 'tables_with_source_date', 0)}</div>
                 <div class="stat-label">With Source & Date</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">{len([i for i in validation_result.source_date_issues if i.severity == 'error'])}</div>
+                <div class="stat-value">{len([i for i in get_val(validation_result, 'compliance_issues', []) if get_val(i, 'severity', '') in ['error', 'critical']])}</div>
                 <div class="stat-label">Errors</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">{len([i for i in validation_result.source_date_issues if i.severity == 'warning'])}</div>
+                <div class="stat-value">{len([i for i in get_val(validation_result, 'compliance_issues', []) if get_val(i, 'severity', '') in ['warning', 'high']])}</div>
                 <div class="stat-label">Warnings</div>
             </div>
         </div>
@@ -373,6 +388,20 @@ class ValidationReportGenerator:
         except Exception as e:
             raise RuntimeError("ReportLab is required for PDF generation") from e
 
+        # Ensure validation_result is a Pydantic model, not a dict
+        if isinstance(validation_result, dict):
+            try:
+                validation_result = DataConsistencyResult(**validation_result)
+            except Exception as e:
+                print(f"Warning: Failed to convert dict to DataConsistencyResult: {e}")
+                # Fallback: wrap in a simple object to allow attribute access?
+                # Or just let it fail, but the conversion is the right fix.
+
+
+        # Ensure output directory exists
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+
         doc = SimpleDocTemplate(str(output_path), pagesize=A4, rightMargin=36, leftMargin=36, topMargin=36, bottomMargin=36)
         styles = getSampleStyleSheet()
         normal = styles['Normal']
@@ -381,87 +410,247 @@ class ValidationReportGenerator:
 
         story = []
 
-        title_text = f"Data Consistency Validation Report - {document_name or validation_result.document_id or 'Document'}"
+        def get_val(obj, key, default=None):
+            if hasattr(obj, key):
+                return getattr(obj, key)
+            if isinstance(obj, dict):
+                val = obj.get(key)
+                if val is not None:
+                    return val
+                # Check inside nested 'statistics' if present
+                stats = obj.get('statistics', {})
+                return stats.get(key, default)
+            return default
+
+        # === HEADER SECTION ===
+        doc_id = get_val(validation_result, 'document_id', 'N/A')
+        val_time = get_val(validation_result, 'validation_timestamp', 'N/A')
+        overall_status = str(get_val(validation_result, 'overall_status', 'UNKNOWN')).upper()
+        compliance_score = get_val(validation_result, 'compliance_score', 0)
+
+        title_text = f"SFDR Compliance Validation Report"
         story.append(Paragraph(title_text, h1))
+        story.append(Paragraph(f"<b>Document:</b> {document_name or 'N/A'}", normal))
+        story.append(Spacer(1, 8))
 
-        meta_lines = [
-            f"Document ID: {validation_result.document_id or 'N/A'}",
-            f"Validation Date: {validation_result.validation_timestamp}",
-            f"Status: {validation_result.overall_status.upper()}"
+        # === EXECUTIVE SUMMARY ===
+        story.append(Paragraph("Executive Summary", h2))
+        
+        # Status badge color
+        status_color = "#dc2626" if overall_status == "NON_COMPLIANT" else "#16a34a" if overall_status == "COMPLIANT" else "#f59e0b"
+        
+        summary_info = [
+            ["Document ID", str(doc_id) if doc_id else "N/A"],
+            ["Validation Date", str(val_time)],
+            ["Compliance Status", get_val(validation_result, 'compliance_status_label', 'N/A')],
+            ["Overall Status", overall_status],
+            ["Compliance Score", f"{compliance_score}/100"],
         ]
-        for line in meta_lines:
-            story.append(Paragraph(line, normal))
-        story.append(Spacer(1, 12))
-
-        # Summary table
-        summary_data = [
-            ["Checked", "With Source/Date", "Errors", "Warnings"],
-            [
-                str(validation_result.total_tables_checked),
-                str(validation_result.tables_with_source_date),
-                str(len([i for i in validation_result.source_date_issues if i.severity == 'error'])),
-                str(len([i for i in validation_result.source_date_issues if i.severity == 'warning']))
-            ]
-        ]
-        tbl = Table(summary_data, colWidths=[90, 120, 60, 60])
-        tbl.setStyle(TableStyle([
-            ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#f0f0f0')),
-            ('TEXTCOLOR', (0,0), (-1,0), colors.HexColor('#333333')),
-            ('ALIGN', (0,0), (-1,-1), 'CENTER'),
-            ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
-            ('BOTTOMPADDING', (0,0), (-1,0), 8),
-            ('GRID', (0,0), (-1,-1), 0.25, colors.HexColor('#e0e0e0')),
+        
+        # Get issue counts
+        compliance_issues = get_val(validation_result, 'compliance_issues', [])
+        total_issues = len(compliance_issues)
+        
+        critical_count = sum(1 for i in compliance_issues if get_val(i, 'severity', '') in ['critical', 'error'])
+        high_count = sum(1 for i in compliance_issues if get_val(i, 'severity', '') in ['high', 'warning'])
+        medium_count = sum(1 for i in compliance_issues if get_val(i, 'severity', '') == 'medium')
+        low_count = sum(1 for i in compliance_issues if get_val(i, 'severity', '') == 'low')
+        
+        summary_info.extend([
+            ["Total Issues Found", str(total_issues)],
+            ["Critical Issues", str(critical_count)],
+            ["High Priority Issues", str(high_count)],
+            ["Medium Priority Issues", str(medium_count)],
+            ["Low Priority Issues", str(low_count)],
+        ])
+        
+        summary_table = Table(summary_info, colWidths=[150, 350])
+        summary_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#f5f5f5')),
+            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 10),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#e0e0e0')),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 8),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
         ]))
-        story.append(tbl)
-        story.append(Spacer(1, 12))
+        story.append(summary_table)
+        story.append(Spacer(1, 16))
 
-        # Source/Date issues
-        story.append(Paragraph('Source / Date Validation', h2))
-        if validation_result.source_date_issues:
-            data = [["Location", "Type", "Severity", "Message"]]
-            for issue in validation_result.source_date_issues:
-                data.append([issue.location, issue.issue_type.replace('_', ' '), issue.severity.upper(), issue.message])
-            t = Table(data, colWidths=[120, 110, 60, 210])
-            t.setStyle(TableStyle([
-                ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#fafafa')),
-                ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
-                ('ALIGN', (2,1), (2,-1), 'CENTER'),
-                ('VALIGN', (0,0), (-1,-1), 'TOP'),
-                ('GRID', (0,0), (-1,-1), 0.25, colors.HexColor('#e8e8e8')),
-            ]))
-            story.append(t)
-        else:
-            story.append(Paragraph('[PASS] No source/date issues found', normal))
-
-        story.append(Spacer(1, 12))
-
-        # Numerical inconsistencies
-        if validation_result.total_numerical_values_checked > 0:
-            story.append(Paragraph('Numerical Validation', h2))
-            if validation_result.numerical_inconsistencies:
-                data = [["Location", "Doc Value", "Ref Value", "Period", "Severity", "Message"]]
-                for inc in validation_result.numerical_inconsistencies:
-                    data.append([
-                        inc.location or 'N/A',
-                        f"{inc.document_value}%" if inc.document_value is not None else 'N/A',
-                        f"{inc.reference_value}%" if inc.reference_value is not None else 'N/A',
-                        inc.period or 'N/A',
-                        inc.severity.upper(),
-                        inc.message
-                    ])
-                t2 = Table(data, colWidths=[110, 70, 70, 70, 60, 130])
-                t2.setStyle(TableStyle([
-                    ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#fafafa')),
-                    ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
-                    ('GRID', (0,0), (-1,-1), 0.25, colors.HexColor('#e8e8e8')),
-                    ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        # === DOCUMENT METADATA ===
+        metadata = get_val(validation_result, 'metadata', {})
+        if metadata:
+            story.append(Paragraph("Document Metadata", h2))
+            meta_items = []
+            meta_fields = [
+                ('fund_name', 'Fund Name'),
+                ('societe_de_gestion', 'Management Company'),
+                ('is_professional_client', 'Professional Client'),
+                ('is_new_product', 'New Product'),
+                ('is_new_strategy', 'New Strategy'),
+                ('is_sicav', 'SICAV'),
+                ('sfdr_article', 'SFDR Article'),
+            ]
+            for key, label in meta_fields:
+                val = metadata.get(key) if isinstance(metadata, dict) else getattr(metadata, key, None)
+                if val is not None:
+                    display_val = "Yes" if val is True else "No" if val is False else str(val)
+                    meta_items.append([label, display_val])
+            
+            if meta_items:
+                meta_table = Table(meta_items, colWidths=[150, 350])
+                meta_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#fafafa')),
+                    ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, -1), 9),
+                    ('GRID', (0, 0), (-1, -1), 0.25, colors.HexColor('#e8e8e8')),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 6),
+                    ('TOPPADDING', (0, 0), (-1, -1), 4),
+                    ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
                 ]))
-                story.append(t2)
+                story.append(meta_table)
+            story.append(Spacer(1, 16))
+
+        # === VALIDATION STATISTICS ===
+        story.append(Paragraph("Validation Statistics", h2))
+        
+        total_tables = get_val(validation_result, 'total_tables_checked', 0)
+        tables_with_source = get_val(validation_result, 'tables_with_source_date', 0)
+        total_charts = get_val(validation_result, 'total_charts_analyzed', 0)
+        charts_with_source = get_val(validation_result, 'charts_with_source_date', 0)
+        numerical_checked = get_val(validation_result, 'total_numerical_values_checked', 0)
+        numerical_matching = get_val(validation_result, 'values_matching_reference', 0)
+        
+        stats_data = [
+            ["Metric", "Value", "Status"],
+            ["Tables Checked", str(total_tables), "✓" if total_tables > 0 else "-"],
+            ["Tables with Source/Date", str(tables_with_source), "✓" if tables_with_source == total_tables else "!"],
+            ["Charts Analyzed", str(total_charts), "✓" if total_charts > 0 else "-"],
+            ["Charts with Source/Date", str(charts_with_source), "✓" if charts_with_source == total_charts else "!"],
+            ["Numerical Values Checked", str(numerical_checked), "✓" if numerical_checked > 0 else "-"],
+            ["Values Matching Reference", str(numerical_matching), "✓" if numerical_matching == numerical_checked else "!"],
+        ]
+        
+        stats_table = Table(stats_data, colWidths=[200, 150, 50])
+        stats_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#e5e7eb')),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 9),
+            ('ALIGN', (1, 0), (-1, -1), 'CENTER'),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#d1d5db')),
+            ('LEFTPADDING', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, -1), 6),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        ]))
+        story.append(stats_table)
+        story.append(Spacer(1, 20))
+
+        # === DETAILED COMPLIANCE ISSUES ===
+        if compliance_issues:
+            story.append(Paragraph("Detailed Compliance Issues", h1))
+            story.append(Spacer(1, 8))
+            
+            # Group issues by category
+            issues_by_category = {}
+            for issue in compliance_issues:
+                cat = get_val(issue, 'issue_category', None) or get_val(issue, 'category', 'compliance') or 'compliance'
+                if cat not in issues_by_category:
+                    issues_by_category[cat] = []
+                issues_by_category[cat].append(issue)
+            
+            issue_number = 0
+            for category, cat_issues in sorted(issues_by_category.items()):
+                # Category header
+                cat_title = category.replace('_', ' ').upper()
+                story.append(Paragraph(f"<b>{cat_title}</b> ({len(cat_issues)} issue{'s' if len(cat_issues) != 1 else ''})", h2))
+                story.append(Spacer(1, 6))
+                
+                for issue in cat_issues:
+                    issue_number += 1
+                    
+                    issue_type = get_val(issue, 'issue_type', 'Unknown')
+                    severity = str(get_val(issue, 'severity', 'medium')).upper()
+                    location = get_val(issue, 'location', 'N/A')
+                    slide_num = get_val(issue, 'slide_number', None)
+                    message = get_val(issue, 'message', 'No description')
+                    context = get_val(issue, 'context', None)
+                    suggestion = get_val(issue, 'suggestion', None)
+                    rule_ref = get_val(issue, 'rule_reference', None)
+                    auto_fixable = get_val(issue, 'auto_fixable', False)
+                    
+                    # Severity color
+                    sev_color = "#dc2626" if severity in ['CRITICAL', 'ERROR'] else "#f97316" if severity in ['HIGH', 'WARNING'] else "#eab308" if severity == 'MEDIUM' else "#6b7280"
+                    
+                    # Issue header
+                    issue_header = f"<b>Issue #{issue_number}:</b> {issue_type.replace('_', ' ').title()}"
+                    story.append(Paragraph(issue_header, normal))
+                    
+                    # Issue details table
+                    issue_details = [
+                        ["Severity", severity],
+                        ["Location", f"{location}" + (f" (Slide {slide_num})" if slide_num else "")],
+                    ]
+                    
+                    # Add full message
+                    issue_details.append(["Description", message])
+                    
+                    # Add context if available
+                    if context:
+                        issue_details.append(["Context", str(context)])
+                    
+                    # Add suggestion if available
+                    if suggestion:
+                        issue_details.append(["Suggested Fix", suggestion])
+                    
+                    # Add rule reference if available
+                    if rule_ref:
+                        issue_details.append(["Rule Reference", rule_ref])
+                    
+                    # Add auto-fixable status
+                    issue_details.append(["Auto-Fixable", "Yes ✓" if auto_fixable else "No - Manual Review Required"])
+                    
+                    issue_table = Table(issue_details, colWidths=[100, 400])
+                    issue_table.setStyle(TableStyle([
+                        ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#f9fafb')),
+                        ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+                        ('FONTSIZE', (0, 0), (-1, -1), 8),
+                        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                        ('GRID', (0, 0), (-1, -1), 0.25, colors.HexColor('#e5e7eb')),
+                        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+                        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+                        ('TOPPADDING', (0, 0), (-1, -1), 4),
+                        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                    ]))
+                    story.append(issue_table)
+                    story.append(Spacer(1, 10))
+                
+                story.append(Spacer(1, 8))
+        else:
+            story.append(Paragraph("Compliance Issues", h2))
+            story.append(Paragraph("<b>✓ PASS</b> - No compliance issues found. Document is compliant.", normal))
+
+        # === SUMMARY SECTION ===
+        story.append(Spacer(1, 20))
+        story.append(Paragraph("Summary", h2))
+        
+        summary_text = get_val(validation_result, 'summary', [])
+        if summary_text:
+            if isinstance(summary_text, list):
+                for line in summary_text:
+                    story.append(Paragraph(f"• {line}", normal))
             else:
-                story.append(Paragraph('[PASS] No numerical inconsistencies found', normal))
+                story.append(Paragraph(str(summary_text), normal))
+        else:
+            story.append(Paragraph(f"Validation completed with {total_issues} issue(s) found.", normal))
+        
+        story.append(Spacer(1, 16))
+        story.append(Paragraph(f"<i>Report generated on {val_time}</i>", normal))
 
         # Finalize
         doc.build(story)
+
     
     def generate_csv_report(
         self,

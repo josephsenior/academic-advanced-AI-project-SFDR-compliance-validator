@@ -35,6 +35,12 @@ def _get_issue_category(issue_type: str) -> str:
     ]):
         return "performance"
     
+    # Source/date issues (Check before generic structure "missing_date")
+    if any(keyword in issue_type_str for keyword in [
+        'source_date', 'missing_source', 'missing_date_info', 'both_missing', 'date_too_old', 'date_inconsistent'
+    ]):
+        return "source_date"
+        
     # Structure issues (cover page, slide 2, etc.)
     if any(keyword in issue_type_str for keyword in [
         'missing_fund_name', 'missing_date', 'missing_risk_profile',
@@ -58,10 +64,6 @@ def _get_issue_category(issue_type: str) -> str:
     # Registration issues
     if 'registration' in issue_type_str or 'country' in issue_type_str:
         return "registration"
-    
-    # Source/date issues
-    if 'source_date' in issue_type_str or 'missing_source' in issue_type_str:
-        return "source_date"
     
     # Numerical issues
     if 'numerical' in issue_type_str or 'mismatch' in issue_type_str or 'data_mismatch' in issue_type_str:
@@ -105,8 +107,16 @@ def format_validation_result(result: Any, metadata: Dict[str, Any], filename: st
         total_penalty = sum(severity_weights.get(i.severity, 0) for i in result.compliance_issues)
         compliance_score = max(0, 100 - total_penalty)
 
-    critical_count = sum(1 for i in result.compliance_issues if i.severity == "critical")
-    high_count = sum(1 for i in result.compliance_issues if i.severity == "high")
+    # Descriptive status label
+    if compliance_score == 100:
+        compliance_status_label = "Totally compliant"
+    elif compliance_score > 0:
+        compliance_status_label = "Partially compliant"
+    else:
+        compliance_status_label = "Non-compliant"
+
+    critical_count = sum(1 for i in result.compliance_issues if i.severity in ["critical", "error"])
+    high_count = sum(1 for i in result.compliance_issues if i.severity in ["high", "warning"])
     medium_count = sum(1 for i in result.compliance_issues if i.severity == "medium")
     low_count = sum(1 for i in result.compliance_issues if i.severity == "low")
 
@@ -127,10 +137,17 @@ def format_validation_result(result: Any, metadata: Dict[str, Any], filename: st
                 "low": 0,
             }
 
+        # Standardize severity for frontend
+        severity = issue.severity
+        if severity == "error":
+            severity = "critical"
+        elif severity == "warning":
+            severity = "high"
+
         issues_by_category[category].append(
             {
                 "issue_type": issue.issue_type,
-                "severity": issue.severity,
+                "severity": severity,
                 "category": category,
                 "location": issue.location,
                 "slide_number": issue.slide_number,
@@ -156,13 +173,20 @@ def format_validation_result(result: Any, metadata: Dict[str, Any], filename: st
         else:
             category_counts[category]["low"] += 1
 
-    # Build compliance_issues list with correct categories
+    # Build compliance_issues list with correct categories and standardized severities
     compliance_issues_with_category = []
     for issue in result.compliance_issues:
         category = issue.issue_category if issue.issue_category and issue.issue_category != "compliance" else _get_issue_category(issue.issue_type)
+        
+        severity = issue.severity
+        if severity == "error":
+            severity = "critical"
+        elif severity == "warning":
+            severity = "high"
+
         compliance_issues_with_category.append({
             "issue_type": issue.issue_type,
-            "severity": issue.severity,
+            "severity": severity,
             "category": category,
             "location": issue.location,
             "slide_number": issue.slide_number,
@@ -178,11 +202,10 @@ def format_validation_result(result: Any, metadata: Dict[str, Any], filename: st
         "filename": filename,
         "overall_status": result.overall_status,
         "compliance_score": compliance_score,
+        "compliance_status_label": compliance_status_label,
         "total_issues": total_issues,
         "compliance_issues": compliance_issues_with_category,
         "issues_by_severity": {
-            "error": sum(1 for i in result.compliance_issues if i.severity == "error"),
-            "warning": sum(1 for i in result.compliance_issues if i.severity == "warning"),
             "critical": critical_count,
             "high": high_count,
             "medium": medium_count,
@@ -197,7 +220,7 @@ def format_validation_result(result: Any, metadata: Dict[str, Any], filename: st
             "total_charts_analyzed": result.total_charts_analyzed,
             "charts_with_source_date": result.charts_with_source_date,
             "charts_missing_source_date": result.charts_missing_source_date,
-            "numerical_values_checked": result.total_numerical_values_checked,
+            "total_numerical_values_checked": result.total_numerical_values_checked,
             "values_matching_reference": result.values_matching_reference,
         },
         "metadata": metadata,

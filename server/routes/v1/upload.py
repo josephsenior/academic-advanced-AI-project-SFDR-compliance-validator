@@ -10,7 +10,7 @@ from flask import current_app, jsonify, request
 from werkzeug.utils import secure_filename
 
 from ...constants import ALLOWED_EXTENSIONS, ValidationStatus
-from ...store import create_job_record, validation_jobs
+from server.store import create_job_record, validation_jobs
 
 from . import bp
 
@@ -89,7 +89,9 @@ def upload_document():
         job = create_job_record(document_id, filename, str(file_path))
         job["metadata"] = metadata
         job["has_prospectus"] = has_prospectus
+        print(f"DEBUG: UPLOAD adding {document_id}. dict id: {id(validation_jobs)}, len: {len(validation_jobs)}")
         validation_jobs[document_id] = job
+        print(f"DEBUG: UPLOAD after add. len: {len(validation_jobs)}")
 
         logger.info(
             "Upload complete: %s - %s (metadata: %s, prospectus: %s)",

@@ -1,15 +1,17 @@
 export interface DocumentMetadata {
   societe_de_gestion?: string
-  client_type?: "professional" | "non-professional"
-  new_strategy?: boolean
-  new_product?: boolean
+  is_sicav?: boolean
+  is_professional_client?: boolean
+  is_new_strategy?: boolean
+  is_new_product?: boolean
+  [key: string]: any
 }
 
 export interface Document {
   document_id: string
   filename: string
   upload_date: string
-  status: "pending" | "uploading" | "extracting" | "validating" | "complete" | "error"
+  status: "pending" | "uploading" | "extracting" | "validating" | "completed" | "error"
   metadata?: DocumentMetadata
 }
 
@@ -50,8 +52,9 @@ export interface Statistics {
 export interface ValidationResults {
   document_id: string
   filename?: string
-  overall_status: "pass" | "warning" | "error"
+  overall_status: "pass" | "warning" | "error" | "critical" | "unknown" | "completed" | "non_compliant" | "compliant"
   compliance_score: number
+  compliance_status_label?: string
   total_issues: number
   issues_by_severity: IssuesBySeverity
   issues_by_category: IssuesByCategory
@@ -60,7 +63,7 @@ export interface ValidationResults {
 
 export interface ValidationStatus {
   document_id: string
-  status: "pending" | "uploading" | "extracting" | "validating" | "complete" | "error"
+  status: "pending" | "uploading" | "extracting" | "validating" | "completed" | "error"
   progress?: number
   message?: string
 }

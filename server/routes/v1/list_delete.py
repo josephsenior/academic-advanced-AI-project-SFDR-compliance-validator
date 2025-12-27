@@ -5,7 +5,7 @@ from pathlib import Path
 
 from flask import current_app, jsonify, request
 
-from ...store import validation_jobs
+from server.store import validation_jobs
 
 from . import bp
 
@@ -19,6 +19,7 @@ def list_documents():
     offset = request.args.get("offset", 0, type=int)
 
     filtered_jobs = []
+    print(f"DEBUG: LIST dict id: {id(validation_jobs)}, len: {len(validation_jobs)}")
     for job_id, job in validation_jobs.items():
         if status_filter and job["status"] != status_filter:
             continue
@@ -30,6 +31,7 @@ def list_documents():
                 "status": job["status"],
                 "progress": job["progress"],
                 "created_at": job["created_at"],
+                "upload_date": job["created_at"],
                 "updated_at": job["updated_at"],
                 "compliance_score": job["validation_result"].get("compliance_score") if job.get("validation_result") else None,
                 "total_issues": job["validation_result"].get("total_issues") if job.get("validation_result") else None,

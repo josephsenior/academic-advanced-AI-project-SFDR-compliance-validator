@@ -13,7 +13,7 @@ interface RecentValidationsProps {
 }
 
 const statusColors: Record<string, string> = {
-  complete: "bg-success/20 text-success border-success/30",
+  completed: "bg-success/20 text-success border-success/30",
   error: "bg-destructive/20 text-destructive border-destructive/30",
   validating: "bg-primary/20 text-primary border-primary/30",
   pending: "bg-muted text-muted-foreground border-border",
@@ -43,7 +43,12 @@ export function RecentValidations({ documents, onDelete }: RecentValidationsProp
           <div className="flex-1 min-w-0">
             <p className="font-medium truncate text-foreground">{doc.filename}</p>
             <p className="text-sm text-muted-foreground">
-              {formatDistanceToNow(new Date(doc.upload_date), { addSuffix: true })}
+              {(() => {
+                const dateStr = doc.upload_date || (doc as any).created_at
+                if (!dateStr) return "Unknown date"
+                const date = new Date(dateStr)
+                return isNaN(date.getTime()) ? "Invalid date" : formatDistanceToNow(date, { addSuffix: true })
+              })()}
             </p>
           </div>
 

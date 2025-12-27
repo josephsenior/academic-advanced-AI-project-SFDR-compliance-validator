@@ -40,16 +40,26 @@ export function ComplianceScoreGauge({ score, size = "md" }: ComplianceScoreGaug
   const strokeDashoffset = circumference - (displayScore / 100) * circumference
 
   const getScoreColor = () => {
-    if (displayScore >= 80) return "text-success stroke-success"
-    if (displayScore >= 60) return "text-medium stroke-medium"
-    if (displayScore >= 40) return "text-high stroke-high"
-    return "text-critical stroke-critical"
+    if (displayScore >= 80) return "hsl(var(--success))"
+    if (displayScore >= 60) return "hsl(var(--warning))"
+    if (displayScore >= 40) return "hsl(var(--high))"
+    return "hsl(var(--critical))"
   }
 
+  const scoreColor = getScoreColor()
+
   return (
-    <div className={cn("relative", sizes[size].container)}>
-      <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="8" className="text-muted/30" />
+    <div className={cn("relative flex items-center justify-center", sizes[size].container)}>
+      <svg className="w-full h-full -rotate-90 drop-shadow-sm" viewBox="0 0 100 100">
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="6"
+          className="text-muted/10"
+        />
         <circle
           cx="50"
           cy="50"
@@ -59,12 +69,23 @@ export function ComplianceScoreGauge({ score, size = "md" }: ComplianceScoreGaug
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
-          className={cn("transition-all duration-1000", getScoreColor())}
+          stroke={scoreColor}
+          className="transition-all duration-1000 ease-out"
+          style={{
+            filter: `drop-shadow(0 0 6px ${scoreColor}44)`
+          }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className={cn("font-bold", sizes[size].text, getScoreColor())}>{displayScore}</span>
-        <span className={cn("text-muted-foreground", sizes[size].label)}>Score</span>
+        <span
+          className={cn("font-black tracking-tighter", sizes[size].text)}
+          style={{ color: scoreColor }}
+        >
+          {displayScore}
+        </span>
+        <span className={cn("text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 mt-1", sizes[size].label)}>
+          Score
+        </span>
       </div>
     </div>
   )

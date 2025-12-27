@@ -5,7 +5,7 @@ from pathlib import Path
 
 from flask import current_app, jsonify
 
-from ...store import validation_jobs
+from server.store import validation_jobs
 
 from . import bp
 
@@ -26,6 +26,7 @@ def get_status(document_id: str):
                     "status": "completed",
                     "progress": 100,
                     "created_at": datetime.fromtimestamp(output_path.stat().st_ctime).isoformat(),
+                    "upload_date": datetime.fromtimestamp(output_path.stat().st_ctime).isoformat(),
                     "updated_at": datetime.fromtimestamp(validation_file.stat().st_mtime).isoformat(),
                 }
             )
@@ -40,6 +41,7 @@ def get_status(document_id: str):
             "status": job["status"],
             "progress": job["progress"],
             "created_at": job["created_at"],
+            "upload_date": job["created_at"],
             "updated_at": job["updated_at"],
             "error": job.get("error"),
         }

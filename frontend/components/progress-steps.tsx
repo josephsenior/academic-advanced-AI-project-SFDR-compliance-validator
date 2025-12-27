@@ -9,7 +9,7 @@ const steps = [
   { id: "uploading", label: "Uploading" },
   { id: "extracting", label: "Extracting" },
   { id: "validating", label: "Validating" },
-  { id: "complete", label: "Complete" },
+  { id: "completed", label: "Complete" },
 ]
 
 export function ProgressSteps({ currentStatus }: ProgressStepsProps) {
@@ -18,8 +18,8 @@ export function ProgressSteps({ currentStatus }: ProgressStepsProps) {
   return (
     <div className="flex items-center gap-2">
       {steps.map((step, index) => {
-        const isComplete = index < currentIndex || currentStatus === "complete"
-        const isCurrent = index === currentIndex && currentStatus !== "complete"
+        const isComplete = index < currentIndex || currentStatus === "completed"
+        const isCurrent = index === currentIndex && currentStatus !== "completed"
 
         return (
           <div key={step.id} className="flex items-center gap-2">

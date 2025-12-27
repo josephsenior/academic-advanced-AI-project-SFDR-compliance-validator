@@ -23,12 +23,8 @@ export function StatisticsTable({ statistics }: StatisticsTableProps) {
       value: statistics.total_charts_analyzed,
       icon: BarChart3,
     },
-    {
-      label: "Numerical Values Checked",
-      value: statistics.numerical_values_checked || 0,
-      icon: Hash,
-    },
   ]
+
 
   return (
     <Card>

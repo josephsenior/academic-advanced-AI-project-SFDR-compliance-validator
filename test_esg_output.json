@@ -111,53 +111,16 @@
       "country": null
     },
     {
-      "issue_type": "esg_overmentioned_article8",
-      "severity": "high",
-      "location": "Document-wide",
-      "message": "Article 8 fund: ESG content exceeds 10% limit (48.73%)",
-      "context": "ESG Level: engaging, Commercial mentions: 1",
-      "suggestion": "Reduce ESG content to below 10% of total document text",
-      "client_type": "retail",
-      "fund_type": "standard",
-      "slide_number": null,
-      "country": null
-    },
-    {
-      "issue_type": "engaging_criteria_not_met",
-      "severity": "high",
-      "location": "Document-wide",
-      "message": "Article 9 (engaging) fund does not meet criteria: exclusion_percentage=None% (required: >= 20%), portfolio_coverage=None% (required: >= 90%)",
-      "context": "ESG Level: engaging",
-      "suggestion": "Verify fund classification or ensure exclusion percentage >= 20% and portfolio coverage >= 90%",
-      "client_type": "retail",
-      "fund_type": "standard",
+      "issue_type": "esg_level_mismatch",
+      "severity": "medium",
+      "location": "ESG Analyzer",
+      "message": "ESG validation could not be completed: Error code: 500 - {'error': {'message': 'litellm.InternalServerError: InternalServerError: Hosted_vllmException - Connection error.. Received Model Group=hosted_vllm/Llama-3.1-70B-Instruct\\nAvailable Model Group Fallbacks=None', 'type': None, 'param': None, 'code': '500'}}",
+      "context": null,
+      "suggestion": null,
+      "client_type": null,
+      "fund_type": null,
       "slide_number": null,
       "country": null
     }
-  ],
-  "esg_analysis": {
-    "esg_level": {
-      "level": "engaging",
-      "sfdr_article": 8,
-      "exclusion_percentage": null,
-      "portfolio_coverage": null,
-      "description": "Fund integrates ESG factors into its investment approach"
-    },
-    "esg_mentions": {
-      "esg_percentage": 48.73,
-      "total_text_length": 314,
-      "esg_text_length": 153,
-      "commercial_esg_mentions": 1,
-      "mandatory_regulatory_mentions": 0,
-      "keywords_found": [
-        "esg"
-      ],
-      "keywords_by_slide": {
-        "esg": [
-          2
-        ]
-      }
-    },
-    "analysis_timestamp": "2025-12-15T13:07:26.450473Z"
-  }
+  ]
 }

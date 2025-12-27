@@ -46,11 +46,24 @@ test_corrected.pptx
 !dataset/**/*.pptx
 
 # Frontend (Next.js)
-compliance-dashboard/node_modules/
-compliance-dashboard/.next/
-compliance-dashboard/.turbo/
-compliance-dashboard/tsconfig.tsbuildinfo
- 
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/tsconfig.tsbuildinfo
+frontend/.next/dev/
+
 # Ignore generated outputs
 outputs/
-\n# Exclude frontend build/deps\nfrontend/node_modules/\nfrontend/.next/\nfrontend/.next/dev/\nfrontend/tsconfig.tsbuildinfo\n
+*.json
+!package.json
+!tsconfig.json
+!*.lock.json
+!*pnpm-lock.yaml
+!jobs_persistence.json
+
+# Test files
+verify_*.py
+main_fix.py
+debug_imports.py
+*.bak
+*.ps1

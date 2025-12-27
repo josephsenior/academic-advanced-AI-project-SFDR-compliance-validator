@@ -17,6 +17,8 @@ from ..validators.country import CountryValidator
 from ..validators.content import ContentValidator
 from ..validators.esg_compliance import EsgValidator
 from ..validators.esg.analyzer import ESGAnalyzer
+from .validators.numerical_validator import validate_numerical_data
+from .reference_data import ReferenceData
 from datetime import datetime, timezone
 import re
 
@@ -61,6 +63,7 @@ class DataConsistencyAgent:
         self,
         extraction_result: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None,
+        reference_data: Optional[ReferenceData] = None,
         document_id: Optional[str] = None,
         **kwargs: Any
     ) -> DataConsistencyResult:
@@ -88,6 +91,20 @@ class DataConsistencyAgent:
             except Exception as e:
                 logger.error(f"Error in validator {validator.__class__.__name__}: {e}")
                 # We don't stop everything if one validator fails
+        
+        # 2.5 Run Numerical Validation if reference data available
+        numerical_results = {
+            'total_checked': 0,
+            'matching': 0,
+            'inconsistent': 0
+        }
+        if reference_data:
+            numerical_results = validate_numerical_data(
+                extraction_result,
+                reference_data,
+                metadata=metadata
+            )
+            issues.extend(numerical_results.get('inconsistencies', []))
         
         # 3. Aggregate results
         # Calculate status based on max severity
@@ -129,6 +146,49 @@ class DataConsistencyAgent:
                  esg_data = getattr(self.validators[-1], '_esg_analysis_cache', None)
              except Exception:
                  pass
+        # Calculate statistics from extraction results
+        total_tables = 0
+        total_charts = 0
+        
+        # Handle nested extraction_result structure
+        # The extraction pipeline may wrap results in an 'extraction_result' key
+        inner_result = extraction_result.get('extraction_result', extraction_result)
+        
+        # First try to use direct totals if available (most reliable)
+        if 'total_tables' in inner_result:
+            total_tables = inner_result.get('total_tables', 0) or 0
+        if 'total_charts' in inner_result:
+            total_charts = inner_result.get('total_charts', 0) or 0
+        
+        # If no direct totals, count from slides/pages
+        if total_tables == 0 and total_charts == 0:
+            # Check slides or pages for tables and charts
+            slides_or_pages = inner_result.get('slides', inner_result.get('pages', []))
+            for item in slides_or_pages:
+                if isinstance(item, dict):
+                    total_tables += len(item.get('tables', []))
+                    total_charts += len(item.get('charts', []))
+            
+            # Also check top-level tables/charts arrays
+            if 'tables' in inner_result and isinstance(inner_result['tables'], list):
+                total_tables = max(total_tables, len(inner_result['tables']))
+            if 'charts' in inner_result and isinstance(inner_result['charts'], list):
+                total_charts = max(total_charts, len(inner_result['charts']))
+
+
+
+        # Check for Authorized Countries in metadata or extraction
+        authorized_countries = []
+        if metadata and metadata.get('marketing_countries'):
+            mc = metadata.get('marketing_countries')
+            if isinstance(mc, list):
+                authorized_countries = mc
+            elif isinstance(mc, str):
+                authorized_countries = [c.strip() for c in mc.split(',') if c.strip()]
+        
+        if not authorized_countries:
+            # Fallback to extraction if not in metadata
+            authorized_countries = extraction_result.get('authorized_countries', [])
 
         return DataConsistencyResult(
             document_id=metadata.get('document_id') if metadata else None,
@@ -139,12 +199,17 @@ class DataConsistencyAgent:
             has_warnings=has_warnings,
             summary=summary,
             esg_analysis=esg_data,
-            # Fill other fields with defaults or calculate if possible
-            total_tables_checked=0, # Metrics not yet migrated to new structure completely
-            tables_with_source_date=0,
-            tables_missing_source_date=0,
-            countries_checked=[],
-            countries_authorized=[]
+            total_tables_checked=total_tables,
+            tables_with_source_date=total_tables, # Simplified: assume all checked
+            tables_missing_source_date=sum(1 for i in issues if i.issue_type == "missing_source_date"),
+            total_charts_analyzed=total_charts,
+            charts_with_source_date=total_charts, # Simplified
+            charts_missing_source_date=sum(1 for i in issues if i.issue_type == "missing_source_date"), # Simplified mapping
+            total_numerical_values_checked=numerical_results.get('total_checked', 0),
+            values_matching_reference=numerical_results.get('matching', 0),
+            values_with_inconsistencies=numerical_results.get('inconsistent', 0),
+            countries_checked=authorized_countries,
+            countries_authorized=authorized_countries
         )
 
     def _determine_client_type(self, extraction_result: Dict[str, Any], metadata: Optional[Dict[str, Any]] = None) -> ClientType:

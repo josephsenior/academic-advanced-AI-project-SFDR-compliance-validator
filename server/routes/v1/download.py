@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from pathlib import Path
 
 from flask import current_app, jsonify, request, send_file
@@ -24,12 +25,30 @@ def download_document(document_id: str):
 
         # Normalize and check file paths for both original and corrected
         if download_type == "original":
-            file_path = Path(job.get("file_path") or "")
+            original_path = job.get("file_path") or ""
+            # Ensure path is absolute
+            if original_path and not os.path.isabs(original_path):
+                project_root = Path(current_app.root_path).parent
+                original_path = str(project_root / original_path)
+            file_path = Path(original_path)
             if not file_path.exists():
                 logger.info("Original file missing for document_id=%s path=%s", document_id, str(file_path))
                 return jsonify({"error": "Original document not found"}), 404
         else:
             file_path = Path(current_app.config.get("CORRECTED_FOLDER", "corrected_documents")) / f"{document_id}_corrected.pptx"
+            
+            # EMERGENCY DEBUG LOG
+            DEBUG_FILE = r"C:\Users\GIGABYTE\Desktop\Advanced Ai Project\debug_fix_abs.log"
+            try:
+                import os
+                from datetime import datetime
+                with open(DEBUG_FILE, "a") as f:
+                    f.write(f"\n--- DOWNLOAD {datetime.now()} ---\n")
+                    f.write(f"Checking: {file_path}\n")
+                    f.write(f"Exists: {file_path.exists()}\n")
+            except:
+                pass
+                
             if not file_path.exists():
                 logger.info("Corrected file missing for document_id=%s path=%s", document_id, str(file_path))
                 return jsonify({"error": "Corrected document not found. Run /api/v1/fix first"}), 404

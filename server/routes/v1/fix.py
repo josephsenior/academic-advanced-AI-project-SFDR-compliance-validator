@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import logging
+import os
+from datetime import datetime
 from pathlib import Path
 
 from flask import current_app, jsonify, request
@@ -24,7 +26,7 @@ def fix_document(document_id: str):
         if job["status"] != ValidationStatus.COMPLETED:
             return jsonify({"error": "Validation must be completed first"}), 400
 
-        data = request.get_json() or {}
+        data = request.get_json(silent=True) or {}
         fix_types = data.get("fix_types", ["all"])
 
         # Lazy import to avoid heavy deps at startup
@@ -33,21 +35,49 @@ def fix_document(document_id: str):
         corrector = DocumentCorrector()
 
         original_path = job["file_path"]
+        # Ensure path is absolute
+        if not os.path.isabs(original_path):
+            project_root = Path(current_app.root_path).parent
+            original_path = str(project_root / original_path)
+            
         output_path = Path(current_app.config["CORRECTED_FOLDER"]) / f"{document_id}_corrected.pptx"
 
-        logger.info("Applying fixes to %s", document_id)
+        # EMERGENCY DEBUG LOG
+        DEBUG_FILE = r"C:\Users\GIGABYTE\Desktop\Advanced Ai Project\debug_fix_abs.log"
+        try:
+            with open(DEBUG_FILE, "a") as f:
+                f.write(f"\n--- {datetime.now()} ---\n")
+                f.write(f"ID: {document_id}\n")
+                f.write(f"Input: {original_path}\n")
+                f.write(f"Output: {output_path}\n")
+                f.write(f"Input exists: {os.path.exists(original_path)}\n")
+            print(f"DEBUG_LOG: Wrote to {DEBUG_FILE}")
+        except Exception as e:
+            print(f"DEBUG_LOG_ERROR: {str(e)}")
+
+        logger.info(f"Applying fixes to {document_id}")
+        logger.info(f"Input path: {original_path}")
+        logger.info(f"Output path: {output_path}")
 
         validation_result = job["validation_result"]
-        issues_to_fix = []
+        
+        logger.info(f"Applying fixes for document {document_id}. Fix types: {fix_types}")
+        
+        auto_fix_disclaimers = "all" in fix_types or "disclaimers" in fix_types
+        
+        result = corrector.correct(
+            original_path, 
+            validation_result, 
+            output_path=str(output_path),
+            auto_fix_disclaimers=auto_fix_disclaimers
+        )
+        
+        if not result.success:
+            logger.error(f"Correction failed for {document_id}: {result.error_message}")
+            return jsonify({"error": f"Correction failed: {result.error_message}"}), 500
 
-        for category, issues in validation_result["issues_by_category"].items():
-            for issue in issues:
-                if issue.get("auto_fixable", False) and ("all" in fix_types or category in fix_types):
-                    issues_to_fix.append(issue)
-
-        corrector.correct(original_path, job["validation_result"], output_path=str(output_path))
-
-        fixes_applied = len(issues_to_fix)
+        fixes_applied = len(result.fixes_applied)
+        logger.info(f"Successfully applied {fixes_applied} fixes for {document_id}. Path: {output_path}")
 
         return jsonify(
             {
@@ -55,9 +85,13 @@ def fix_document(document_id: str):
                 "corrected_file_path": str(output_path),
                 "fixes_applied": fixes_applied,
                 "message": f"Document corrected successfully. {fixes_applied} fixes applied.",
+                "details": {
+                    "applied": result.fixes_applied,
+                    "failed": result.fixes_failed
+                }
             }
         )
 
     except Exception as e:
-        logger.error("Fix error for %s: %s", document_id, str(e), exc_info=True)
-        return jsonify({"error": f"Fix failed: {str(e)}"}), 500
+        logger.error(f"Unexpected error in fix_document for {document_id}: {str(e)}", exc_info=True)
+        return jsonify({"error": f"Internal server error: {str(e)}"}), 500

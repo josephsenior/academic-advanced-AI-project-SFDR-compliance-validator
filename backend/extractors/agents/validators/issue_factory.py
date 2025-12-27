@@ -56,7 +56,8 @@ def create_source_date_issue(
         context=None,
         suggestion="Add source and date information to this table/chart",
         client_type=client_type,
-        fund_type=fund_type
+        fund_type=fund_type,
+        auto_fixable=True
     )
 
 

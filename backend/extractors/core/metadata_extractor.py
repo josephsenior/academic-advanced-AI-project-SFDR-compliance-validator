@@ -179,9 +179,15 @@ class MetadataExtractor:
                 normalized['management_company_full'] = management_company
         
         # Sicav product flag
-        sicav_key = "Est ce que le produit fait partie de la Sicav d'Oddo"
-        if sicav_key in data:
-            normalized['is_sicav_product'] = bool(data[sicav_key])
+        sicav_keys = [
+            "Est ce que le produit fait partie de la Sicav d'Oddo",
+            "Est ce que le produit fait partie de la Sicav luxembourgeoise ",
+            "is_sicav"
+        ]
+        for key in sicav_keys:
+            if key in data:
+                normalized['is_sicav_product'] = bool(data[key])
+                break
         
         # Client type (professional vs non-professional)
         client_type_key = "Le client est-il un professionnel"
@@ -191,14 +197,18 @@ class MetadataExtractor:
             normalized['client_type'] = 'Professional' if is_professional else 'Non-professional'
         
         # New strategy flag
-        new_strategy_key = "Le document fait-il référence à une nouvelle Stratégie"
-        if new_strategy_key in data:
-            normalized['is_new_strategy'] = bool(data[new_strategy_key])
+        new_strategy_keys = ["Le document fait-il référence à une nouvelle Stratégie", "is_new_strategy"]
+        for key in new_strategy_keys:
+            if key in data:
+                normalized['is_new_strategy'] = bool(data[key])
+                break
         
         # New product flag
-        new_product_key = "Le document fait-il référence à un nouveau Produit"
-        if new_product_key in data:
-            normalized['is_new_product'] = bool(data[new_product_key])
+        new_product_keys = ["Le document fait-il référence à un nouveau Produit", "is_new_product"]
+        for key in new_product_keys:
+            if key in data:
+                normalized['is_new_product'] = bool(data[key])
+                break
         
         # Store raw JSON for reference
         normalized['raw_json_metadata'] = data

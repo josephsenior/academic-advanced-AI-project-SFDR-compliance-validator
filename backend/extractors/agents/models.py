@@ -3,19 +3,21 @@ Data models for data consistency validation
 """
 
 from typing import Dict, Any, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime, timezone
 
-from ..rules import ComplianceIssue
+from ..rules.models import ComplianceIssue
 
 
 class DataConsistencyResult(BaseModel):
     """Complete result of data consistency validation"""
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    
     document_id: Optional[str] = Field(None, description="Document identifier")
     validation_timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'))
     
     # Unified compliance issues array (includes all types: source/date, numerical, cross-reference, compliance)
-    compliance_issues: List[ComplianceIssue] = Field(default_factory=list, description="All validation issues unified")
+    compliance_issues: List[Any] = Field(default_factory=list, description="All validation issues unified")
     
     # Summary statistics
     total_tables_checked: int = Field(default=0, description="Total tables/charts checked for source/date")

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import uuid
@@ -21,6 +22,17 @@ def allowed_file(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+
+
+def get_file_hash(file_stream) -> str:
+    """Calculate SHA-256 hash of a file-like object."""
+    hasher = hashlib.sha256()
+    # Read in chunks to be memory efficient
+    for chunk in iter(lambda: file_stream.read(4096), b""):
+        hasher.update(chunk)
+    file_stream.seek(0) # IMPORTANT: Seek back to start after reading
+    return hasher.hexdigest()
+
 @bp.post("/upload")
 def upload_document():
     try:
@@ -38,7 +50,24 @@ def upload_document():
                 400,
             )
 
-        document_id = str(uuid.uuid4())
+        # Calculate hash to identify unique documents
+        file_hash = get_file_hash(document_file)
+        # Use first 16 chars of hash combined with a short uuid fragment to ensure uniqueness but stable matching
+        # Or just use the hash if we want to "match" exactly.
+        # User wants "matching with current document". Let's use hash directly if possible, or allow lookup.
+        
+        # Check if hash already exists in store
+        existing_id = None
+        for job_id, job in validation_jobs.items():
+            if job.get("file_hash") == file_hash:
+                existing_id = job_id
+                break
+        
+        if existing_id:
+            logger.info("Matching existing document found for hash %s: %s", file_hash[:10], existing_id)
+            document_id = existing_id
+        else:
+            document_id = str(uuid.uuid4())
 
         doc_dir = Path(current_app.config["UPLOAD_FOLDER"]) / document_id
         doc_dir.mkdir(parents=True, exist_ok=True)
@@ -86,12 +115,19 @@ def upload_document():
             has_prospectus = True
             logger.info("Prospectus uploaded for %s: %s", document_id, prospectus_filename)
 
+
         job = create_job_record(document_id, filename, str(file_path))
+        job["file_hash"] = file_hash
         job["metadata"] = metadata
         job["has_prospectus"] = has_prospectus
         print(f"DEBUG: UPLOAD adding {document_id}. dict id: {id(validation_jobs)}, len: {len(validation_jobs)}")
         validation_jobs[document_id] = job
         print(f"DEBUG: UPLOAD after add. len: {len(validation_jobs)}")
+        
+        # If we reused an ID, we might have overwritten the record, but that's okay.
+        # Ensure _save_jobs is called
+        from server.store import _save_jobs
+        _save_jobs()
 
         logger.info(
             "Upload complete: %s - %s (metadata: %s, prospectus: %s)",

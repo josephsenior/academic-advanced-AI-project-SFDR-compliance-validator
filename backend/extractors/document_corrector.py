@@ -18,6 +18,9 @@ from typing import Dict, Any, List, Optional, TYPE_CHECKING
 from datetime import datetime
 import logging
 
+from .agents.data_consistency_agent import DataConsistencyResult
+from .utils.issue_highlighter import IssueHighlighter
+
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
@@ -35,8 +38,6 @@ try:
 except ImportError:
     PPTX_AVAILABLE = False
     Presentation = None
-
-from .agents.data_consistency_agent import DataConsistencyResult
 
 
 class CorrectionResult:
@@ -69,6 +70,20 @@ class DocumentCorrector:
         
         if not PPTX_AVAILABLE:
             raise ImportError("python-pptx not installed. Install with: pip install python-pptx")
+        
+        # Attempt to load slide content mapping from project data folder to help map
+        # document-wide issues to the most relevant slide.
+        try:
+            from pathlib import Path
+            project_root = Path(__file__).resolve().parents[3]
+            mapping_path = project_root / "data" / "slide_content_map.json"
+            if mapping_path.exists():
+                import json
+                self.slide_content_map = {int(k): v for k, v in json.loads(mapping_path.read_text(encoding="utf-8")).items()}
+            else:
+                self.slide_content_map = {}
+        except Exception:
+            self.slide_content_map = {}
     
     def correct(
         self,
@@ -76,20 +91,19 @@ class DocumentCorrector:
         validation_result: DataConsistencyResult,
         disclaimer_result: Optional[Any] = None,
         output_path: Optional[str] = None,
-        auto_fix_disclaimers: bool = False
+        **kwargs # Ignore legacy auto_fix arguments
     ) -> CorrectionResult:
         """
-        Apply fixes to document and save corrected version.
+        Apply highlighting and suggestions to document.
         
         Args:
             original_path: Path to original document
             validation_result: DataConsistencyResult from validation
             disclaimer_result: Optional disclaimer validation result
-            output_path: Path for corrected document (default: adds _corrected suffix)
-            auto_fix_disclaimers: Whether to auto-fix missing disclaimers
+            output_path: Path for corrected document
             
         Returns:
-            CorrectionResult with details of fixes applied
+            CorrectionResult with details of highlights applied
         """
         result = CorrectionResult()
         input_path_obj = Path(original_path)
@@ -116,7 +130,8 @@ class DocumentCorrector:
         try:
             # Call appropriate corrector
             corrector_func = self.supported_formats[file_ext]
-            corrector_func(input_path_obj, output_path_obj, validation_result, disclaimer_result, result, auto_fix_disclaimers)
+            # ONLY pass necessary args for highlighting
+            corrector_func(input_path_obj, output_path_obj, validation_result, result)
             
             result.corrected_path = str(output_path_obj)
             result.success = True
@@ -132,11 +147,9 @@ class DocumentCorrector:
         input_path: Path,
         output_path: Path,
         validation_result: DataConsistencyResult,
-        disclaimer_result: Optional[Any],
-        result: CorrectionResult,
-        auto_fix_disclaimers: bool
+        result: CorrectionResult
     ) -> None:
-        """Correct PowerPoint presentation"""
+        """Apply highlighting to PowerPoint presentation"""
         
         # Load presentation
         prs = Presentation(str(input_path))
@@ -144,20 +157,11 @@ class DocumentCorrector:
         # Store prs reference for slide dimension access
         self._current_prs = prs
         
-        # Apply source/date fixes
-        try:
-            self._apply_source_date_fixes(prs, validation_result, result)
-        except Exception as e:
-            logger.error(f"Error in _apply_source_date_fixes: {e}", exc_info=True)
-            result.fixes_failed.append({"issue": "all_source_date", "reason": f"Internal error: {str(e)}"})
-        
-        # Apply disclaimer fixes if enabled
-        if auto_fix_disclaimers and disclaimer_result:
-            try:
-                self._apply_disclaimer_fixes(prs, disclaimer_result, result)
-            except Exception as e:
-                logger.error(f"Error in _apply_disclaimer_fixes: {e}", exc_info=True)
-                result.fixes_failed.append({"issue": "all_disclaimers", "reason": f"Internal error: {str(e)}"})
+        # Build index maps for deterministic finding of shapes
+        self._build_shape_indices(prs)
+
+        # ONLY HIGHLIGHTING - NO AUTO-FIXES
+        logger.info("Highlighting document issues (Auto-fixes are disabled)")
         
         # Highlight all issues in the document
         try:
@@ -172,41 +176,14 @@ class DocumentCorrector:
         # Flag cross-reference issues for manual review
         self._flag_cross_reference_issues(validation_result, result)
         
-        # Save corrected presentation
+        # Save presentation
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            # EMERGENCY DEBUG LOG
-            DEBUG_FILE = r"C:\Users\GIGABYTE\Desktop\Advanced Ai Project\debug_fix_abs.log"
-            try:
-                import os
-                with open(DEBUG_FILE, "a") as f:
-                    f.write(f"Saving to: {output_path}\n")
-            except:
-                pass
-                
-            logger.info(f"Saving corrected presentation to {output_path}")
+            logger.info(f"Saving highlighted presentation to {output_path}")
             prs.save(str(output_path))
-            
-            # EMERGENCY DEBUG LOG
-            DEBUG_FILE = r"C:\Users\GIGABYTE\Desktop\Advanced Ai Project\debug_fix_abs.log"
-            try:
-                import os
-                with open(DEBUG_FILE, "a") as f:
-                    f.write(f"Save successful. File exists: {os.path.exists(output_path)}\n")
-            except:
-                pass
-                
-            logger.info("Successfully saved corrected presentation")
+            logger.info("Successfully saved highlighted presentation")
         except Exception as e:
-            # EMERGENCY DEBUG LOG
-            DEBUG_FILE = r"C:\Users\GIGABYTE\Desktop\Advanced Ai Project\debug_fix_abs.log"
-            try:
-                with open(DEBUG_FILE, "a") as f:
-                    f.write(f"SAVE FAILED: {str(e)}\n")
-            except:
-                pass
-            logger.error(f"Failed to save corrected presentation: {e}", exc_info=True)
+            logger.error(f"Failed to save presentation: {e}", exc_info=True)
             raise e
         
         # Clean up
@@ -214,270 +191,71 @@ class DocumentCorrector:
 
     def _get_issues_from_result(self, result: Any, field_name: str) -> List[Any]:
         """Helper to get issues from validation_result regardless of if it's a dict or model."""
+        self._log_debug(f"Retrieving issues for field: {field_name}")
+        
+        # 1. Handle DICT input
         if isinstance(result, dict):
-            # Sometimes nested in 'validation_result'
             inner = result.get("validation_result", result)
             
-            # If the direct field exists, use it
-            if field_name in inner and inner[field_name]:
-                return inner[field_name]
+            # Direct check in inner dict
+            if field_name in inner:
+                res = inner[field_name]
+                if isinstance(res, list):
+                    self._log_debug(f"Found {len(res)} issues in dict field '{field_name}'")
+                    return res
                 
-            # Otherwise look in the categorized issues (common for formatted results)
+            # Category fallback
             categorized = inner.get("issues_by_category", {})
-            
-            # Map legacy field names to category keys
             mapping = {
                 "source_date_issues": "source_date",
                 "numerical_inconsistencies": "numerical",
-                "cross_reference_issues": "cross_reference",
-                "compliance_issues": None # Already checked at top level
+                "cross_reference_issues": "cross_reference"
             }
             
-            if field_name in mapping and mapping[field_name]:
+            if field_name in mapping:
                 cat_key = mapping[field_name]
-                return categorized.get(cat_key, [])
+                res = categorized.get(cat_key, [])
+                self._log_debug(f"Mapped {field_name} to category {cat_key}, found {len(res)} items")
+                return res
             
-            # Final fallback: look for the field name directly in inner
-            return inner.get(field_name, [])
-            
-        return getattr(result, field_name, [])
+            # Universal fallback for dict: check all common names
+            if field_name == "compliance_issues":
+                for alt_key in ["compliance_issues", "issues", "violations", "all_issues"]:
+                    if alt_key in inner and isinstance(inner[alt_key], list) and inner[alt_key]:
+                        self._log_debug(f"Found {len(inner[alt_key])} issues in alternative dict key '{alt_key}'")
+                        return inner[alt_key]
+
+        # 2. Handle OBJECT input
+        # Try direct attribute access
+        res = getattr(result, field_name, None)
+        if res is not None and isinstance(res, list):
+             self._log_debug(f"Found {len(res)} issues in object attribute '{field_name}'")
+             return res
+             
+        # Fallback for models: check properties or common aliases
+        if field_name == "compliance_issues":
+             for alt_attr in ["compliance_issues", "issues", "violations"]:
+                 res = getattr(result, alt_attr, None)
+                 if res is not None and isinstance(res, list) and res:
+                     self._log_debug(f"Found {len(res)} issues in alternative attribute '{alt_attr}'")
+                     return res
+
+             # Last resort: Combine all legacy fields
+             combined = []
+             combined.extend(getattr(result, "source_date_issues", []))
+             combined.extend(getattr(result, "numerical_inconsistencies", []))
+             combined.extend(getattr(result, "cross_reference_issues", []))
+             if combined:
+                 self._log_debug(f"Combined {len(combined)} issues from legacy attributes")
+             return combined
+
+        return []
 
     def _get_val(self, obj: Any, field: str, default: Any = None) -> Any:
         """Helper to get value from object or dict."""
         if isinstance(obj, dict):
             return obj.get(field, default)
         return getattr(obj, field, default)
-    
-    def _apply_source_date_fixes(
-        self,
-        prs: PresentationType,
-        validation_result: DataConsistencyResult,
-        result: CorrectionResult
-    ) -> None:
-        """Apply source/date fixes to slides"""
-        source_date_issues = self._get_issues_from_result(validation_result, "source_date_issues")
-        logger.info(f"Found {len(source_date_issues)} source/date issues to fix")
-        
-        for issue in source_date_issues:
-            severity = self._get_val(issue, "severity", "warning").lower()
-            if severity not in ["error", "critical", "high", "warning"]:
-                logger.info(f"Skipping source/date fix for severity: {severity}")
-                continue  # Only fix higher severity issues
-            
-            slide_num = self._get_val(issue, "slide_number")
-            location = self._get_val(issue, "location")
-            issue_type = self._get_val(issue, "issue_type")
-            
-            if slide_num is None or slide_num < 1:
-                result.fixes_failed.append({
-                    "issue": issue_type,
-                    "location": location,
-                    "reason": "Invalid slide number"
-                })
-                continue
-            
-            try:
-                # Get slide (0-indexed)
-                if slide_num > len(prs.slides):
-                    result.fixes_failed.append({
-                        "issue": issue_type,
-                        "location": location,
-                        "reason": f"Slide {slide_num} does not exist (presentation has {len(prs.slides)} slides)"
-                    })
-                    continue
-                
-                slide = prs.slides[slide_num - 1]
-                
-                # Determine what needs to be added
-                needs_source = issue_type in ["missing_source", "both_missing", "missing_source_date"]
-                needs_date = issue_type in ["missing_date", "both_missing", "missing_source_date", "missing_date_info"]
-                
-                # Try to extract source/date from existing notes or use defaults
-                source_text = "Source: [To be specified]"
-                date_text = datetime.now().strftime("%Y-%m-%d")
-                
-                # Check if we can infer from other slides or use metadata
-                # For now, use placeholder values
-                
-                # Add source/date note
-                note_text = self._format_source_date_note(
-                    source_text if needs_source else None,
-                    date_text if needs_date else None
-                )
-                
-                # Get position where note will be added (bottom of slide)
-                if hasattr(self, '_current_prs') and self._current_prs:
-                    slide_height = self._current_prs.slide_height
-                else:
-                    slide_height = Inches(7.5)
-                
-                note_y = float(slide_height - Inches(0.8)) / float(slide_height)
-                
-                self._add_note_to_slide(slide, note_text, self._get_val(issue, "table_index"))
-                
-                change_info = {
-                    "type": "source_date",
-                    "issue_type": issue_type,
-                    "location": location,
-                    "fix": f"Added source/date note: {note_text}",
-                    "slide_number": slide_num,
-                    "change_type": "added",
-                    "position": {"x": 0.5, "y": note_y},
-                    "description": f"Added source/date note at bottom of slide {slide_num}"
-                }
-                
-                result.fixes_applied.append(change_info)
-                
-                # Track change by slide for visual annotation
-                if slide_num not in result.changes_by_slide:
-                    result.changes_by_slide[slide_num] = []
-                result.changes_by_slide[slide_num].append(change_info)
-                
-            except Exception as e:
-                result.fixes_failed.append({
-                    "issue": issue_type,
-                    "location": location,
-                    "reason": str(e)
-                })
-    
-    def _format_source_date_note(
-        self,
-        source: Optional[str],
-        date: Optional[str]
-    ) -> str:
-        """Format source/date note text"""
-        parts = []
-        
-        if source:
-            if not source.startswith("Source:"):
-                parts.append(f"Source: {source}")
-            else:
-                parts.append(source)
-        
-        if date:
-            parts.append(f"Data as of {date}")
-        
-        return " | ".join(parts) if parts else "Source: [To be specified] | Data as of [To be specified]"
-    
-    def _add_note_to_slide(
-        self,
-        slide,
-        note_text: str,
-        table_index: Optional[int] = None
-    ) -> None:
-        """
-        Add a source/date note to a slide.
-        
-        Strategy:
-        - Add as text box at bottom of slide
-        - Use small font, gray color
-        - Position near bottom right
-        """
-        # Get slide dimensions from presentation if available
-        if hasattr(self, '_current_prs') and self._current_prs:
-            slide_width = self._current_prs.slide_width
-            slide_height = self._current_prs.slide_height
-        else:
-            # Standard PowerPoint slide dimensions (10x7.5 inches)
-            slide_width = Inches(10)
-            slide_height = Inches(7.5)
-        
-        # Calculate position (bottom right area)
-        left = Inches(0.5)
-        top = slide_height - Inches(0.8)  # Near bottom
-        width = slide_width - Inches(1.0)  # Most of slide width
-        height = Inches(0.4)
-        
-        # Add text box
-        textbox = slide.shapes.add_textbox(left, top, width, height)
-        text_frame = textbox.text_frame
-        text_frame.text = note_text
-        text_frame.word_wrap = True
-        
-        # Format text
-        paragraph = text_frame.paragraphs[0]
-        paragraph.alignment = PP_ALIGN.LEFT
-        paragraph.font.size = Pt(8)
-        paragraph.font.color.rgb = RGBColor(128, 128, 128)  # Gray
-        paragraph.font.name = "Calibri"
-        paragraph.font.bold = True  # Make it bold as requested
-        
-        # Make it non-selectable/editable (optional, for protection)
-        # textbox.click_action = None
-    
-    def _apply_disclaimer_fixes(
-        self,
-        prs: PresentationType,
-        disclaimer_result: Any,
-        result: CorrectionResult
-    ) -> None:
-        """Apply disclaimer fixes to presentation"""
-        
-        # Check if disclaimer_result has missing disclaimers
-        if not hasattr(disclaimer_result, 'missing_disclaimers'):
-            return
-        
-        missing = disclaimer_result.missing_disclaimers
-        if not missing:
-            return
-        
-        # Add missing disclaimers to appropriate slide
-        # Typically add to last slide or create new slide
-        if len(prs.slides) > 0:
-            # Add to last slide as footnote/note
-            last_slide = prs.slides[-1]
-            
-            for disclaimer in missing:
-                # Use _get_val to be safe for both models and dicts
-                disclaimer_text = self._format_disclaimer(disclaimer)
-                self._add_disclaimer_to_slide(last_slide, disclaimer_text)
-                
-                result.fixes_applied.append({
-                    "type": "disclaimer",
-                    "disclaimer_type": self._get_val(disclaimer, "disclaimer_type", "Unknown"),
-                    "fix": f"Added disclaimer: {disclaimer_text[:50]}..."
-                })
-    
-    def _format_disclaimer(self, disclaimer: Any) -> str:
-        """Format disclaimer text"""
-        # Use helper for dictionary safety
-        expected = self._get_val(disclaimer, 'expected_text')
-        text = self._get_val(disclaimer, 'text')
-        
-        if expected:
-            return expected
-        elif text:
-            return text
-        else:
-            # Fallback: create a placeholder based on disclaimer type
-            disclaimer_type = self._get_val(disclaimer, 'disclaimer_type', 'Unknown')
-            return f"[Disclaimer: {disclaimer_type}]"
-    
-    def _add_disclaimer_to_slide(self, slide, disclaimer_text: str) -> None:
-        """Add disclaimer text to slide"""
-        # Get slide dimensions from presentation if available
-        if hasattr(self, '_current_prs') and self._current_prs:
-            slide_width = self._current_prs.slide_width
-            slide_height = self._current_prs.slide_height
-        else:
-            slide_width = Inches(10)
-            slide_height = Inches(7.5)
-        
-        # Add as small text at bottom
-        left = Inches(0.5)
-        top = slide_height - Inches(0.5)
-        width = slide_width - Inches(1.0)
-        height = Inches(0.3)
-        
-        textbox = slide.shapes.add_textbox(left, top, width, height)
-        text_frame = textbox.text_frame
-        text_frame.text = disclaimer_text
-        text_frame.word_wrap = True
-        
-        paragraph = text_frame.paragraphs[0]
-        paragraph.font.size = Pt(7)
-        paragraph.font.color.rgb = RGBColor(100, 100, 100)
-        paragraph.font.italic = True
     
     def _flag_numerical_issues(
         self,
@@ -502,7 +280,7 @@ class DocumentCorrector:
         validation_result: DataConsistencyResult,
         result: CorrectionResult
     ) -> None:
-        """Flag cross-reference issues for manual review (don't auto-fix)"""
+        """Flag cross-reference issues for manual review"""
         cross_reference_issues = self._get_issues_from_result(validation_result, "cross_reference_issues")
         
         for issue in cross_reference_issues:
@@ -515,118 +293,263 @@ class DocumentCorrector:
                 "action": "Review and correct manually"
             })
 
+    def _log_debug(self, msg):
+        try:
+            # Use absolute path to ensure we can find the log
+            log_path = r"C:\Users\GIGABYTE\Desktop\Portfolio\Advanced Ai Project\debug_corrector.txt"
+            with open(log_path, "a", encoding='utf-8') as f:
+                f.write(f"{datetime.now()} - {msg}\n")
+        except Exception:
+            pass
+
     def _highlight_issues(
         self,
         prs: PresentationType,
         validation_result: DataConsistencyResult,
         result: CorrectionResult
     ) -> None:
-        """Add visual markers/notes for all issues to slides"""
-        
-        # Prefer unified compliance_issues if available, else use legacy fields
-        all_issues = []
-        compliance_issues = self._get_issues_from_result(validation_result, "compliance_issues")
-        if compliance_issues:
-            all_issues = compliance_issues
-        else:
-            # Aggregate from legacy fields
-            all_issues.extend(self._get_issues_from_result(validation_result, "source_date_issues"))
-            all_issues.extend(self._get_issues_from_result(validation_result, "numerical_inconsistencies"))
-            all_issues.extend(self._get_issues_from_result(validation_result, "cross_reference_issues"))
+        """Add visual markers (borders) for issues and add details to Speaker Notes."""
+        logger.info(f"!!! STARTING HIGHLIGHTING for {len(prs.slides)} slides")
 
-        issues_by_slide: Dict[int, List[Any]] = {}
+        # Robustly get issues from result
+        compliance_issues = self._get_issues_from_result(validation_result, "compliance_issues")
+        
+        all_issues = []
+        if compliance_issues:
+            all_issues = list(compliance_issues)
+        else:
+             # Combined fallback
+             all_issues.extend(self._get_issues_from_result(validation_result, "source_date_issues"))
+             all_issues.extend(self._get_issues_from_result(validation_result, "numerical_inconsistencies"))
+             all_issues.extend(self._get_issues_from_result(validation_result, "cross_reference_issues"))
+        
+        logger.info(f"!!! FOUND {len(all_issues)} issues to process")
+
+        issues_by_slide: Dict[int, List[Dict[str, Any]]] = {}
+        all_issue_dicts: List[Dict[str, Any]] = []
+
         for issue in all_issues:
-            # Handle both Pydantic models and dicts
-            issue_dict = issue if isinstance(issue, dict) else (issue.model_dump() if hasattr(issue, 'model_dump') else {})
-            slide_num = issue_dict.get('slide_number')
+            # Conversion logic...
+            if isinstance(issue, dict):
+                issue_dict = issue
+            elif hasattr(issue, 'model_dump'):
+                issue_dict = issue.model_dump()
+            elif hasattr(issue, 'dict'):
+                issue_dict = issue.dict()
+            else:
+                issue_dict = {k: getattr(issue, k) for k in dir(issue) if not k.startswith('_') and not callable(getattr(issue, k))}
             
-            if slide_num and slide_num >= 1:
+            all_issue_dicts.append(issue_dict)
+            
+            slide_num = issue_dict.get('slide_number')
+            if not slide_num or not isinstance(slide_num, int):
+                slide_num = 1 # Fallback
+                
+            if slide_num >= 1:
                 if slide_num not in issues_by_slide:
                     issues_by_slide[slide_num] = []
                 issues_by_slide[slide_num].append(issue_dict)
 
+        # Apply slide-specific highlights
         for slide_num, issues in issues_by_slide.items():
             if slide_num > len(prs.slides):
                 continue
             
             slide = prs.slides[slide_num - 1]
+            logger.info(f"!!! HIGHLIGHTING Slide {slide_num} ({len(issues)} issues)")
             
-            # Add a banner or collective note at top of slide
-            severity_colors = {
-                "critical": RGBColor(255, 0, 0),    # Red
-                "error": RGBColor(200, 0, 0),       # Dark Red
-                "high": RGBColor(255, 100, 0),     # Orange
-                "medium": RGBColor(200, 150, 0),   # Yellow/Gold
-                "low": RGBColor(100, 100, 100)     # Gray
-            }
+            # 1. Update Speaker Notes
+            IssueHighlighter.add_speaker_notes(slide, issues)
 
-            # Strategy: Add a small warning icon/text box at top right
-            left = prs.slide_width - Inches(3.2)
-            top = Inches(0.1)
-            width = Inches(3.0)
-            height = Inches(0.3) * len(issues)
+            # 2. Add Visual Highlights
+            doc_box_y_offset = 0.5 
             
-            # Cap height
-            height = min(height, Inches(2.0))
-            
-            textbox = slide.shapes.add_textbox(left, top, width, height)
-            text_frame = textbox.text_frame
-            text_frame.word_wrap = True
-            
-            p = text_frame.paragraphs[0]
-            p.text = f"⚠️ {len(issues)} Issue(s) detected:"
-            p.font.bold = True
-            p.font.size = Pt(10)
-            p.font.color.rgb = RGBColor(255, 0, 0)
-            
-            for i, issue in enumerate(issues[:5]): # Show max 5 in the banner
-                severity = issue.get('severity', 'low').lower()
-                msg = issue.get('message', issue.get('issue', 'Unknown issue'))
-                
-                # Truncate long messages
-                if len(msg) > 60:
-                    msg = msg[:57] + "..."
-                
-                p = text_frame.add_paragraph()
-                p.text = f"• [{severity.upper()}] {msg}"
-                p.font.size = Pt(8)
-                p.font.color.rgb = severity_colors.get(severity, RGBColor(0, 0, 0))
-
-            if len(issues) > 5:
-                p = text_frame.add_paragraph()
-                p.text = f"...and {len(issues) - 5} more issues. See report."
-                p.font.size = Pt(8)
-                p.font.italic = True
-
-            # --- ELEMENT-LEVEL HIGHLIGHTING ---
             for issue in issues:
                 target_shape = None
                 
-                # Try to find the specific table or chart
-                if issue.get('table_index') is not None:
-                    target_shape = self._find_shape_by_index(slide, MSO_SHAPE_TYPE.TABLE, issue.get('table_index'))
-                elif issue.get('chart_index') is not None:
-                    # Charts are often in GRAPHIC_FRAME (14)
-                    target_shape = self._find_shape_by_index(slide, MSO_SHAPE_TYPE.CHART, issue.get('chart_index'))
+                # Check for direct shape identification (preferred)
+                table_idx = issue.get('table_index')
+                chart_idx = issue.get('chart_index')
+                
+                if table_idx is not None:
+                    target_shape = self._find_shape_by_index(slide, MSO_SHAPE_TYPE.TABLE, table_idx)
+                elif chart_idx is not None:
+                    target_shape = self._find_shape_by_index(slide, MSO_SHAPE_TYPE.CHART, chart_idx)
                     if not target_shape:
                         GRAPHIC_FRAME = getattr(MSO_SHAPE_TYPE, 'GRAPHIC_FRAME', 14)
-                        target_shape = self._find_shape_by_index(slide, GRAPHIC_FRAME, issue.get('chart_index'))
+                        target_shape = self._find_shape_by_index(slide, GRAPHIC_FRAME, chart_idx)
                 
+                # Context-based lookup
+                if not target_shape:
+                    context = issue.get('context')
+                    if context:
+                        target_shape = self._find_shape_by_text(slide, context)
+                
+                # Heuristic-based lookup for "exact location" if still not found
+                if not target_shape:
+                    issue_type = issue.get('issue_type', '').lower()
+                    
+                    # Performance issues -> find first chart or table
+                    if 'performance' in issue_type:
+                        for shape in slide.shapes:
+                            if (hasattr(shape, "has_chart") and shape.has_chart) or \
+                               (hasattr(shape, "has_table") and shape.has_table):
+                                target_shape = shape
+                                break
+                    
+                    # Risk/SRI issues -> find shape with "risk" or "sri"
+                    elif 'risk' in issue_type or 'sri' in issue_type:
+                        target_shape = self._find_shape_by_text(slide, "risk") or \
+                                       self._find_shape_by_text(slide, "sri")
+                    
+                    # Disclaimer issues -> find shape with "disclaimer" or long text
+                    elif 'disclaimer' in issue_type:
+                        target_shape = self._find_shape_by_text(slide, "disclaimer") or \
+                                       self._find_shape_by_text(slide, "investor")
+                    
+                    # NAV issues
+                    elif 'nav' in issue_type:
+                        target_shape = self._find_shape_by_text(slide, "nav")
+                    
+                    # Date/Source issues
+                    elif 'source' in issue_type or 'date' in issue_type:
+                         target_shape = self._find_shape_by_text(slide, "source") or \
+                                        self._find_shape_by_text(slide, "date") or \
+                                        self._find_shape_by_text(slide, "202") # year prefix
+                    
+                    # If still not found, and there is "context", try a fuzzy match
+                    if not target_shape and issue.get('context'):
+                         target_shape = self._find_shape_by_text(slide, issue.get('context'))
+
                 if target_shape:
-                    self._add_visual_highlight(slide, target_shape, issue)
+                    IssueHighlighter.add_red_border_to_shape(slide, target_shape, issue, border_width=5.0)
+                    IssueHighlighter.add_issue_marker(slide, target_shape, issue)
+                    IssueHighlighter.add_suggestion_box(slide, target_shape, issue)
+                else:
+                    # Generic box fallback
+                    IssueHighlighter.add_document_issue_box(slide, issue, (6.0, doc_box_y_offset))
+                    doc_box_y_offset += 1.4
+        
+        # No longer adding summary slide as per user request (ODDO BHF requirement)
+        pass
+
+    def _find_shape_by_text(self, slide: Any, search_text: str) -> Optional[Any]:
+        """Search for a shape on the slide that contains the specified text."""
+        if not search_text:
+            return None
+            
+        search_text_lower = search_text.lower().strip()
+        
+        # Try finding a shape where the text is exactly or clearly part of it
+        for shape in slide.shapes:
+            if not hasattr(shape, "text") or not shape.text:
+                continue
+                
+            shape_text = shape.text.lower()
+            if search_text_lower in shape_text:
+                return shape
+                
+        return None
+
+    def _bring_to_front(self, shape: Any) -> None:
+        """Ensure a shape is at the top of the Z-order so it is visible."""
+        try:
+            # In python-pptx, moving to front can be done by re-appending the element
+            # or using the shape's Z-order if exposed (it's internal in some versions)
+            # Standard way to move to front:
+            el = shape.element
+            el.getparent().append(el)
+        except Exception as e:
+            logger.warning(f"Failed to bring shape to front: {e}")
+
+    def _build_shape_indices(self, prs: PresentationType) -> None:
+        """Build maps of Global Index -> Shape for deterministic lookup."""
+        # Global maps (1-based global index -> shape)
+        self.table_map = {}
+        self.global_table_idx = 0
+
+        # Per-slide maps: slide_index (1-based) -> { local_table_index (0-based) : shape }
+        self.table_map_by_slide = {}
+        self.chart_map_by_slide = {}
+
+        for slide_index, slide in enumerate(prs.slides, start=1):
+            local_table_idx = 0
+            local_chart_idx = 0
+            self.table_map_by_slide[slide_index] = {}
+            self.chart_map_by_slide[slide_index] = {}
+
+            for shape in slide.shapes:
+                # Check for Table
+                if shape.shape_type == MSO_SHAPE_TYPE.TABLE and hasattr(shape, "has_table") and shape.has_table:
+                    # global index
+                    self.global_table_idx += 1
+                    self.table_map[self.global_table_idx] = shape
+                    # per-slide mapping (use 0-based local index)
+                    self.table_map_by_slide[slide_index][local_table_idx] = shape
+                    local_table_idx += 1
+                # Check for Chart/Graphic frame (count as charts)
+                elif (hasattr(shape, "has_chart") and shape.has_chart) or shape.shape_type == MSO_SHAPE_TYPE.CHART or getattr(MSO_SHAPE_TYPE, 'GRAPHIC_FRAME', None) == shape.shape_type:
+                    # per-slide chart map
+                    self.chart_map_by_slide[slide_index][local_chart_idx] = shape
+                    local_chart_idx += 1
 
     def _find_shape_by_index(self, slide: Any, shape_type: Any, index: int) -> Optional[Any]:
-        """Find a shape of a specific type by its index on the slide."""
+        """Find a shape of a specific type by its index."""
+        # Determine slide index if we have a current presentation
+        slide_index = None
+        try:
+            if hasattr(self, "_current_prs") and self._current_prs:
+                for i, s in enumerate(self._current_prs.slides, start=1):
+                    if s is slide:
+                        slide_index = i
+                        break
+        except Exception:
+            slide_index = None
+
+        # For tables, prefer per-slide map if available
+        if shape_type == MSO_SHAPE_TYPE.TABLE:
+            # Try per-slide map lookup (index is local per-slide index or global index)
+            if slide_index and hasattr(self, "table_map_by_slide"):
+                # If caller passed a global index, try to map it to local by searching global map first
+                # But most callers pass a local index; try local directly
+                local_map = self.table_map_by_slide.get(slide_index, {})
+                if index in local_map:
+                    return local_map[index]
+                # Fallback: if index is global, check global map and verify it belongs to this slide
+                if hasattr(self, "table_map") and index in self.table_map:
+                    candidate = self.table_map[index]
+                    try:
+                        for s in slide.shapes:
+                            if s is candidate:
+                                return candidate
+                    except Exception:
+                        return candidate
+            else:
+                # No per-slide maps available, fallback to global map behavior
+                if hasattr(self, 'table_map') and index in self.table_map:
+                    shape = self.table_map[index]
+                    try:
+                        for s in slide.shapes:
+                            if s is shape:
+                                return shape
+                    except Exception:
+                        return shape
+
+        # Fallback for charts or if map failed. Prefer per-slide chart map if available.
         count = 0
+        if shape_type in [MSO_SHAPE_TYPE.CHART, getattr(MSO_SHAPE_TYPE, 'GRAPHIC_FRAME', 14)]:
+            # Try per-slide chart map if we found a slide_index
+            if slide_index and hasattr(self, "chart_map_by_slide"):
+                local_chart_map = self.chart_map_by_slide.get(slide_index, {})
+                if index in local_chart_map:
+                    return local_chart_map[index]
+
         for shape in slide.shapes:
-            # For tables, check has_table attribute
-            if shape_type == MSO_SHAPE_TYPE.TABLE and hasattr(shape, "has_table") and shape.has_table:
-                if count == index:
-                    return shape
-                count += 1
             # For charts, check has_chart or shape_type
-            elif shape_type in [MSO_SHAPE_TYPE.CHART, getattr(MSO_SHAPE_TYPE, 'GRAPHIC_FRAME', 14)]:
+            if shape_type in [MSO_SHAPE_TYPE.CHART, getattr(MSO_SHAPE_TYPE, 'GRAPHIC_FRAME', 14)]:
                 if (hasattr(shape, "has_chart") and shape.has_chart) or shape.shape_type == MSO_SHAPE_TYPE.CHART:
+                    # Note: This finds N-th chart on slide, but issue might pass Global Index.
+                    # Without global chart map (which requires LLM logic), this is best effort.
                     if count == index:
                         return shape
                     count += 1
@@ -635,50 +558,3 @@ class DocumentCorrector:
                     return shape
                 count += 1
         return None
-
-    def _add_visual_highlight(self, slide: Any, shape: Any, issue: Dict[str, Any]) -> None:
-        """Add a red border around a shape and a green suggestion box nearby."""
-        try:
-            # 1. Add Red Border (Rectangle behind or around)
-            # Shapes like Tables/Charts sometimes don't allow' line' property directly on the frame
-            # We add a transparent rectangle with a red border exactly over the shape
-            border = slide.shapes.add_shape(
-                MSO_SHAPE.RECTANGLE,
-                shape.left - Pt(2),
-                shape.top - Pt(2),
-                shape.width + Pt(4),
-                shape.height + Pt(4)
-            )
-            border.fill.background() # Transparent fill
-            border.line.color.rgb = RGBColor(255, 0, 0) # Red
-            border.line.width = Pt(3)
-            
-            # 2. Add Green Suggestion Box
-            suggestion = issue.get('suggestion', 'Review required')
-            
-            # Position box at the top right of the element
-            box_width = min(shape.width, Inches(3))
-            box_left = shape.left + shape.width - box_width
-            box_top = shape.top - Inches(0.4) # Slightly above the shape
-            
-            # Ensure it doesn't go off-slide
-            if box_top < Inches(0.1):
-                box_top = shape.top + shape.height + Inches(0.1) # Move below instead
-            
-            callout = slide.shapes.add_textbox(box_left, box_top, box_width, Inches(0.4))
-            callout.fill.solid()
-            callout.fill.fore_color.rgb = RGBColor(220, 255, 220) # Very light green
-            callout.line.color.rgb = RGBColor(0, 150, 0) # Dark green border
-            callout.line.width = Pt(1)
-            
-            tf = callout.text_frame
-            tf.word_wrap = True
-            p = tf.paragraphs[0]
-            p.text = f"💡 Suggested: {suggestion}"
-            p.font.size = Pt(9)
-            p.font.color.rgb = RGBColor(0, 100, 0) # Dark green text
-            p.font.bold = True
-            
-        except Exception as e:
-            logger.warning(f"Failed to add visual highlight for issue: {e}")
-

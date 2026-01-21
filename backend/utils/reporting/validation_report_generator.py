@@ -22,6 +22,68 @@ class ValidationReportGenerator:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
+    
+    def _normalize_result(self, result):
+        """Normalize dict or object result into an object with dot access and standard fields."""
+        if not isinstance(result, dict):
+            return result
+
+        class ResultWrapper:
+            def __init__(self, data):
+                # Copy all fields
+                self.__dict__.update(data)
+                
+                # Flatten statistics if present (formatted result format)
+                stats = data.get('statistics', {})
+                if stats:
+                    self.__dict__.update(stats)
+                
+                # Helper to wrap dict issues as objects
+                def wrap_issue(i):
+                    if isinstance(i, dict):
+                        # Create generic object from dict
+                        return type('Issue', (), i)()
+                    return i
+                
+                # Normalize compliance_issues
+                raw_issues = data.get('compliance_issues', [])
+                self.compliance_issues = [wrap_issue(i) for i in raw_issues]
+                
+                # Reconstruct specific lists if missing
+                if 'source_date_issues' not in data:
+                    self.source_date_issues = [
+                        i for i in self.compliance_issues 
+                        if getattr(i, 'category', '') == 'source_date' or getattr(i, 'issue_category', '') == 'source_date' or 'source_date' in str(getattr(i, 'issue_type', ''))
+                    ]
+                else:
+                    self.source_date_issues = [wrap_issue(i) for i in data['source_date_issues']]
+
+                if 'numerical_inconsistencies' not in data:
+                    self.numerical_inconsistencies = [
+                        i for i in self.compliance_issues 
+                        if getattr(i, 'category', '') == 'numerical' or 'numerical' in str(getattr(i, 'issue_type', ''))
+                    ]
+                else:
+                    self.numerical_inconsistencies = [wrap_issue(i) for i in data['numerical_inconsistencies']]
+
+                if 'cross_reference_issues' not in data:
+                    self.cross_reference_issues = [
+                        i for i in self.compliance_issues 
+                        if getattr(i, 'category', '') == 'cross_reference' or 'cross_reference' in str(getattr(i, 'issue_type', ''))
+                    ]
+                else:
+                    self.cross_reference_issues = [wrap_issue(i) for i in data['cross_reference_issues']]
+                    
+                # Ensure defaults for counts if missing
+                self.total_tables_checked = getattr(self, 'total_tables_checked', 0)
+                self.tables_with_source_date = getattr(self, 'tables_with_source_date', 0)
+                self.tables_missing_source_date = getattr(self, 'tables_missing_source_date', 0)
+                self.total_numerical_values_checked = getattr(self, 'total_numerical_values_checked', 0)
+                self.values_matching_reference = getattr(self, 'values_matching_reference', 0)
+                self.values_with_inconsistencies = getattr(self, 'values_with_inconsistencies', 0)
+
+        return ResultWrapper(result)
+
     def generate_all_reports(
         self,
         validation_result: DataConsistencyResult,
@@ -82,6 +144,10 @@ class ValidationReportGenerator:
         document_name: Optional[str] = None
     ) -> None:
         """Generate human-readable HTML report"""
+        
+        # Normalize input to ensure object access and existence of specific lists
+        validation_result = self._normalize_result(validation_result)
+        
         
         def get_val(obj, key, default=None):
             if hasattr(obj, key):
@@ -428,7 +494,7 @@ class ValidationReportGenerator:
         overall_status = str(get_val(validation_result, 'overall_status', 'UNKNOWN')).upper()
         compliance_score = get_val(validation_result, 'compliance_score', 0)
 
-        title_text = f"SFDR Compliance Validation Report"
+        title_text = "SFDR Compliance Validation Report"
         story.append(Paragraph(title_text, h1))
         story.append(Paragraph(f"<b>Document:</b> {document_name or 'N/A'}", normal))
         story.append(Spacer(1, 8))
@@ -437,7 +503,6 @@ class ValidationReportGenerator:
         story.append(Paragraph("Executive Summary", h2))
         
         # Status badge color
-        status_color = "#dc2626" if overall_status == "NON_COMPLIANT" else "#16a34a" if overall_status == "COMPLIANT" else "#f59e0b"
         
         summary_info = [
             ["Document ID", str(doc_id) if doc_id else "N/A"],
@@ -581,7 +646,6 @@ class ValidationReportGenerator:
                     auto_fixable = get_val(issue, 'auto_fixable', False)
                     
                     # Severity color
-                    sev_color = "#dc2626" if severity in ['CRITICAL', 'ERROR'] else "#f97316" if severity in ['HIGH', 'WARNING'] else "#eab308" if severity == 'MEDIUM' else "#6b7280"
                     
                     # Issue header
                     issue_header = f"<b>Issue #{issue_number}:</b> {issue_type.replace('_', ' ').title()}"

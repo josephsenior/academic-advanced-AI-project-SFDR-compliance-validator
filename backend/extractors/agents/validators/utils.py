@@ -3,7 +3,7 @@ Utility functions for data consistency validation
 """
 
 import re
-from typing import Optional
+from typing import Optional, Dict, Any, List
 
 
 def format_location(
@@ -85,4 +85,95 @@ def infer_period_from_column(column: Optional[str]) -> Optional[str]:
             return period
     
     return None
+
+
+def infer_last_slide(extraction_result: Dict[str, Any]) -> int:
+    """
+    Infer the last slide number from extraction result.
+    
+    Used for disclaimers and glossary issues which typically appear on the last slide.
+    
+    Args:
+        extraction_result: Extraction result dictionary
+        
+    Returns:
+        Last slide number (1-indexed)
+    """
+    if 'slides' in extraction_result:
+        return len(extraction_result['slides'])
+    if 'pages' in extraction_result:
+        return len(extraction_result['pages'])
+    return 6  # Default to slide 6 for standard 6-slide presentations
+
+
+def infer_performance_slide(
+    extraction_result: Dict[str, Any],
+    performance_sections: Optional[List[Dict[str, Any]]] = None
+) -> Optional[int]:
+    """
+    Infer which slide contains performance data.
+    
+    Performance issues should point to where performance data is actually shown.
+    Per compliance rules, performance MUST NOT be on slide 1 (cover page).
+    
+    Args:
+        extraction_result: Extraction result dictionary
+        performance_sections: List of performance sections with slide_number info
+        
+    Returns:
+        Slide number where performance appears, or None if not found
+    """
+    # Try to get from performance sections
+    if performance_sections:
+        for section in performance_sections:
+            slide_num = section.get('slide_number')
+            if slide_num and slide_num > 1:  # Exclude cover page
+                return slide_num
+    
+    # Fallback: search for performance keywords in slide content
+    if 'slides' in extraction_result:
+        for i, slide in enumerate(extraction_result['slides'], start=1):
+            if i == 1:  # Skip cover page
+                continue
+            if i == 2:  # Skip slide 2 (risk profile slide)
+                continue
+                
+            if isinstance(slide, dict):
+                content = (slide.get('content', '') or slide.get('text', '')).lower()
+            else:
+                content = str(slide).lower()
+            
+            # Look for performance keywords
+            perf_keywords = ['performance', 'rendement', 'ytd', '1y', '3y', '5y', '10y', 'benchmark', 'indice']
+            if any(kw in content for kw in perf_keywords):
+                return i
+    
+    return None  # If no performance slide found, leave null for document-wide
+
+
+def infer_glossary_slide(extraction_result: Dict[str, Any]) -> int:
+    """
+    Infer which slide contains the glossary.
+    
+    Per compliance rules, glossary typically appears on the last slide for retail documents.
+    
+    Args:
+        extraction_result: Extraction result dictionary
+        
+    Returns:
+        Slide number where glossary appears (defaults to last slide)
+    """
+    if 'slides' in extraction_result:
+        for i, slide in enumerate(extraction_result['slides'], start=1):
+            if isinstance(slide, dict):
+                content = (slide.get('content', '') or slide.get('text', '')).lower()
+            else:
+                content = str(slide).lower()
+            
+            # Look for glossary indicators
+            if 'glossaire' in content or 'glossary' in content:
+                return i
+    
+    # Default to last slide if not found (per compliance rules)
+    return infer_last_slide(extraction_result)
 

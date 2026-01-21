@@ -40,6 +40,8 @@ class MetadataDetectionResult(BaseModel):
     is_sicav_product: Optional[bool] = Field(None, description="True if product is part of SICAV Oddo, False if not, None if unknown")
     is_new_strategy: Optional[bool] = Field(None, description="True if document references new strategy, False otherwise, None if unknown")
     is_new_product: Optional[bool] = Field(None, description="True if document references new product, False otherwise, None if unknown")
+    esg_approach: Optional[str] = Field(None, description="'Engageante', 'Réduite', or 'Limitée au prospectus'")
+    sfdr_article: Optional[int] = Field(None, description="6, 8, or 9")
     confidence: float = Field(default=0.0, ge=0.0, le=1.0, description="Overall confidence in detection (0-1)")
 
 
@@ -272,6 +274,16 @@ Your task is to extract specific metadata from the document text that is require
    - Look for phrases like "new product", "nouveau produit", "new fund", "new offering"
    - Return: True if new product mentioned, False otherwise, None if unclear
 
+6. **ESG Approach (Critical)**:
+   - Identify the ESG approach based on Oddo BHF internal classification:
+   - "Engageante" (Engaging): High commitment, Article 9.
+   - "Réduite" (Reduced): Moderate commitment, Article 8.
+   - "Limitée au prospectus" (Prospectus Limited): Minimal mentions.
+   - Return one of these three strings or None.
+
+7. **SFDR Article**:
+   - Determine if the fund is Article 6, 8, or 9.
+
 **Important:**
 - Be accurate and conservative - only return True/False if you're confident
 - Return None if the information is not clearly stated in the document
@@ -350,6 +362,12 @@ Your task is to extract specific metadata from the document text that is require
             
             if result.is_new_product is not None:
                 content_meta['is_new_product'] = result.is_new_product
+            
+            if result.esg_approach:
+                content_meta['esg_approach'] = result.esg_approach
+                
+            if result.sfdr_article:
+                content_meta['sfdr_article'] = result.sfdr_article
             
             content_meta['llm_confidence'] = result.confidence
             content_meta['content_detection_attempted'] = True
@@ -508,6 +526,72 @@ Your task is to extract specific metadata from the document text that is require
         if any(keyword in text_lower for keyword in new_product_keywords):
             content_meta['is_new_product'] = True
         
+        # 5. ESG Approach Detection (Engageante, Réduite, Limitée au prospectus)
+        # Based on SFDR Article and ESG keywords in the document
+        esg_approach = None
+        
+        # Check for SFDR article mentions to infer ESG approach
+        if 'article 9' in text_lower or 'article9' in text_lower.replace(' ', ''):
+            # Article 9 = Engageante (engaging)
+            esg_approach = 'Engageante'
+        elif 'article 8' in text_lower or 'article8' in text_lower.replace(' ', ''):
+            # Article 8 = Réduite (reduced)
+            esg_approach = 'Réduite'
+        elif 'article 6' in text_lower or 'article6' in text_lower.replace(' ', ''):
+            # Article 6 = Limitée au prospectus or non-ESG
+            esg_approach = 'Limitée au prospectus'
+        
+        # Additional indicators for ESG approach
+        # Check for engagement/exclusion language (Engageante indicators)
+        engageante_keywords = [
+            'sustainable investment objective',
+            'objectif d\'investissement durable',
+            'ecological transition', 'transition écologique',
+            'significant contribution', 'contribution significative',
+            'exclusion', 'exclusions', 'engagement', 'exclusion criteria'
+        ]
+        
+        # Check for reduced ESG mentions (Réduite indicators)
+        reduite_keywords = [
+            'esg criteria', 'critères esg', 'esg integration',
+            'integration esg', 'sustainability risks', 'risques de durabilité'
+        ]
+        
+        # Only override if strong indicators found and no Article 9 detected
+        if esg_approach != 'Engageante':
+            if any(keyword in text_lower for keyword in engageante_keywords):
+                # Strong engagement indicators point to Engageante
+                esg_approach = 'Engageante'
+            elif any(keyword in text_lower for keyword in reduite_keywords):
+                # ESG integration without engagement points to Réduite
+                esg_approach = 'Réduite'
+        
+        if esg_approach:
+            content_meta['esg_approach'] = esg_approach
+        
+        # 6. SFDR Article Detection
+        sfdr_article = None
+        
+        # Direct article mentions
+        if 'article 9' in text_lower or 'article9' in text_lower.replace(' ', ''):
+            sfdr_article = 9
+        elif 'article 8' in text_lower or 'article8' in text_lower.replace(' ', ''):
+            sfdr_article = 8
+        elif 'article 6' in text_lower or 'article6' in text_lower.replace(' ', ''):
+            sfdr_article = 6
+        
+        # If no direct mention, infer from ESG approach
+        if sfdr_article is None and esg_approach:
+            if esg_approach == 'Engageante':
+                sfdr_article = 9
+            elif esg_approach == 'Réduite':
+                sfdr_article = 8
+            elif esg_approach == 'Limitée au prospectus':
+                sfdr_article = 6
+        
+        if sfdr_article:
+            content_meta['sfdr_article'] = sfdr_article
+        
         # Mark that content-based detection was attempted
         content_meta['content_detection_attempted'] = True
         
@@ -587,6 +671,18 @@ Your task is to extract specific metadata from the document text that is require
             json_meta.get('is_new_product')
             if 'is_new_product' in json_meta
             else (content_meta or {}).get('is_new_product', False)
+        )
+        
+        # ESG Approach - prefer JSON, then content detection
+        combined['esg_approach'] = (
+            json_meta.get('esg_approach') or 
+            (content_meta or {}).get('esg_approach')
+        )
+        
+        # SFDR Article - prefer JSON, then content detection
+        combined['sfdr_article'] = (
+            json_meta.get('sfdr_article') or 
+            (content_meta or {}).get('sfdr_article')
         )
         
         # Track metadata sources
@@ -680,6 +776,8 @@ if __name__ == "__main__":
             print(f"Is Sicav Product: {metadata.get('is_sicav_product')}")
             print(f"Is New Strategy: {metadata.get('is_new_strategy')}")
             print(f"Is New Product: {metadata.get('is_new_product')}")
+            print(f"ESG Approach: {metadata.get('esg_approach')}")
+            print(f"SFDR Article: {metadata.get('sfdr_article')}")
             print(f"\nHas JSON Metadata: {metadata.get('has_json_metadata')}")
             print(f"Has Filename Metadata: {metadata.get('has_filename_metadata')}")
             print(f"Filename Parsing Confidence: {metadata.get('filename_parsing_confidence', 0):.2f}")

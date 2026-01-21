@@ -31,6 +31,15 @@ def prepare_image_for_ocr(image: Image.Image) -> Image.Image:
     if ImageOps:
         image = ImageOps.grayscale(image)
         image = ImageOps.autocontrast(image)
+        
+    # Optimization: Upscale 2x for small text (Disclaimers)
+    width, height = image.size
+    image = image.resize((width * 2, height * 2), Image.Resampling.LANCZOS)
+    
+    # Optimization: Binarization (Thresholding) to remove noise
+    # Threshold = 128
+    image = image.point(lambda x: 0 if x < 128 else 255, '1')
+
     if ImageFilter:
         image = image.filter(ImageFilter.MedianFilter(size=3))
     return image

@@ -1,6 +1,7 @@
 # Environment variables
 .env
 .env.local
+!.env.example
 
 # Python
 __pycache__/
@@ -67,3 +68,77 @@ main_fix.py
 debug_imports.py
 *.bak
 *.ps1
+
+# Debug and log files
+*.log
+*.txt
+!requirements.txt
+!dataset_rules.txt
+!README.txt
+debug_*.txt
+*_output.txt
+*_results.txt
+verification_results.txt
+mypy_output.txt
+ruff_output.txt
+server_stdout.txt
+test_output.txt
+api_debug.log
+standalone_debug.log
+debug_fix_abs.log
+
+# Cache directories
+.cache/
+__pycache__/
+
+# Temporary analysis and documentation files
+*_SUMMARY.md
+*_INDEX.md
+*_ANALYSIS.md
+*_AUDIT.md
+*_REFERENCE.md
+*_RESULTS.md
+*_CHECKLIST.md
+*_QUICK_START.md
+*_GUIDE.md
+CODE_*.md
+COMPLETE_*.md
+COMPREHENSIVE_*.md
+COMPLETION_*.md
+DOCUMENTATION_*.md
+EXACT_*.md
+EXECUTIVE_*.md
+FIXES_*.md
+HIGHLIGHTING_*.md
+IMPLEMENTATION_*.md
+INTEGRATION_*.md
+ISSUE_*.md
+LOCATION_*.md
+MASTER_*.md
+QUICK_*.md
+README_*.md
+REALWORLD_*.md
+RED_*.md
+VALIDATION_*.md
+VISUAL_*.md
+
+# Temporary Python scripts
+detailed_extraction_analysis.py
+run_full_demo.py
+test_*.py
+!tests/test_*.py
+
+# Test result JSON files
+*_results.json
+*_test_results.json
+example_*_validation_results.json
+germany_fee_loading_test_results.json
+
+# LaTeX compilation artifacts
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.fdb_latexmk
+report/*.fls
+report/*.synctex.gz

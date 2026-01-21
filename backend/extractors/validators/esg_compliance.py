@@ -8,6 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 from backend.extractors.rules.models import ComplianceIssue
 from backend.extractors.rules.enums import ComplianceIssueType
 from .base import BaseValidator
+from .utils import infer_last_slide
 
 logger = logging.getLogger(__name__)
 
@@ -79,13 +80,16 @@ class EsgValidator(BaseValidator):
         
         if has_holdings or issuer_mentions:
             if "recommandation" not in full_disclaimer_text and "recommendation" not in full_disclaimer_text:
+                last_slide = infer_last_slide(extraction_result)
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.INVESTMENT_RECOMMENDATION,
-                    rule_reference="Section 4.2",
-                    location="Disclaimers",
+                    rule_reference="Rule 4.2 - Securities Disclosure",
+                    location=f"Slide {last_slide} - Legal Disclaimers footer",
+                    slide_number=last_slide,
                     severity="warning",
                     message="Specific securities are mentioned, but disclaimer stating 'This is not a recommendation to buy or sell' is missing.",
-                    suggestion="Add disclaimer: 'This does not constitute an investment recommendation'",
+                    context="Holdings/securities listed without legal protection clause. Marketing materials must clarify that stock mentions aren't advice.",
+                    suggestion="Add to Slide 6 disclaimers: 'The mention of specific securities does not constitute a buy or sell recommendation from ODDO BHF AM.'",
                     client_type=client_type,
                     fund_type=fund_type
                 ))
@@ -100,14 +104,16 @@ class EsgValidator(BaseValidator):
             has_valuation_mention = any(keyword in all_text_lower for keyword in valuation_keywords)
             
             if has_valuation_mention:
+                last_slide = infer_last_slide(extraction_result)
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.SECURITY_VALUATION_MENTION,
-                    rule_reference="Section 4.2",
-                    location="Content",
+                    rule_reference="Rule 4.2 - Subjective Valuation Prohibition",
+                    location=f"Slide {last_slide} - Securities analysis text block",
+                    slide_number=last_slide,
                     severity="error",
                     message="Security valuation mentions (undervalued/overvalued) are prohibited in marketing documents. Only factual information is allowed.",
-                    context="Valuation keywords detected in document",
-                    suggestion="Remove valuation opinions. Only factual information about securities is permitted.",
+                    context="Subjective valuation keywords detected. Only objective characteristics should be described.",
+                    suggestion="Remove valuation opinions from Slide 6. Use neutral, factual language about securities.",
                     client_type=client_type,
                     fund_type=fund_type
                 ))
@@ -127,14 +133,16 @@ class EsgValidator(BaseValidator):
                     if mention_text:
                         mention_lower = mention_text.lower()
                         if any(keyword in mention_lower for keyword in comparison_keywords):
+                            mention_slide = mention.get('slide_number') or 4
                             issues.append(ComplianceIssue(
                                 issue_type=ComplianceIssueType.SECURITIES_COMPARISON,
-                                rule_reference="Section 4.2",
-                                location=mention.get('location', 'Content'),
+                                rule_reference="Rule 4.2 - Comparative Claims Prohibition",
+                                location=mention.get('location') or f"Slide {mention_slide} - Portfolio description section",
+                                slide_number=mention_slide,
                                 severity="error",
                                 message="Securities comparison detected. Direct comparison between securities is prohibited in marketing documents.",
                                 context=f"Comparison found: {mention_text[:100]}",
-                                suggestion="Remove direct securities comparisons. Only factual information is permitted.",
+                                suggestion="Remove direct securities comparisons. Present only standalone factual information.",
                                 client_type=client_type,
                                 fund_type=fund_type
                             ))
@@ -152,14 +160,16 @@ class EsgValidator(BaseValidator):
                 if multiple_mentions:
                     for security_name, count in multiple_mentions.items():
                         if count > 2:
+                            last_slide = infer_last_slide(extraction_result)
                             issues.append(ComplianceIssue(
                                 issue_type=ComplianceIssueType.MULTIPLE_SECURITY_MENTIONS,
-                                rule_reference="Section 4.2",
-                                location="Content",
+                                rule_reference="Rule 4.2 - Securities Emphasis Restriction",
+                                location=f"Slide {last_slide} - Portfolio or holdings section",
+                                slide_number=last_slide,
                                 severity="warning",
                                 message=f"Security '{security_name}' is mentioned {count} times in the document. Multiple mentions may imply recommendation.",
-                                context=f"Security mentioned {count} times",
-                                suggestion="Review if multiple mentions are necessary. Ensure all mentions are factual and include proper disclaimer.",
+                                context=f"Multiple mentions ({count}) detected for single issuer.",
+                                suggestion="Ensure all mentions are factual. Consider reducing repetitions to avoid appearance of specific recommendation.",
                                 client_type=client_type,
                                 fund_type=fund_type
                             ))
@@ -181,14 +191,16 @@ class EsgValidator(BaseValidator):
                     if mention_text:
                         mention_lower = mention_text.lower()
                         if any(keyword in mention_lower for keyword in projection_keywords):
+                            mention_slide = mention.get('slide_number') or 4
                             issues.append(ComplianceIssue(
                                 issue_type=ComplianceIssueType.SECURITY_PROJECTION,
-                                rule_reference="Section 4.2",
-                                location=mention.get('location', 'Content'),
+                                rule_reference="Rule 4.2 - Forecasting Prohibition",
+                                location=mention.get('location') or f"Slide {mention_slide} - Portfolio outlook / analysis section",
+                                slide_number=mention_slide,
                                 severity="error",
                                 message="Future projection for security detected. Projections of future security prices/performance are prohibited.",
-                                context=f"Projection found: {mention_text[:100]}",
-                                suggestion="Remove future projections for securities. Only historical/past performance is permitted.",
+                                context=f"Forecasting language found: {mention_text[:100]}",
+                                suggestion="Remove future price targets or performance projections for specific securities.",
                                 client_type=client_type,
                                 fund_type=fund_type
                             ))
@@ -209,14 +221,16 @@ class EsgValidator(BaseValidator):
                     if mention_text:
                         mention_lower = mention_text.lower()
                         if any(keyword in mention_lower for keyword in buy_sell_keywords):
+                            mention_slide = mention.get('slide_number') or 4
                             issues.append(ComplianceIssue(
                                 issue_type=ComplianceIssueType.BUY_SELL_RECOMMENDATION,
-                                rule_reference="Section 4.2",
-                                location=mention.get('location', 'Content'),
+                                rule_reference="Rule 4.2 - Investment Advice Prohibition",
+                                location=mention.get('location') or f"Slide {mention_slide} - Portfolio call-to-action or strategy text",
+                                slide_number=mention_slide,
                                 severity="error",
                                 message="Buy/sell recommendation detected. Direct investment recommendations are prohibited in marketing documents.",
-                                context=f"Buy/sell keyword found: {mention_text[:100]}",
-                                suggestion="Remove buy/sell recommendations. Only factual information about securities is permitted.",
+                                context=f"Active management recommendation found: {mention_text[:100]}",
+                                suggestion="Remove explicit buy/sell/reduce/reinforce instructions. Describe strategy objectively.",
                                 client_type=client_type,
                                 fund_type=fund_type
                             ))
@@ -245,7 +259,7 @@ class EsgValidator(BaseValidator):
                 document_type = metadata.get('document_type', 'marketing')
                 
                 if not sfdr_article:
-                    esg_approach = metadata.get('esg_approach', '').lower()
+                    esg_approach = (metadata.get('esg_approach') or '').lower()
                     if 'article 9' in esg_approach or 'engaging' in esg_approach:
                         sfdr_article = 9
                     elif 'article 8' in esg_approach or 'reduced' in esg_approach:
@@ -320,9 +334,10 @@ class EsgValidator(BaseValidator):
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.ESG_LEVEL_MISMATCH,
                     severity="medium",
-                    rule_reference="ESG Validation",
+                    rule_reference="ESG Validation - System Error",
                     message=f"ESG validation could not be completed: {str(last_error)}",
-                    location="ESG Analyzer",
+                    location="ESG Analyzer - Document processing engine",
+                    slide_number=1,
                     details={"error": str(last_error), "fallback": "validation_failure"}
                 ))
                 return issues
@@ -351,12 +366,13 @@ class EsgValidator(BaseValidator):
                 if esg_mentions.commercial_esg_mentions > 0:
                     issues.append(ComplianceIssue(
                         issue_type=ComplianceIssueType.ESG_FORBIDDEN_ARTICLE6,
-                        rule_reference="SFDR Article 6",
-                        location="Document-wide",
+                        rule_reference="SFDR Article 6 - Non-ESG Restrictions",
+                        location="Slide 1 - Key Information / Promotional messaging",
+                        slide_number=1,
                         severity="critical",
                         message=f"Article 6 (non-ESG): {esg_mentions.commercial_esg_mentions} commercial ESG mentions detected",
                         context=f"ESG Level: {esg_level.level}, ESG%: {esg_mentions.esg_percentage}%",
-                        suggestion="Remove all commercial ESG mentions from Article 6 fund materials",
+                        suggestion="Remove all commercial ESG mentions from Article 6 fund materials. Ensure document contains only factual information.",
                         client_type=client_type,
                         fund_type=fund_type,
                         details={"esg_percentage": esg_mentions.esg_percentage, "commercial_mentions": esg_mentions.commercial_esg_mentions}
@@ -366,12 +382,13 @@ class EsgValidator(BaseValidator):
                 if esg_mentions.esg_percentage > 10.0:
                     issues.append(ComplianceIssue(
                         issue_type=ComplianceIssueType.ESG_OVERMENTIONED_ARTICLE8,
-                        rule_reference="SFDR Article 8",
-                        location="Document-wide",
+                        rule_reference="SFDR Article 8 - ESG Commitment Limit",
+                        location="Slides 1-3 - ESG claims and messaging sections",
+                        slide_number=1,
                         severity="high",
                         message=f"Article 8 fund: ESG content exceeds 10% limit ({esg_mentions.esg_percentage}%)",
                         context=f"ESG Level: {esg_level.level}, Commercial mentions: {esg_mentions.commercial_esg_mentions}",
-                        suggestion="Reduce ESG content to below 10% of total document text",
+                        suggestion="Reduce ESG content to below 10% of total document text. Prioritize legally required ESG statements over promotional ESG claims.",
                         client_type=client_type,
                         fund_type=fund_type,
                         details={"esg_percentage": esg_mentions.esg_percentage, "limit": 10.0}
@@ -387,12 +404,13 @@ class EsgValidator(BaseValidator):
                 if criteria_issues:
                     issues.append(ComplianceIssue(
                         issue_type=ComplianceIssueType.ENGAGING_CRITERIA_NOT_MET,
-                        rule_reference="SFDR Article 9",
-                        location="Document-wide",
+                        rule_reference="SFDR Article 9 - Sustainable Investment Requirements",
+                        location="Slide 1 - Fund objective & ESG strategy description",
+                        slide_number=1,
                         severity="high",
                         message=f"Article 9 (engaging) fund does not meet criteria: {', '.join(criteria_issues)}",
                         context=f"ESG Level: {esg_level.level}",
-                        suggestion="Verify fund classification or ensure exclusion percentage >= 20% and portfolio coverage >= 90%",
+                        suggestion="Verify fund classification or ensure exclusion percentage >= 20% and portfolio coverage >= 90%. Document ESG impact metrics.",
                         client_type=client_type,
                         fund_type=fund_type
                     ))
@@ -400,12 +418,13 @@ class EsgValidator(BaseValidator):
             if metadata and metadata.get('sfdr_article') and metadata.get('sfdr_article') != esg_level.sfdr_article:
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.SFDR_ARTICLE_INCONSISTENCY,
-                    rule_reference="SFDR Disclosure",
-                    location="Document metadata",
+                    rule_reference="SFDR Disclosure - Article Classification",
+                    location="Document metadata vs. Slide 1 - Fund positioning",
+                    slide_number=1,
                     severity="medium",
                     message=f"SFDR article mismatch: metadata indicates Article {metadata.get('sfdr_article')}, but content suggests Article {esg_level.sfdr_article or 'Unknown'}",
                     context=f"Detected ESG level: {esg_level.level}",
-                    suggestion="Verify SFDR classification and ensure document content aligns with declared article",
+                    suggestion="Verify SFDR classification and ensure document content aligns with declared article. Update metadata if needed.",
                     client_type=client_type,
                     fund_type=fund_type,
                     details={"metadata_article": metadata.get('sfdr_article'), "detected_article": esg_level.sfdr_article}
@@ -416,12 +435,13 @@ class EsgValidator(BaseValidator):
                     if len(slide_nums) > 10:
                         issues.append(ComplianceIssue(
                             issue_type=ComplianceIssueType.ESG_KEYWORD_OVERUSE,
-                            rule_reference="Best Practices",
-                            location=f"Keyword '{keyword}' appears in {len(slide_nums)} slides",
+                            rule_reference="Best Practices - ESG Communication Balance",
+                            location=f"Keyword '{keyword}' appears in {len(slide_nums)} slides across document",
+                            slide_number=slide_nums[0] if slide_nums else 1,
                             severity="low",
                             message=f"ESG keyword '{keyword}' appears excessively across {len(slide_nums)} slides",
                             context=f"Slides: {', '.join(map(str, slide_nums[:10]))}...",
-                            suggestion="Consider reducing repetitive ESG terminology",
+                            suggestion="Consider reducing repetitive ESG terminology for better document flow and clarity",
                             client_type=client_type,
                             fund_type=fund_type,
                             details={"keyword": keyword, "slide_count": len(slide_nums)}

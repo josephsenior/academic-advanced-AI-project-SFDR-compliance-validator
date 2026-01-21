@@ -11,6 +11,8 @@ from ...constants import ValidationStatus
 from ...store import validation_jobs
 
 from . import bp
+from .utils import standardize_results
+from backend.extractors.agents.data_consistency_agent import DataConsistencyResult
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +25,9 @@ def fix_document(document_id: str):
 
         job = validation_jobs[document_id]
 
-        if job["status"] != ValidationStatus.COMPLETED:
+        # Allow force override for testing/debugging using query param ?force=true
+        force = request.args.get("force", "false").lower() == "true"
+        if job["status"] != ValidationStatus.COMPLETED and not force:
             return jsonify({"error": "Validation must be completed first"}), 400
 
         data = request.get_json(silent=True) or {}
@@ -43,7 +47,7 @@ def fix_document(document_id: str):
         output_path = Path(current_app.config["CORRECTED_FOLDER"]) / f"{document_id}_corrected.pptx"
 
         # EMERGENCY DEBUG LOG
-        DEBUG_FILE = r"C:\Users\GIGABYTE\Desktop\Advanced Ai Project\debug_fix_abs.log"
+        DEBUG_FILE = "debug_fix_abs.log"
         try:
             with open(DEBUG_FILE, "a") as f:
                 f.write(f"\n--- {datetime.now()} ---\n")
@@ -59,17 +63,58 @@ def fix_document(document_id: str):
         logger.info(f"Input path: {original_path}")
         logger.info(f"Output path: {output_path}")
 
-        validation_result = job["validation_result"]
+
+        validation_result = job.get("validation_result")
+        
+        # NEW: Lazy validation if results are missing
+        if not validation_result:
+            logger.info(f"Validation result missing for {document_id}. Triggering lazy validation...")
+            try:
+                from ...services.validation_service import run_validation
+                # We use empty options for lazy validation
+                validation_result = run_validation(document_id, job, {})
+                # Update the local job reference as well
+                job["validation_result"] = validation_result
+                logger.info(f"Lazy validation successful for {document_id}")
+            except Exception as e:
+                logger.error(f"Lazy validation failed for {document_id}: {str(e)}")
+                return jsonify({"error": f"Could not perform lazy validation: {str(e)}"}), 500
+
+        # DEBUG: Log issue count
+        if not validation_result:
+             return jsonify({"error": "Validation result is empty after lazy validation"}), 500
+             
+        validation_result = standardize_results(validation_result)
+        issues_to_process = validation_result.get("compliance_issues", [])
+        print(f"DEBUG: fix_document processing {len(issues_to_process)} issues for document {document_id}")
         
         logger.info(f"Applying fixes for document {document_id}. Fix types: {fix_types}")
         
         auto_fix_disclaimers = "all" in fix_types or "disclaimers" in fix_types
         
+        # Prepare disclaimer_result from validation_result if present so the corrector
+        # can auto-fix disclaimers. Some validation outputs store disclaimers under
+        # issues_by_category -> 'disclaimer'.
+        disclaimer_result = None
+        try:
+            from types import SimpleNamespace
+
+            if isinstance(validation_result, dict):
+                missing = validation_result.get("issues_by_category", {}).get("disclaimer", [])
+                # Wrap into an object with attribute `missing_disclaimers` expected by the corrector
+                disclaimer_result = SimpleNamespace(missing_disclaimers=missing)
+            else:
+                # Pass through if it's already a model/object
+                disclaimer_result = getattr(validation_result, "disclaimer_result", None) or validation_result
+        except Exception:
+            disclaimer_result = None
+
         result = corrector.correct(
-            original_path, 
-            validation_result, 
+            original_path,
+            DataConsistencyResult(**validation_result) if isinstance(validation_result, dict) else validation_result,
+            disclaimer_result=disclaimer_result,
             output_path=str(output_path),
-            auto_fix_disclaimers=auto_fix_disclaimers
+            auto_fix_disclaimers=auto_fix_disclaimers,
         )
         
         if not result.success:

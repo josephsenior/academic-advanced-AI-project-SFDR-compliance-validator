@@ -111,14 +111,16 @@ export default function UploadPage() {
 
       setFiles((prev) => prev.map((f, idx) => (idx === 0 ? { ...f, status: "completed" } : f)))
 
+
       await validateDocument(result.document_id)
       toast.success("Document uploaded successfully")
       router.push(`/dashboard/${result.document_id}`)
       return
     } catch (error) {
-      toast.error("Failed to upload document. Running in demo mode.")
-      // Demo mode - navigate to demo dashboard
-      router.push("/dashboard/demo-123")
+      console.error("Upload error:", error)
+      const errorMessage = error instanceof Error ? error.message : "Upload failed"
+      toast.error(`Failed to upload: ${errorMessage}`)
+      setFiles((prev) => prev.map((f, idx) => (idx === 0 ? { ...f, status: "error" } : f)))
     } finally {
       setIsValidating(false)
     }

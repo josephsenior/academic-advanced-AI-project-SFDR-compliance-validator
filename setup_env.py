@@ -4,7 +4,8 @@ Helper script to create .env file with API credentials
 from pathlib import Path
 
 env_content = """# Token Factory API Configuration
-TOKEN_FACTORY_API_KEY=sk-24de04a569b14843bbb8302b084dc5a3
+# IMPORTANT: Replace with your own API credentials
+TOKEN_FACTORY_API_KEY=your_api_key_here
 TOKEN_FACTORY_BASE_URL=https://tokenfactory.esprit.tn/api
 
 # Optional: Vision Model (defaults to hosted_vllm/llava-1.5-7b-hf)

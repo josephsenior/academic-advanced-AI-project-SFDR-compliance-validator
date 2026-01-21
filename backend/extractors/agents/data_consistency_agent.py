@@ -3,7 +3,7 @@ Data Consistency Agent (Refactored)
 """
 from __future__ import annotations
 import logging
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, cast
 
 from ..rules.models import ComplianceIssue
 from .models import DataConsistencyResult
@@ -16,6 +16,11 @@ from ..validators.performance import PerformanceValidator
 from ..validators.country import CountryValidator
 from ..validators.content import ContentValidator
 from ..validators.esg_compliance import EsgValidator
+from ..validators.esg_volume import ESGVolumeValidator
+from ..validators.translation_consistency import TranslationConsistencyValidator
+from ..validators.anglicism_detector import AnglicismDetector
+from ..validators.visual_prominence import VisualProminenceValidator
+from ..validators.dynamic_prospectus import DynamicProspectusExtractor
 from ..validators.esg.analyzer import ESGAnalyzer
 from .validators.numerical_validator import validate_numerical_data
 from .reference_data import ReferenceData
@@ -56,6 +61,11 @@ class DataConsistencyAgent:
             PerformanceValidator(),
             CountryValidator(),
             ContentValidator(),
+            ESGVolumeValidator(),  # NEW: ESG Volume Validation (Rule 4.1)
+            TranslationConsistencyValidator(),  # NEW: Cross-language consistency
+            AnglicismDetector(),  # NEW: Undefined English terms detection
+            VisualProminenceValidator(),  # NEW: WCAG contrast checking
+            DynamicProspectusExtractor(),  # NEW: Auto-extract fees from prospectus
             EsgValidator(esg_analyzer=self.esg_analyzer, enable_esg_validation=enable_esg_validation)
         ]
 
@@ -104,7 +114,7 @@ class DataConsistencyAgent:
                 reference_data,
                 metadata=metadata
             )
-            issues.extend(numerical_results.get('inconsistencies', []))
+            issues.extend(cast(List[ComplianceIssue], numerical_results.get('inconsistencies', [])))
         
         # 3. Aggregate results
         # Calculate status based on max severity
@@ -191,7 +201,7 @@ class DataConsistencyAgent:
             authorized_countries = extraction_result.get('authorized_countries', [])
 
         return DataConsistencyResult(
-            document_id=metadata.get('document_id') if metadata else None,
+            document_id=str(metadata.get('document_id')) if metadata and metadata.get('document_id') else None,
             validation_timestamp=datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
             compliance_issues=issues,
             overall_status=status,
@@ -213,16 +223,45 @@ class DataConsistencyAgent:
         )
 
     def _determine_client_type(self, extraction_result: Dict[str, Any], metadata: Optional[Dict[str, Any]] = None) -> ClientType:
-        """Determine if document is for Retail or Professional clients."""
-        # Check metadata first
-        if metadata and metadata.get('target_audience'):
-            audience = metadata.get('target_audience', '').lower()
-            if 'professional' in audience or 'institution' in audience:
-                return ClientType.PROFESSIONAL
-            if 'retail' in audience or 'detail' in audience or 'privat' in audience:
-                return ClientType.RETAIL
+        """Determine if document is for Retail or Professional clients.
         
-        # Check content
+        Priority:
+        1. Metadata field: "Le client est-il un professionnel" (Oddo BHF format)
+        2. Metadata field: "target_audience"
+        3. Content analysis (text matching)
+        """
+        # PRIORITY 1: Check Oddo BHF metadata format (French field names from dataset)
+        if metadata:
+            # Exact Oddo BHF field: "Le client est-il un professionnel"
+            if 'Le client est-il un professionnel' in metadata:
+                is_professional = metadata.get('Le client est-il un professionnel')
+                if isinstance(is_professional, bool):
+                    return ClientType.PROFESSIONAL if is_professional else ClientType.RETAIL
+                if isinstance(is_professional, str):
+                    if is_professional.lower() in ['true', 'yes', 'oui', 'professional', 'professionnel']:
+                        return ClientType.PROFESSIONAL
+                    if is_professional.lower() in ['false', 'no', 'non', 'retail', 'détail', 'retail']:
+                        return ClientType.RETAIL
+            
+            # PRIORITY 2: Generic metadata fields
+            if metadata.get('is_professional_client') is not None:
+                return ClientType.PROFESSIONAL if metadata.get('is_professional_client') else ClientType.RETAIL
+            
+            if metadata.get('client_type'):
+                client_type_str = metadata.get('client_type', '').lower()
+                if 'professional' in client_type_str or 'professionnel' in client_type_str:
+                    return ClientType.PROFESSIONAL
+                if 'retail' in client_type_str or 'detail' in client_type_str:
+                    return ClientType.RETAIL
+            
+            if metadata.get('target_audience'):
+                audience = metadata.get('target_audience', '').lower()
+                if 'professional' in audience or 'institution' in audience:
+                    return ClientType.PROFESSIONAL
+                if 'retail' in audience or 'detail' in audience or 'privat' in audience:
+                    return ClientType.RETAIL
+        
+        # PRIORITY 3: Check content
         all_text = ""
         if 'pages' in extraction_result:
             for page in extraction_result['pages']:

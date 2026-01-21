@@ -226,10 +226,10 @@ class ExtractionPipeline:
             features_path = document_dir / "features.json"
             self._write_json(features_path, features_dump)
         
-            manifest_payload = {
+        manifest_payload = {
             "document_id": document_id,
             "original_filename": original_filename,
-                "processed_at": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+            "processed_at": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
             "paths": {
                 "metadata": str(metadata_path.relative_to(self.output_dir)),
                 "extraction": str(extraction_path.relative_to(self.output_dir)),

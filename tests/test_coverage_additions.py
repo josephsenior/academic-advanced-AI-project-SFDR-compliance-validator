@@ -5,7 +5,7 @@ from backend.extractors.pipeline import ExtractionPipeline
 
 
 def test_data_consistency_result_legacy_fields():
-    res = DataConsistencyResult()
+    res = DataConsistencyResult(document_id="test")
     assert hasattr(res, "numerical_inconsistencies")
     assert isinstance(res.numerical_inconsistencies, list)
     assert hasattr(res, "cross_reference_issues")

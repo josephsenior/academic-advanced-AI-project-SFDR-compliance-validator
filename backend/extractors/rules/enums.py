@@ -185,4 +185,16 @@ class ComplianceIssueType(str, Enum):
     # Cross-Reference Issues
     PERFORMANCE_MISMATCH = "performance_mismatch"
     DUPLICATE_INCONSISTENCY = "duplicate_inconsistency"
+    
+    # New: Translation Consistency
+    TRANSLATION_INCONSISTENCY = "translation_inconsistency"
+    
+    # New: Anglicism Detection
+    ANGLICISM_UNDEFINED = "anglicism_undefined"
+    
+    # New: Visual Prominence
+    VISUAL_CONTRAST_VIOLATION = "visual_contrast_violation"
+    
+    # New: Dynamic Prospectus
+    FEE_DISCLOSURE_INCOMPLETE = "fee_disclosure_incomplete"
 

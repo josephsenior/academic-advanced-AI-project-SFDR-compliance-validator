@@ -1,118 +1,93 @@
 # Document Compliance Validation System
 
-Advanced AI-powered document validation system for financial compliance checking with ESG validation, disclaimer verification, and regulatory requirement validation.
+**AI-powered autonomous compliance reviews for proper financial documentation.**
 
-## Quick Start
+This system uses Generative AI (Llama 3.1 & LLaVA) to automatically validate marketing documents against complex regulatory rules (SFDR, ESG, Cross-border registration).
 
-### Backend API Server
+## 📚 Documentation
+
+**[Enter the Documentation Hub](docs/index.md)**
+
+- **[Architecture](docs/architecture.md)**: How the backend/frontend and AI agents work together.
+- **[User Guide](docs/guide_usage.md)**: How to run the pipeline and use the dashboard.
+- **[Development](docs/guide_development.md)**: Setup, testing, and deployment.
+- **[API Reference](docs/api_reference.md)**: Endpoints for the REST API.
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+- Python 3.12+
+- Node.js 18+ (for UI)
+- Tesseract OCR (for image extraction)
+
+### 2. Setup
 ```bash
-# Start the API server (runs on port 5000)
+# Clone and Install
+git clone <repo>
+cd "Advanced Ai Project"
+python -m venv .venv
+source .venv/bin/activate  # or .\.venv\Scripts\Activate on Windows
+pip install -r requirements.txt
+
+# Configure Env
+cp .env.example .env
+# Edit .env with your API Keys
+```
+
+### 3. Run
+**Windows**:
+```batch
 start_web_interface.bat
 ```
 
-### Frontend Dashboard
+**Linux/Mac**:
 ```bash
-cd frontend
-pnpm install
-pnpm dev
-# Opens on http://localhost:3000
+./start_web_interface.sh
 ```
 
-## System Architecture
+- **Dashboard**: http://localhost:3000
+- **API**: http://localhost:5000
 
-### Backend (Python)
-- **API Server**: Flask REST API (`api.py`) on port 5000
-- **Extractors**: Document processing pipeline in `backend/extractors/`
-- **Utilities**: Helper functions in `backend/utils/`
-- **Tests**: Comprehensive test suite in `tests/`
-
-### Frontend (Next.js)
-- **Dashboard**: React/Next.js UI in `frontend/`
-- **Port**: 3000 (development)
-- **Features**: Upload documents, view validation results, manage compliance
-
-### Data
-- **Dataset**: Reference data in `dataset/`
-  - Registration abroad of Funds (82 funds, 21 countries)
-  - Disclaimer Glossary (3 languages)
-  - Compliance rules
-- **Outputs**: Validation results in `outputs/`
-- **Uploads**: User uploaded documents in `uploads/`
-
-## Features
-
-- Document Upload (3-file support)
-  - Main document (required): .pptx, .pdf, .docx
-  - Metadata (optional): metadata.json
-  - Prospectus (optional): Reference document for performance validation
-
-- Automated Validation
-  - ESG compliance checking
-  - Disclaimer verification (multilingual)
-  - Performance data validation
-  - Country-specific registration rules
-  - Structure and formatting checks
-
-- Interactive Dashboard
-  - Real-time validation status
-  - Detailed compliance reports
-  - Issue categorization and severity
-  - Document correction interface
-
-## Documentation
-
-All documentation is in the `docs/` folder:
-
-- **System Overview**: `docs/system_overview.md`
-- **API Documentation**: `docs/API_DOCUMENTATION.md`
-- **Pipeline Usage**: `docs/pipeline_usage.md`
-- **Environment Setup**: `docs/environment_setup.md`
-- **Frontend Quick Start**: `docs/frontend_quick_start.md`
-
-## Environment Variables
-
-Required environment variables (set in `.env`):
-```
-ANTHROPIC_API_KEY=your_api_key_here
-```
-
-## Tech Stack
-
-### Backend
-- Python 3.12
-- Flask (REST API)
-- Anthropic Claude (LLM processing)
-- openpyxl, python-pptx (document processing)
-
-### Frontend
-- Next.js 16.0.7
-- React 19
-- TypeScript
-- Tailwind CSS
-- shadcn/ui components
-- SWR for data fetching
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 Advanced Ai Project/
-├── api.py                    # Main API server
-├── setup_env.py             # Environment setup script
-├── start_web_interface.bat  # Start script (Windows)
-├── start_web_interface.sh   # Start script (Unix)
-├── requirements.txt         # Python dependencies
-├── .env                     # Environment variables
-├── frontend/    # Frontend Next.js app
-├── src/                     # Python source code
-│   ├── extractors/          # Document processing
-│   └── utils/               # Helper utilities
-├── tests/                   # Test suite
-├── dataset/                 # Reference data
-├── docs/                    # Documentation
-├── outputs/                 # Validation results
-└── uploads/                 # Uploaded documents
+├── api.py                    # Flask API entry point
+├── backend/                  # Core Python Application
+│   ├── extractors/           # Extraction & Validation Logic
+│   │   ├── core/            # Document, chart, feature extractors
+│   │   ├── pipeline/        # Pipeline orchestrator
+│   │   ├── validators/      # Compliance validators (15+ validators)
+│   │   ├── agents/          # Data consistency agent
+│   │   ├── parsers/         # Filename & registration parsers
+│   │   └── rules/           # Compliance rules engine
+│   ├── server/               # Flask API Server
+│   │   ├── routes/v1/       # REST API endpoints
+│   │   ├── services/        # Business logic services
+│   │   └── config.py        # API configuration
+│   ├── utils/                # Utilities (metrics, caching, reporting)
+│   └── evaluation/          # Evaluation metrics
+├── frontend/                 # Next.js Dashboard (React 19, Tailwind CSS)
+├── server/                   # Flask application (legacy, use api.py)
+├── docs/                     # Complete Documentation
+│   ├── index.md             # Documentation hub
+│   ├── architecture.md     # System architecture
+│   ├── guide_usage.md       # User guide
+│   ├── guide_development.md # Development guide
+│   ├── features.md           # Validation rules & features
+│   └── api_reference.md     # Complete API documentation
+├── tests/                    # Comprehensive Test Suite
+│   ├── README.md            # Test documentation
+│   ├── test_pipeline_*.py    # Pipeline tests
+│   ├── test_data_consistency*.py  # Validation tests
+│   ├── test_esg_*.py        # ESG compliance tests
+│   ├── test_api*.py         # API endpoint tests
+│   └── run_all_tests.py     # Test runner
+├── examples/                 # Example scripts
+├── scripts/                  # Utility scripts
+├── dataset/                  # Test datasets & reference data
+└── outputs/                  # Generated outputs (gitignored)
 ```
 
 ## License
-
-Proprietary - Internal use only
+Proprietary - Internal use only.

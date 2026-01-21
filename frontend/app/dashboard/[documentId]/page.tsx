@@ -397,11 +397,38 @@ export default function DashboardPage({
   const handleDownload = async () => {
     const downloadToastId = "download-correction";
     try {
-      toast.loading("Preparing corrected document...", { id: downloadToastId })
+      toast.loading("Preparing corrected document with highlights...", { id: downloadToastId })
 
-      // DEMO MODE: Download original document but present as "corrected"
-      // This provides a polished demo experience
-      const blob = await downloadDocument(documentId, "original")
+      // First, trigger the fix endpoint to generate the highlighted document
+      // This is necessary because auto-fixes are now "highlighting and suggestions"
+      try {
+        await applyFixes(documentId)
+      } catch (fixError) {
+        console.error("Error generating highlights:", fixError)
+        // Continue anyway, maybe it was already generated
+      }
+
+      // Try corrected document first (preferred)
+      let blob
+      try {
+        blob = await downloadDocument(documentId, "corrected")
+      } catch (e: any) {
+        console.warn("Corrected download failed, attempting original as fallback", e)
+        // If corrected fails, we fallback to original
+        blob = await downloadDocument(documentId, "original")
+        toast.info("Showing original document (highlighted version not available)", { id: downloadToastId })
+        // Return early to skip the "Success" toast below if we fell back
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.href = url
+        a.download = results?.filename || "document.pptx"
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+        return
+      }
+
       const url = URL.createObjectURL(blob)
       const a = document.createElement("a")
       a.href = url
@@ -410,7 +437,7 @@ export default function DashboardPage({
       a.click()
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
-      toast.success("Corrected document downloaded", { id: downloadToastId })
+      toast.success("Highlighted document downloaded successfully", { id: downloadToastId })
     } catch (finalError: any) {
       console.error("Download failure", finalError);
       toast.error(`Download failed: ${finalError.message || "Document might have been deleted"}`, { id: downloadToastId })

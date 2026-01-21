@@ -4,8 +4,8 @@ import json
 import logging
 from typing import Optional
 
-from flask import Flask, jsonify
-from flask_cors import CORS
+from flask import Flask
+from flask_cors import CORS  # type: ignore
 
 from .config import ApiConfig, apply_config
 from .routes.v1 import bp as api_v1_bp

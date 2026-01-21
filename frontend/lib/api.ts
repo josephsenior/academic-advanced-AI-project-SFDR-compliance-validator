@@ -100,13 +100,21 @@ export async function downloadDocument(documentId: string, type: "original" | "c
   const response = await fetch(`${API_BASE}/download/${documentId}?type=${type}`)
 
   if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error(`${type} document not found`)
+    let errorMessage = `Failed to download ${type} document`;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorMessage;
+    } catch (e) {
+      // If not JSON, use default or status text
+      if (response.status === 404) {
+        errorMessage = `${type} document not found`;
+      }
     }
-    throw new Error(`Failed to download ${type} document`)
+    throw new Error(errorMessage);
   }
   return response.blob()
 }
+
 
 export async function downloadReport(documentId: string, format: "pdf" | "html"): Promise<Blob> {
   const response = await fetch(`${API_BASE}/report/${documentId}?format=${format}`)

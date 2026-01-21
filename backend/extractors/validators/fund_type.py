@@ -5,6 +5,7 @@ from typing import Dict, Any, List, Optional
 from backend.extractors.rules.models import ComplianceIssue
 from backend.extractors.rules.enums import ComplianceIssueType, ClientType, FundType
 from .base import BaseValidator
+from .utils import infer_last_slide, infer_performance_slide
 
 class FundTypeValidator(BaseValidator):
     """Validator for rules specific to certain fund types (Dated, PE, ETF, Money Market, RAIF)."""
@@ -75,27 +76,31 @@ class FundTypeValidator(BaseValidator):
             if detected_fund_type == FundType.DATED_FUND_ACTIVE:
                 if client_type == ClientType.RETAIL:
                     if has_ytm:
+                        perf_slide = infer_performance_slide(extraction_result) or 4
                         issues.append(ComplianceIssue(
                             issue_type=ComplianceIssueType.YTM_FOR_ACTIVE_RETAIL,
-                            rule_reference="Section 4.3",
-                            location="Performance Section",
+                            rule_reference="Rule 162 - Active Dated Fund Restrictions",
+                            location=f"Slide {perf_slide} - Performance or yield metrics table",
+                            slide_number=perf_slide,
                             severity="error",
                             message="YTM (Yield to Maturity) should not be shown for active management dated funds to retail clients.",
-                            context="YTM detected in active dated fund document for retail clients",
-                            suggestion="Remove YTM data or restrict document to professional clients only",
+                            context="YTM metric detected for active dated fund shown to retail investors. YTM implies buy-and-hold strategy which is inconsistent with active management disclosure rules.",
+                            suggestion=f"Remove YTM metric from the table on Slide {perf_slide} or restrict document to professional clients only. Active retail dated funds must prioritize actual performance.",
                             client_type=client_type,
                             fund_type=detected_fund_type
                         ))
                     
                     if has_ytw:
+                        perf_slide = infer_performance_slide(extraction_result) or 4
                         issues.append(ComplianceIssue(
                             issue_type=ComplianceIssueType.YTW_FOR_ACTIVE_RETAIL,
-                            rule_reference="Section 4.3",
-                            location="Performance Section",
+                            rule_reference="Rule 162 - Active Dated Fund Restrictions",
+                            location=f"Slide {perf_slide} - Yield or risk metrics section",
+                            slide_number=perf_slide,
                             severity="error",
                             message="YTW (Yield to Worst) should not be shown for active management dated funds to retail clients.",
-                            context="YTW detected in active dated fund document for retail clients",
-                            suggestion="Remove YTW data or restrict document to professional clients only",
+                            context="YTW metric detected for active dated fund shown to retail investors. YTW assumes worst-case bond call scenarios not applicable to active management retail marketing.",
+                            suggestion=f"Remove YTW metric from Slide {perf_slide} or restrict document to professional clients. Show fund performance and SRI risk profile instead.",
                             client_type=client_type,
                             fund_type=detected_fund_type
                         ))
@@ -115,13 +120,16 @@ class FundTypeValidator(BaseValidator):
             full_disclaimer_text = " ".join(disclaimer_texts)
             
             if "liquidité" not in full_disclaimer_text and "liquidity" not in full_disclaimer_text:
+                last_slide = infer_last_slide(extraction_result)
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.MISSING_STANDARD_DISCLAIMER,
-                    rule_reference="Section 4.1",
-                    location="Disclaimers",
+                    rule_reference="Rule 164 - PE Fund Risk Disclosure",
+                    location=f"Slide {last_slide} - Risk Factors or Disclaimer section (PE)",
+                    slide_number=last_slide,
                     severity="error",
                     message="Private Equity fund detected, but warning about 'Liquidity Risk' is missing.",
-                    suggestion="Add liquidity risk warning for Private Equity funds",
+                    context="Private Equity fund (FCPR/FPCI) without liquidity risk warning. PE investments are illiquid by nature and require specific regulatory warnings.",
+                    suggestion="Add to Slide 6 disclaimers: 'Private Equity Fund - Limited Liquidity: Redemptions may be restricted. Investors should have long-term investment horizons.'",
                     client_type=client_type,
                     fund_type=detected_fund_type
                 ))
@@ -135,14 +143,16 @@ class FundTypeValidator(BaseValidator):
                 has_irr = any(keyword in all_text_lower for keyword in irr_keywords)
                 
                 if has_irr:
+                    perf_slide = infer_performance_slide(extraction_result) or 4
                     issues.append(ComplianceIssue(
                         issue_type=ComplianceIssueType.NET_IRR_FOR_RETAIL,
-                        rule_reference="Section 4.3",
-                        location="Performance Section",
+                        rule_reference="Rule 165 - PE Performance Metrics Restrictions",
+                        location=f"Slide {perf_slide} - Performance summary table (PE)",
+                        slide_number=perf_slide,
                         severity="error",
                         message="Net IRR (Internal Rate of Return) should not be shown to retail clients for Private Equity funds.",
-                        context="Net IRR detected in Private Equity document for retail clients",
-                        suggestion="Remove Net IRR data or restrict document to professional clients only",
+                        context="Net IRR metric detected in PE fund document for retail investors. IRR methodology is complex and can be misleading for non-professional investors.",
+                        suggestion=f"Remove Net IRR from Slide {perf_slide} or restrict document to professional clients only. Show fund NAV and simple annual performance.",
                         client_type=client_type,
                         fund_type=detected_fund_type
                     ))
@@ -155,14 +165,16 @@ class FundTypeValidator(BaseValidator):
                 has_institutional_track = any(keyword in all_text_lower for keyword in institutional_track_keywords)
                 
                 if has_institutional_track:
+                    perf_slide = infer_performance_slide(extraction_result) or 4
                     issues.append(ComplianceIssue(
                         issue_type=ComplianceIssueType.INSTITUTIONAL_TRACK_FOR_RETAIL,
-                        rule_reference="Section 4.3",
-                        location="Performance Section",
+                        rule_reference="Rule 165 - PE Performance Metrics Restrictions",
+                        location=f"Slide {perf_slide} - Historical track record section",
+                        slide_number=perf_slide,
                         severity="error",
                         message="Institutional track record should not be shown to retail clients for Private Equity funds.",
-                        context="Institutional track record detected in Private Equity document for retail clients",
-                        suggestion="Remove institutional track record or restrict document to professional clients only",
+                        context="Institutional track record (separate from current fund) shown to retail. This is prohibited as it may imply performance expectations that don't apply to the retail share class.",
+                        suggestion=f"Remove institutional track record from Slide {perf_slide} or restrict document to professional clients. Show only current retail share class performance.",
                         client_type=client_type,
                         fund_type=detected_fund_type
                     ))
@@ -195,12 +207,12 @@ class FundTypeValidator(BaseValidator):
             if has_liquid_mention:
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.ETF_CALLED_LIQUID,
-                    rule_reference="Section 4.1",
-                    location="Content",
+                    rule_reference="Rule 139 - ETF Terminology Restrictions",
+                    location="Slide 1 - Cover Page or Marketing messaging",
                     severity="error",
-                    message="ETF should not be called 'liquid'. ETFs have liquidity risks and should not be described as liquid.",
-                    context="ETF described as liquid in document",
-                    suggestion="Remove 'liquid' description from ETF. Use factual language about ETF characteristics instead.",
+                    message="ETF should not be called 'liquid'. ETFs have secondary market liquidity risks and should not be described as liquid in marketing headers.",
+                    context="ETF described as 'liquid' in marketing material. Using 'liquid' misrepresents ETF liquidity characteristics which depend on market makers and exchange volume.",
+                    suggestion="Remove 'liquid' descriptor from Slide 1. Use accurate language: 'shares trade on exchange' or 'secondary market liquidity depends on market conditions'.",
                     client_type=client_type,
                     fund_type=detected_fund_type
                 ))
@@ -218,14 +230,16 @@ class FundTypeValidator(BaseValidator):
             has_money_market_disclaimer = any(keyword in all_text_lower for keyword in money_market_disclaimer_keywords)
             
             if not has_money_market_disclaimer:
+                last_slide = infer_last_slide(extraction_result)
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.MISSING_STANDARD_DISCLAIMER,
-                    rule_reference="Section 4.1",
-                    location="Disclaimers",
+                    rule_reference="Rule 140 - Money Market Fund Disclosures",
+                    location=f"Slide {last_slide} - Disclaimer section (Money Market)",
+                    slide_number=last_slide,
                     severity="warning",
                     message="Money Market fund detected, but specific Money Market disclaimer may be missing.",
-                    context="Money Market fund without specific disclaimer",
-                    suggestion="Add Money Market fund disclaimer: 'The money market fund is not a guaranteed investment and investment in a money market fund is different from investment in deposits.'",
+                    context="Money Market fund without standard disclaimer explaining no guaranteed return and difference from bank deposits.",
+                    suggestion="Add to Slide 6: 'This money market fund is not a guaranteed investment. Investment differs from bank deposits. Capital is not guaranteed.'",
                     client_type=client_type,
                     fund_type=detected_fund_type
                 ))
@@ -239,13 +253,16 @@ class FundTypeValidator(BaseValidator):
                 has_citation = "article 36" in all_text_lower and "2017/1131" in all_text_lower
                 
                 if not has_citation:
+                    last_slide = infer_last_slide(extraction_result)
                     issues.append(ComplianceIssue(
                         issue_type=ComplianceIssueType.MISSING_WEEKLY_MM_LEGAL_CITATION,
-                        rule_reference="Money Market Reg",
-                        location="Disclaimers",
+                        rule_reference="EU Regulation 2017/1131 - Article 36(2)",
+                        location=f"Slide {last_slide} - Footer or Legal Information section",
+                        slide_number=last_slide,
                         severity="error",
                         message="Weekly Money Market Factsheet missing required Article 36 citation.",
-                        suggestion="Add citation: 'pursuant to Article 36 (2) of EU Regulation 2017/1131'",
+                        context="Weekly reporting for MM funds must include a specific legal citation referencing Article 36(2) of EU Regulation 2017/1131.",
+                        suggestion="Add legal citation to footer: 'Factsheet prepared pursuant to Article 36(2) of EU Regulation 2017/1131'",
                         client_type=client_type,
                         fund_type=detected_fund_type
                     ))
@@ -263,12 +280,13 @@ class FundTypeValidator(BaseValidator):
             if not has_well_informed_mention:
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.MISSING_TARGET_AUDIENCE,
-                    rule_reference="Section 2",
-                    location="Cover Page",
+                    rule_reference="RAIF Directive - Target Audience Disclosure",
+                    location="Slide 1 - Cover Page (Confidentiality Banner)",
+                    slide_number=1,
                     severity="error",
                     message="RAIF fund detected, but 'Well-informed investor' target audience indication is missing.",
-                    context="RAIF fund without proper target audience indication",
-                    suggestion="Add target audience indication: 'Well-informed investors' (within the meaning of the RAIF law)",
+                    context="Reserved Alternative Investment Funds (RAIF) are restricted to well-informed investors. This status must be visible on the cover.",
+                    suggestion="Add to Slide 1 header: 'RESERVED FOR WELL-INFORMED INVESTORS AS DEFINED BY RAIF DIRECTIVE'",
                     client_type=client_type,
                     fund_type=detected_fund_type
                 ))
@@ -292,14 +310,16 @@ class FundTypeValidator(BaseValidator):
             has_raif_disclaimer = any(keyword in full_disclaimer_text for keyword in raif_disclaimer_keywords)
             
             if not has_raif_disclaimer:
+                last_slide = infer_last_slide(extraction_result)
                 issues.append(ComplianceIssue(
                     issue_type=ComplianceIssueType.MISSING_STANDARD_DISCLAIMER,
-                    rule_reference="Section 4.1",
-                    location="Disclaimers",
+                    rule_reference="RAIF Directive - Alternative Risk Disclosure",
+                    location=f"Slide {last_slide} - Legal Information section (RAIF)",
+                    slide_number=last_slide,
                     severity="warning",
                     message="RAIF fund detected, but RAIF-specific disclaimer may be missing.",
-                    context="RAIF fund without specific disclaimer",
-                    suggestion="Add RAIF disclaimer mentioning 'Well-informed investors' within the meaning of the RAIF law",
+                    context="Reserved Alternative Investment Fund (RAIF) requires a standard disclaimer about its specialized nature and risk profile.",
+                    suggestion="Add RAIF disclaimer: 'This is a Reserved Alternative Investment Fund (RAIF). It is reserved for well-informed investors and involves high risks.'",
                     client_type=client_type,
                     fund_type=detected_fund_type
                 ))

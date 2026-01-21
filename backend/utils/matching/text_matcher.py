@@ -137,9 +137,9 @@ class EnhancedTextMatcher:
                 print("       [OK] EXACT MATCH (100%)")
             return True, 1.0, "exact_match"
         
-        # LEVEL 2: High Similarity via SequenceMatcher (85%+)
+        # LEVEL 2: High Similarity via SequenceMatcher (Optimized from 0.85 to 0.80)
         similarity = SequenceMatcher(None, normalized_required, normalized_target).ratio()
-        if similarity > 0.85:
+        if similarity > 0.80:
             if self.debug:
                 print(f"       [OK] HIGH SIMILARITY ({similarity:.1%})")
             return True, similarity, "high_similarity"
@@ -160,7 +160,8 @@ class EnhancedTextMatcher:
             common_keywords = required_keywords & target_keywords
             keyword_ratio = len(common_keywords) / len(required_keywords)
             
-            if keyword_ratio >= 0.5:
+            # Optimized from 0.5 to 0.4 to catch subtle phrasing changes
+            if keyword_ratio >= 0.4:
                 if self.debug:
                     print(f"       [OK] KEYWORDS MATCH ({keyword_ratio:.1%})")
                     print(f"          Common words: {list(common_keywords)[:5]}")

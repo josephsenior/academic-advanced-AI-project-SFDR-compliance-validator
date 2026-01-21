@@ -72,7 +72,59 @@ def run_validation(document_id: str, job: Dict[str, Any], options: Dict[str, Any
     with open(output_dir / "validation_result.json", "w", encoding="utf-8") as f:
         json.dump(formatted_result, f, indent=2, ensure_ascii=False, cls=DateTimeEncoder)
 
+    # --- Module 7: Visual Remediation (Active) ---
+    try:
+        if options.get("generate_annotations", True):
+            logger.info("Starting Visual Remediation for %s", document_id)
+            from backend.utils.rendering.slide_renderer import render_slides_to_images, annotate_slide_image
+            
+            # Step 1: Render base slides
+            slide_images = render_slides_to_images(
+                job["file_path"], 
+                output_dir=str(output_dir / "slides"),
+                scale=1.5
+            )
+            
+            # Step 2: Map issues to slides
+            issues = formatted_result.get("issues", [])
+            issues_by_slide = {}
+            for issue in issues:
+                # Heuristic: issues usually have a 'location' string like "Slide 3" or metadata 'slide_number'
+                # For this implementation, we assume a 'slide_number' field or parse from location
+                slide_num = issue.get("slide_number")
+                if not slide_num and "Slide" in issue.get("location", ""):
+                    try:
+                        slide_num = int(issue["location"].split("Slide")[1].split()[0])
+                    except Exception:
+                        slide_num = 1 # Default to 1 if parsing fails
+                        
+                if slide_num:
+                    if slide_num not in issues_by_slide:
+                        issues_by_slide[slide_num] = []
+                    issues_by_slide[slide_num].append({
+                        "text": issue["description"],
+                        "type": "issue", # Red box
+                        "bbox": issue.get("bbox"), # Might be None, handled by renderer
+                        "location": issue.get("location")
+                    })
+            
+            # Step 3: Draw Annotations
+            annotated_paths = []
+            for i, img_path in enumerate(slide_images):
+                slide_num = i + 1
+                if slide_num in issues_by_slide:
+                    ann_path = annotate_slide_image(img_path, issues_by_slide[slide_num])
+                    annotated_paths.append(ann_path)
+                    
+            logger.info("Generated %d annotated slides", len(annotated_paths))
+            
+    except Exception as e:
+        # Remediation is non-critical, do not fail the job
+        logger.error("Visual Remediation failed: %s", e)
+    # ---------------------------------------------
+
     update_job_status(document_id, ValidationStatus.COMPLETED, 100, validation_result=formatted_result)
     logger.info("Validation completed for %s: %s issues found", document_id, formatted_result.get("total_issues"))
 
     return formatted_result
+

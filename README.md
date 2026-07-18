@@ -4,6 +4,12 @@
 
 This system uses Generative AI (Llama 3.1 & LLaVA) to automatically validate marketing documents against complex regulatory rules (SFDR, ESG, Cross-border registration).
 
+## Demo
+
+Watch the product walkthrough: [demo video](assets/demo.mp4). GitHub opens the file in its built-in video preview.
+
+> The demo is intentionally kept in `assets/` so it remains versioned with the application it showcases.
+
 ## 📚 Documentation
 
 **[Enter the Documentation Hub](docs/index.md)**

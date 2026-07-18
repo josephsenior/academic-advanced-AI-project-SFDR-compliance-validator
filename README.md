@@ -6,9 +6,11 @@ This system uses Generative AI (Llama 3.1 & LLaVA) to automatically validate mar
 
 ## Demo
 
-Watch the product walkthrough: [demo video](assets/demo.mp4). GitHub opens the file in its built-in video preview.
+<video src="https://github.com/josephsenior/academic-advanced-AI-project-SFDR-compliance-validator/raw/refs/heads/main/assets/demo.mp4" controls width="100%">
+  Your browser does not support embedded video. [Download the demo](assets/demo.mp4).
+</video>
 
-> The demo is intentionally kept in `assets/` so it remains versioned with the application it showcases.
+> Product walkthrough of the Document Compliance Validation System.
 
 ## 📚 Documentation
 
